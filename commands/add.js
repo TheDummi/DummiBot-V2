@@ -42,7 +42,7 @@ class AddCashCommand extends Command {
 
     async exec(message, args) {
 
-// Define member as mentioned user
+// Define member as mentioned user.
         let member = args.user.id
 
 // If member has no coins, set defaults
