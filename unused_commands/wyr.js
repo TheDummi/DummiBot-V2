@@ -1,0 +1,1 @@
+'Would you rather be caught picking your nose or picking a wedgie?',    'Would you rather live with no internet or no A/C or heating?',    'Would you rather lose your sex organs forever or gain 200 pounds?',    'Would you rather have sex with [insert name] in secret or not have sex with that person, but everyone thinks you did?',
