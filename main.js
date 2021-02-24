@@ -1,8 +1,6 @@
 const Discord = require('discord.js');
-const getPrefix = require('./funcs.js')
 const fs = require('fs');
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler, setEmitters } = require('discord-akairo');
-
 class MyClient extends AkairoClient {
     constructor() {
         super({
@@ -11,10 +9,9 @@ class MyClient extends AkairoClient {
         });
         this.commandHandler = new CommandHandler(this, {
             directory: './commands/',
-            prefix: ['~'], // I had to add this even though we have a configurable one....
-            defaultCooldown: 5000,
+            prefix: ['~', 'dummi '],
+            defaultCooldown: 1000,
             ratelimit: 2,
-            ignoreCooldown: ['482513687417061376', '487443883127472129'],
             handleEdits: true,
             commandUtil: true,
             clientPermissions: 'EMBED_LINKS'

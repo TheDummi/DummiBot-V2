@@ -14,7 +14,7 @@ const names = {
 	'moderation': 'Moderation commands',
 	'admin': "Admin commands",
 	'wom': "Wolves of Mars only commands",
-	'development' : 'Under Development'
+	'economy' : 'Economy commands'
 }
 const nameWeight = {
 	'fun': 1,
@@ -29,7 +29,7 @@ const nameWeight = {
 	'support': 10,
 	'wom': 11,
 	'bot maker': 12,
-	'development': 13,
+	'economy' : 13
 }
 class CommandsCommand extends Command {
 	constructor() {

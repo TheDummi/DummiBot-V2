@@ -33,14 +33,15 @@ class ReadyListener extends Listener {
         const DateMoment = () => moment(timestamp).format("MMMM Do YYYY");
         const TimeMoment = () => moment(timestamp).format("H:mm");
 // Restart message
-        console.log(`${client.user.username} signed into ${client.guilds.cache.size} servers. helping ${client.users.cache.size} users, at ${(new Date().toTimeString())}`)
+        console.log(`${client.user.username} signed into ${client.guilds.cache.size} servers. helping ${client.users.cache.size} users, at ${TimeMoment()}`)
 // Restart message in status channel
-        const channel = client.channels.cache.get('787659066573979699');
+        const channel = this.client.channels.cache.get('787659066573979699');
 // Auto delete everything in status channel
         let messages = await channel.messages.fetch()
         messages.forEach(async e => {
             await e.delete()
         })
+        
 // Rich Presence formats
         const randRP = [
             `${client.guilds.cache.size} servers`,

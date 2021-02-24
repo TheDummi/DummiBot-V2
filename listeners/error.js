@@ -29,16 +29,20 @@ class ErrorListener extends Listener {
             embed = embed.addField('Server link', `[${message.guild.name}](${invited})`)
         }
         embed
-        /*if (message.channel.id !== undefined) {
-            let Url = await message.logsChannel.lastMessage.get(message.url)
-            embed = embed.addField('Error link', `[message link](${Url})`)
-        }
-        embed*/
             .addField('Error log', `[${command.id}](${m.url})`)
             .addField('Command', command.id)
             .addField('Reason', reason)
         await tracebackChannel.send(embed)
-        
+        let embedError = new Discord.MessageEmbed()
+		.setTitle(`There was an error trying to execute ${command.id}!`)
+		.setDescription('Your error got logged in the support server.\nPlease join the support server [here](https://discord.gg/ET4yckcD78) for more information.')
+		.setColor(0xaa00cc)
+		await message.util.send(embedError)
+        .then(message => {
+            setTimeout(function() {
+                message.delete(embedError)
+            }, 60000)
+        })
     }
 }
 

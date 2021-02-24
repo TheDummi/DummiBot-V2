@@ -4,7 +4,7 @@ const Discord = require('discord.js');
 class CloseCommand extends Command {
     constructor() {
         super('close', {
-            aliases: ['close', 'hide', 'delete', 'remove'],
+            aliases: ['close', 'hide', 'delete'],
             category: 'utility',
             description: 'Edit a message command to close/hide/delete the command message!',
             ownerOnly: false,
@@ -37,18 +37,7 @@ class CloseCommand extends Command {
                 }, 1);
             })
         }
-        if (message.util.parsed.alias === 'remove') {
-            let removeEmbed = new Discord.MessageEmbed()
-            .setTitle('Deleting message in 1 second')
-            .setColor(0xaa00cc)
-            message.util.send(removeEmbed)
-            .then(message => {
-                setTimeout(async function(){
-                    await message.delete(removeEmbed)
-                }, 1);
-            })
-        }
-        }
-    };
+    }
+};
 
 module.exports = CloseCommand;

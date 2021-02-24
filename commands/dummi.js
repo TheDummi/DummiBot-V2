@@ -61,6 +61,7 @@ const randomImages = [
     "https://media1.tenor.com/images/e691e2cff6c4026b54e624e08dbc2261/tenor.gif?itemid=19687211",
 
 ]
+const xp = require('../xp.json')
 const randomFooters = [ 
     "Dummi was born on the 13th of may \n2005 and died on 19th of august 2019.",
     "Dummi loved water!",
@@ -93,6 +94,31 @@ class DummiCommand extends Command {
         .setFooter('This command is in memory of Dummi.\nFun fact: ' + randomFooter)
         .setColor(0xaa00cc)
 		await message.util.send(embed);
+        if (!xp[message.author.id]) {
+            xp[message.author.id] = {
+                xp: 0,
+                level: 1,
+                respect: 0,
+                respectLevel: 1,
+                prestige: 0,
+            };
+        }
+        let userXp = xp[message.author.id].xp;
+        let userLevel = xp[message.author.id].level;
+        let userRespect = xp[message.author.id].respect;
+        let userLevelRespect = xp[message.author.id].respectLevel;
+        let xpAdd = Math.floor(Math.random() * 15) + 5;
+        userRespect = userRespect + xpAdd;
+        xp[message.author.id] = {
+            xp: userXp,
+            level: userLevel,
+            respect: userRespect,
+            respectLevel: userLevelRespect,
+            prestige: 0,
+        }
+        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+            if (err) console.log(err)
+        })
 	}
 };
 

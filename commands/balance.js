@@ -6,7 +6,7 @@ class BalanceCommand extends Command {
     constructor() {
         super('balance', {
             aliases: ['balance', 'bal', 'credits', 'cred'],
-            category: 'info',
+            category: 'economy',
             description: 'Dimboins Balance',
             channel: ['guild'],
             args: [
@@ -18,24 +18,52 @@ class BalanceCommand extends Command {
         })
     };
     
-    async exec(message) {
+    async exec(message, args) {
+
+// Define member as first mentioned member or message author, define gold, and balance for member
+        let member = message.mentions.users.first() || message.author;
+
+// If the member doesn't have any dummicoins, set defaults
         if (!currency[message.author.id]){
             currency[message.author.id] = {
                 Dimboins: 0,
-                Gold: 0
+                silver: 0,
+                Gold: 0,
+                diamond: 0
             }
-        };
-        let goldBalance = currency[message.author.id].Gold;
-        let balance = currency[message.author.id].Dimboins;
+        }
+        if (!currency[member.id]){
+            currency[member.id] = {
+                Dimboins: 0,
+                silver: 0,
+                Gold: 0,
+                diamond: 0
+            }
+        }
+        
+        let goldBalance = currency[member.id].Gold;
+        let silverBalance = currency[member.id].silver;
+        let balance = currency[member.id].Dimboins;
+        let diamondBalance = currency[member.id].diamond;
+// Send embed on use of command
         let BalEmbed = new Discord.MessageEmbed()
-        .setDescription(`<@${message.author.id}>'s wallet`)
-        .addField('| Dummicoins', balance + " 💰", true)
-        .addField('| Golden Dummicoins', goldBalance + " :coin:", true )
-        .setThumbnail(message.author.displayAvatarURL())
+        .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL())
+        .addField('| Coins', balance + " 💰", true)
+        .addField('| Silver', silverBalance, true )
+        .addField('| Gold', goldBalance , true )
+        .addField('| Diamond', diamondBalance, true )
         .setColor(0xaa00cc)
-        .addField('Note*', '1 :coin: = 100000 💰')
-        message.util.send(BalEmbed)
+        
+        try {
+            message.util.send(BalEmbed)
+        }
+        catch {
+            message.channel.send(`${member}, does not have any balance yet...`)
+        }
+        fs.writeFile('currency.json', JSON.stringify(currency), (err) => {
+            if(err) console.log(err)
+        });
     }
-}
+};
 
 module.exports = BalanceCommand;

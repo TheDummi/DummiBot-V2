@@ -1,6 +1,8 @@
 const {randColor} = require("../funcs.js");
 const Discord = require("discord.js");
 const { Command } = require('discord-akairo');
+const fs = require('fs');
+const xp = require('../xp.json')
 class InviteCommand extends Command {
 	constructor() {
 		super('invite', {
@@ -22,6 +24,31 @@ class InviteCommand extends Command {
 			.addField('No role (no perms), only invite this when you\'re experienced with bots!', 'click [here](https://discord.com/oauth2/authorize?client_id=741940149633679390&scope=bot&permissions=0)')
 			.setColor(0xaa00cc)
 		await message.util.send(embed);
+		if (!xp[message.author.id]) {
+			xp[message.author.id] = {
+				xp: 0,
+				level: 1,
+				respect: 0,
+				respectLevel: 1,
+				prestige: 0,
+			};
+		}
+		let userXp = xp[message.author.id].xp;
+		let userLevel = xp[message.author.id].level;
+		let userRespect = xp[message.author.id].respect;
+		let userLevelRespect = xp[message.author.id].respectLevel;
+		let xpAdd = Math.floor(Math.random() * 15) + 5;
+		userRespect = userRespect + xpAdd;
+		xp[message.author.id] = {
+			xp: userXp,
+			level: userLevel,
+			respect: userRespect,
+			respectLevel: userLevelRespect,
+			prestige: 0,
+		}
+		fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+			if (err) console.log(err)
+		})
 	}
 };
 

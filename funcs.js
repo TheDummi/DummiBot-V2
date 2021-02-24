@@ -1,5 +1,7 @@
-const fs = require("fs")
-const got = require("got")
+const fs = require("fs");
+const got = require("got");
+const data = require('./data.json');
+const Discord = require('discord.js')
 
 const hasteURLs = [
     "https://hst.sh",

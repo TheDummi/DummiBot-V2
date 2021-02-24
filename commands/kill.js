@@ -9,6 +9,8 @@ const randomShot = [
 const randomKill = [
 	'',
 ]
+const fs = require('fs');
+const xp = require('../xp.json')
 const Discord = require("discord.js")
 class KillCommand extends Command {
 	constructor() {
@@ -71,9 +73,61 @@ class KillCommand extends Command {
 	}
 
 	if (message.util.parsed.alias === 'kill') {
+		
+		if (!xp[message.author.id]) {
+			xp[message.author.id] = {
+				xp: 0,
+				level: 1,
+				respect: 0,
+				respectLevel: 1,
+				prestige: 0,
+			};
+		}
+		let userXp = xp[message.author.id].xp;
+		let userLevel = xp[message.author.id].level;
+		let userRespect = xp[message.author.id].respect;
+		let userLevelRespect = xp[message.author.id].respectLevel;
+		let xpAdd = Math.floor(Math.random() * 5) + 5;
+		userRespect = userRespect - xpAdd;
+		xp[message.author.id] = {
+			xp: userXp,
+			level: userLevel,
+			respect: userRespect,
+			respectLevel: userLevelRespect,
+			prestige: 0,
+		}
+		fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+			if (err) console.log(err)
+		})
 		return message.util.send(KillEmbed)
 	}
 	if (message.util.parsed.alias === 'shoot') {
+		
+		if (!xp[message.author.id]) {
+			xp[message.author.id] = {
+				xp: 0,
+				level: 1,
+				respect: 0,
+				respectLevel: 1,
+				prestige: 0,
+			};
+		}
+		let userXp = xp[message.author.id].xp;
+		let userLevel = xp[message.author.id].level;
+		let userRespect = xp[message.author.id].respect;
+		let userLevelRespect = xp[message.author.id].respectLevel;
+		let xpAdd = Math.floor(Math.random() * 5) + 5;
+		userRespect = userRespect - xpAdd;
+		xp[message.author.id] = {
+			xp: userXp,
+			level: userLevel,
+			respect: userRespect,
+			respectLevel: userLevelRespect,
+			prestige: 0,
+		}
+		fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+			if (err) console.log(err)
+		})
 		return message.util.send(ShootEmbed)
 	}
 }

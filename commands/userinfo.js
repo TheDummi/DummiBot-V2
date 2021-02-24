@@ -86,6 +86,7 @@ async exec(message, args) {
 		days = Math.floor((new Date() - member.premiumSince) / 1000 / 60 / 60 / 24) - (months * 30);
 		embed = embed.addField('| Time boosted', Math.floor(days) + " days")
 	}
+	embed
 // This is for the permissions to change to the names const
 	let permissions = [];
 	for (var i = 0; i < member.permissions.toArray().length; i++) {
@@ -98,6 +99,10 @@ async exec(message, args) {
 	for (var i = 0; i < member.user.flags.toArray().length; i++) {
 		let flag = member.user.flags.toArray()[i]
 		flags.push("`" + (badgeNames[flag] || flag) + "`");
+	}
+	embed
+	if (!member.roles.length) {
+		embed = embed.addField('Highest role', member.roles.highest.name, true)
 	}
 	embed
 		.addField('| roles', member.roles.cache.size, true)

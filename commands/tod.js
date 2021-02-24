@@ -92,7 +92,6 @@ const truth = [
     'What is your go-to song for the shower?',
     'Who is the sexiest person in this room?',
     'How would you rate your looks on a scale of 1 to 10?',
-    'Would you rather have sex with [insert name] in secret or not have sex with that person, but everyone thinks you did?',
     'What don\'t you like about me?',
     'What color underwear are you wearing right now?',
     'What was the last thing you texted?',
@@ -108,12 +107,10 @@ const truth = [
     'Would you trade in your dog for a million dollars?',
     'What is your biggest pet peeve?',
     'If you were allowed to marry more than one person, would you? Who would you choose to marry?',
-    'Would you rather lose your sex organs forever or gain 200 pounds?',
     'Would you choose to save 100 people without anyone knowing about it or not save them but have everyone praise you for it?',
     'If you could only hear one song for the rest of your life, what would it be?',
     'If you lost one day of your life every time you said a swear word, would you try not to do it?',
     'Who in this room would be the worst person to date? Why?',
-    'Would you rather live with no internet or no A/C or heating?',
     'If someone offered you $1 million to break up with your girlfriend/boyfriend, would you do it?',
     'If you were reborn, what decade would you want to be born in?',
     'If you could go back in time in erase one thing you said or did, what would it be?',
@@ -125,7 +122,6 @@ const truth = [
     'What\'s the longest time you\'ve stayed in the bathroom, and why did you stay for that long?',
     'What\'s the most unflattering school picture of you?',
     'Have you ever cried because you missed your parents so much?',
-    'Would you rather be caught picking your nose or picking a wedgie?',
     'Describe the strangest dream you\'ve ever had. Did you like it?',
     'Have you ever posted something on social media that you regret?',
     'What is your biggest fear?',
@@ -179,21 +175,72 @@ const truth = [
 ];
 
 const dare = [
-    'test',
-    'test1',
-    'test2'
-
+    'describe the last dream you had.',
+    'kiss the player you think looks the cutest.',
+    'change your Discord PFP to whatever the group decides.',
+    'run outside in your underwear for two minutes.',
+    'send knee pics to the group.',
+    'lick the floor.',
+    'become a slave to a person of your choosing for the next 5 minutes.',
+    'what is your honest opinion of the person who sent this command?',
+    'tell the last person you texted that you\'re pregnant/got someone pregnant.',
+    'show everyone the last picture in your camera roll.',
+    'talk in an accent for the next 10 minutes.',
+    'delete the last 10 pictures in your camera roll permanently (remove them from recently deleted too).',
+    'let the group pose you in an embarrassing position and take a picture.',
+    'go commando for the rest of the game.',
+    'do as many pushups or situps as you can in a minute.',
+    'name one thing you would change about each person here.',
+    'link everyone to the last song you listened to.',
+    'Kiss the person who you think is the best friend to you.',
+    'Hold hands with the player on your right for 3 minutes.',
+    'Ask someone in this server out on a date.',
+    'Show everyone here your last 10 google searches.',
+    'Lick someone\'s hand.',
+    'Show the group a picture of one person you find very attractive.',
+    'Show the list of people in your DMs.',
+    'Show the group an embarrassing picture of you.',
+    'Eat a piece of paper.',
+    'Kiss the person to your left, either on the hand or cheek.',
+    'Lick the neck of the person next to you.',
+    'Tell a dirty joke.',
+    'Text the third person in your message history \`last night was great\` with a heart.',
+    'Rate everyone here 1-10 in terms of looks.',
+    'Rate everyone here 1-10 in terms of personality.',
+    'Tell your crush that you don\'t love them.',
+    'Take a sniff of everyone playing.',
+    'Pair everyone here up into couples.',
+    'Send a text to your crush explaining your favorite movie plot in vivid detail.',
+    'Curse as badly as you can for 20 seconds.',
+    'Spin an imaginary hula hoop around your waist for 1 minute.',
+    'Send every curse word you can think of in chat.',
+    'Change your phone wallpaper to the choice of the group for 7 days.',
+    'Pretend to date someone here for a day.',
+    'Breakdance for the group.',
+    'Show everyone your suggested emoji list.',
+    'Show everyone the last YouTube video you watched.',
+    'Show everyone something you wrote/drew when you were younger.',
+    'Sing a song for the group.',
+    'Give yourself a haircut.',
+    'Tell everyone about your last kiss.',
+    'Let the group look through your phone for 30 seconds.',
+    'Show everyone the earlier picture in your camera roll.',
+    'Send the fifth person in your message history 20 seconds of keyboard spam.',
+    'Call your crush and try to make conversation for a minute.',
+    'Show everyone an embarrassing childhood picture of you.',
+    'Fake cry for the group.'
 ];
 const random = () => Math.floor[Math.random() * (2)]
 const truths = () => truth[Math.floor(Math.random() *  truth.length)];
 const dares = () => dare[Math.floor(Math.random() *  dare.length)];
 class ToDCommand extends Command {
     constructor() {
-        super('tod', {
+        super('truth/dare', {
             aliases: ['truth', 'dare', 'tod'],
             category: 'fun',
-            description: 'Truth or dare',
-            channel: ['guild', 'dm']
+            description: 'Truth or dare. (tod for random)',
+            channel: ['guild', 'dm'],
+            cooldown: 60000
         })
     }
     async exec(message) {

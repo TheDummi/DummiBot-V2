@@ -1,95 +1,105 @@
-const { DMChannel, DiscordAPIError } = require("discord.js");
-const { randColor } = require("../funcs");
+const { Command } = require("discord-akairo");
+const { randColor } = require("../funcs.js");
+const Discord = require("discord.js");
+class MuteCommand extends Command {
+	constructor() {
+		super('mute', {
+			aliases: ['mute'],
+			category: 'moderation',
+			description: 'Mute a user',
+			channel: 'guild',
+			userPermissions: [
+				'MUTE_MEMBERS',
+				'MANAGE_MESSAGES'
+			],
+			clientPermissions: 'MANAGE_ROLES',
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					prompt: {
+						start: 'Who would you like to mute?',
+						retry: 'Invalid user, Who would you like to mute?',
+						ended: 'Too many retries!',
+						cancel: 'Cancelled the command',
+						timeout: 'Ran out of time'
+					}
+				},
+				{
+					id: 'time',
+					type: 'number',
+					prompt: {
+						start: 'How long would you like to mute for?',
+						retry: 'Invalid time input, How long would you like to mute for?',
+						ended: 'Too many retries',
+						timeout: 'Ran out of time'
+					}
+				},
+				{
+					id: 'message',
+					type: 'string',
+					match: 'rest',
+					prompt: {
+						start: 'What\'s the reason for this mute?'
+					}
+				}
+			]
+		})
+	}
 
-Discord = require("discord.js")
-module.exports = {
-	name: 'mute',
-	category: 'development',
-	description: 'Mute someone, the time in minutes',
-	check(message) {
-		message.author.id == 482513687417061376 || message.author.id == 541015870072422410 || message.author.id == 487443883127472129
-		//return message.member.hasPermission("MANAGE_MESSAGES")
-	},
-	async execute(message, args) {
-		let embed = new Discord.MessageEmbed()
-		.setTitle('Muting')
-		.setDescription('Format:\nWith reason: mute <user> <time> <reason>\nWithout reason: mute <user> <time>')
-		.addField('Important!', 'Time is always in minutes __**Don\'t**__ specify  a time or it won\'t work!')
-		if (args.length < 2) return await message.reply(embed)
-		let tomute = message.mentions.members.first();
-		let muterole = message.guild.roles.cache.find(e => e.name.toLowerCase() == "muted");
-		if (!muterole){
+	async exec(message, args, error) {
+		let argsMute = args.member
+		let argsTime = args.time
+		argsTime = Number(argsTime)*1000*60;
+		let argsReason = args.message
+		let muteRole = message.guild.roles.cache.find(e => e.name.toLowerCase() == "muted");
+		if (!muteRole){
 			try{
-				muterole = await message.guild.createRole({
+				muteRole = await message.guild.create.role({
 					name: "Muted",
 					color: "#000000",
 					permissions:[]
 				})
 				message.guild.channels.forEach(async (channel, id) => {
-					await channel.overwritePermissions(muterole, {
+					await channel.overwritePermissions(muteRole, {
 						SEND_MESSAGES: false,
 						ADD_REACTIONS: false
 					});
 				});
-			}catch(e){
-				console.log(e.stack);
 			}
-			let reason = args.slice()
-			reason.splice(0, 2)
-			reason = reason.join(" ")
-		// ~mute <@mention> <time> [reason]
-			let invaliduser = new Discord.MessageEmbed()
-				.setTitle('Couldn\'t find user')
-				.setColor(0xaa00cc)
-		if (tomute.size == 0) return message.reply(invaliduser);
-			let embed1 = new Discord.MessageEmbed()
-				.setTitle(`${tomute.id} has already been muted!`)
-				.setColor(0xaa00cc)
-		if (tomute.roles.cache.has(muterole)) return message.reply(embed1)
-			let botmute = new Discord.MessageEmbed()
-				.setTitle("You can't mute me.")
-				.setColor(0xaa00cc)
-		if (message.mentions.users.first().id == message.author.id) return message.channel.send(botmute);
-			let selfmute = new Discord.MessageEmbed()
-			.setTitle('You can\'t mute yourself.')
-			.setColor(0xaa00cc)
-		if (tomute) return message.reply(selfmute);
-			let nomention = new Discord.MessageEmbed()
-				.setTitle("You must specify a user")
-				.setColor(0xaa00cc)
-		if (args[0] === undefined) return message.channel.send(nomention);
+			catch(error) {
+				message.util.send('Couldn\'t mute.')
+			}
 		}
-		if (reason == "") reason = "No reason given";
-		let mutetime = Number(args[1])*1000*60;
-			let embed5 = new Discord.MessageEmbed()
-				.setTitle('You didn\'t specify a time')
-				.setColor(0xaa00cc)
-		if (!mutetime) return message.reply(embed5);
-		await tomute.roles.add(muterole)
+
+		if (message.member.roles.cache.has(muteRole)) return message.reply('Has already been muted')
+		if (argsMute.id == argsMute.bot) return message.util.reply('You can\'t mute bots!')
+		if (argsMute.id == message.author.id) return message.util.send('You can\'t mute yourself');
+		await message.member.roles.add(muteRole)
 			let embed6 = new Discord.MessageEmbed()
 				.setTitle('Muting')
-				.setDescription(`<@${tomute.id}> has been muted for ${args[1]} minutes, reason: \`${reason}\`.`)
+				.setDescription(`<@${argsMute.id}> has been muted for ${argsTime} minutes, reason: \`${argsReason}\`.`)
 				.setColor(0xaa00cc)
-			message.channel.send(embed6);
-		let embed7 = new Discord.MessageEmbed()
+			await message.channel.send(embed6);
+			let embed7 = new Discord.MessageEmbed()
 				.setTitle('Mute report.')
 				.setDescription(`You got muted! Watch it next time!\nListed below are details.`)
 				.addField(`Server`, `${message.guild.name}`, true)
-				.addField(`time`, `${args[1]} minutes`, true)
+				.addField(`time`, `${argsTime} minutes`, true)
 				.addField(`You got muted by`, `<@${message.author.id}>`, true)
-				.addField(`Reason`, `${reason}`, true)
+				.addField(`Reason`, `${argsReason}`, true)
 				//.addField(`Mute count`, ``, true)
 				.setColor(0xaa00cc)
-			message.client.users.cache.get(tomute.id).send(embed7);
-			;
-		setTimeout(function(){
-			tomute.roles.remove(muterole)
+			await message.client.users.cache.get(argsMute.id).send(embed7);
+		setTimeout(async function(){
+			argsMute.roles.remove(muteRole)
 			let embed8 = new Discord.MessageEmbed()
 				.setTitle('Muting')
-				.setDescription(`<@${tomute.id}> has been unmuted!`)
+				.setDescription(`<@${argsMute.id}> has been unmuted!`)
 				.setColor(0xaa00cc)
-			message.author.send(embed8);
-		}, mutetime);
-	},
-	
+			await message.author.send(embed8);
+		}, argsTime);
+	}
 };
+
+module.exports = MuteCommand;

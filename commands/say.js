@@ -19,8 +19,9 @@ class SayCommand extends Command {
 	}
 
 	async exec(message, args) {
-        await message.delete()
-        await message.util.send(args.message)
+		let sayMessage = args.message
+			await message.delete()
+			return await message.util.send(sayMessage)
     }
 };
 

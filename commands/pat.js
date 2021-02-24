@@ -7,7 +7,8 @@ const randomImages = [
 ]
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
-
+const fs = require('fs');
+const xp = require('../xp.json')
 class PatCommand extends Command {
     constructor() {
         super('pat', {
@@ -66,7 +67,32 @@ class PatCommand extends Command {
         // When you mention someone
             else {
             await message.util.send(embed);
+            if (!xp[message.author.id]) {
+                xp[message.author.id] = {
+                    xp: 0,
+                    level: 1,
+                    respect: 0,
+                    respectLevel: 1,
+                    prestige: 0,
+                };
             }
+            let userXp = xp[message.author.id].xp;
+            let userLevel = xp[message.author.id].level;
+            let userRespect = xp[message.author.id].respect;
+            let userLevelRespect = xp[message.author.id].respectLevel;
+            let xpAdd = Math.floor(Math.random() * 15) + 5;
+            userRespect = userRespect + xpAdd;
+            xp[message.author.id] = {
+                xp: userXp,
+                level: userLevel,
+                respect: userRespect,
+                respectLevel: userLevelRespect,
+                prestige: 0,
+            }
+            fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+                if (err) console.log(err)
+            })
+        }
             
         }
 };

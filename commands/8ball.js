@@ -1,7 +1,6 @@
-const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 
-const ball = [
+const bal = [
     'No',
     'Definitely',
     'Yes',
@@ -14,8 +13,8 @@ const ball = [
     'I don\'t know',
     'maybe',
     'I am not certain',
-]
-const bal = () => ball[Math.floor(Math.random() * ball.length)]
+];
+const ball = () => bal[Math.floor(Math.random() * bal.length)];
 
 class BallCommand extends Command {
     constructor() {
@@ -24,15 +23,21 @@ class BallCommand extends Command {
             category: 'fun',
             description: '8ball command',
             channel: ['guild', 'dm'],
-        })
+            args: [
+                {
+                    id: 'message',
+                    type: 'string',
+                    prompt: {
+                        start: 'What is your question?'
+                    }
+                }
+            ]
+        });
     }
-    async exec(message, args) {
-        if (args[0] == " ") {
-            return await message.util.channel('hi')
-        }
-        else {
-            return await message.util.send(bal())
-        }
+    async exec(message) {
+
+// Send the answer
+        await message.util.send(ball());
     }
 };
 

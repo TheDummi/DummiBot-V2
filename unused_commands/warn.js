@@ -32,14 +32,14 @@ class WarnCommand extends Command {
 
     async exec(message) {
         let reason = args.message;
-        if (![message.guild.id].warns[args.user.id]) {
-            [message.guild.id].warns[args.user.id] = {
+        if (!warns[args.user.id]) {
+            warns[args.user.id] = {
                 warns: 0
             }
         }
         
-        let warn = [message.guild.id].warns[args.user.id].warns
-        [message.guild.id].warns[args.user.id] = {
+        let warn = warns[args.user.id].warns
+        warns[args.user.id] = {
             warns: warn++
         }
         await message.util.send(`Warned <@${args.user.id}> for the ${warn++} time! With reason: ${reason}`)

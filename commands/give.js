@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs')
 let coins = require('../currency.json')
+const xp = require('../xp.json')
 class GiveCommand extends Command {
     constructor() {
         super('give', {
@@ -12,6 +13,13 @@ class GiveCommand extends Command {
             ownerOnly: false,
 			channel: 'guild',
             args: [
+                {
+                    id: 'choice',
+                    type: ['coins', 'silver', 'gold', 'diamond'],
+                    prompt: {
+                        start: 'What would you like to give? coins, silver, gold, or diamond?'
+                    }
+                },
                 {
                     id: 'user',
                     type: 'user',
@@ -49,7 +57,9 @@ class GiveCommand extends Command {
             if(!coins[member]){
                 coins[member] ={
                     Dimboins: 0,
-                    Gold: coins[member].Gold
+                    silver: 0,
+                    Gold: 0,
+                    diamond: 0
                 };
             }
 
@@ -69,13 +79,17 @@ class GiveCommand extends Command {
 
             coins[message.author.id] = {
                 Dimboins: userCoins - parseInt(args.message),
-                Gold: coins[member].Gold
+                silver: coins[message.author.id].silver,
+                Gold: coins[message.author.id].Gold,
+                diamond: coins[message.author.id].diamond
             }
             
 
             coins[member] = {
                 Dimboins: memberCoins + parseInt(args.message),
-                Gold: coins[member].Gold
+                silver: coins[member].silver,
+                Gold: coins[member].Gold,
+                diamond: coins[member].diamond
             }
             let WithDrawEmbed = new Discord.MessageEmbed()
             .setTitle('Withdraw receipt')
@@ -84,7 +98,31 @@ class GiveCommand extends Command {
             .addField(`${args.user.username}'s info`, `Before: ${memberCoins}\nWithdraw: +${args.message}\nAfter: ${memberCoins + args.message}`)
             .setColor(0xaa00cc)
             await message.util.send(WithDrawEmbed)
-            
+            if (!xp[message.author.id]) {
+                xp[message.author.id] = {
+                    xp: 0,
+                    level: 1,
+                    respect: 0,
+                    respectLevel: 1,
+                    prestige: 0,
+                };
+            }
+            let userXp = xp[message.author.id].xp;
+            let userLevel = xp[message.author.id].level;
+            let userRespect = xp[message.author.id].respect;
+            let userLevelRespect = xp[message.author.id].respectLevel;
+            let xpAdd = Math.floor(Math.random() * 15) + 5;
+            userRespect = userRespect + xpAdd;
+            xp[message.author.id] = {
+                xp: userXp,
+                level: userLevel,
+                respect: userRespect,
+                respectLevel: userLevelRespect,
+                prestige: 0,
+            }
+            fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+                if (err) console.log(err)
+            })
             fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
                 if(err) console.log(err)
             })

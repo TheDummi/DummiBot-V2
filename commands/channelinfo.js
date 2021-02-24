@@ -35,41 +35,30 @@ class ChannelinfoCommand extends Command {
 	}
 
 async exec(message, args) {
-		const channel = args.channel
-		if (!channel) {
-			let embed1 = new Discord.MessageEmbed()
-				.setTitle('please enter a valid channel.')
-				.setColor(0xaa00cc)
-			return message.reply(embed1)
+	let channel = args.channel
+	let invite = message.channel.createInvite()
+	let invited = await invite
+	let embed = new Discord.MessageEmbed()
+		.setColor(0xaa00cc)
+		.setThumbnail(message.guild.iconURL())
+		.setTitle('Channel Info')
+		.addField('| Name', channel.type === 'dm' ? `<@${channel.recipient.username}>` : channel.name, true)
+		.addField('| ID', channel.id, true)
+		.addField('| Creation Date', channel.createdAt.toDateString(), true)
+		.addField('| NSFW', channel.nsfw ? 'Yes' : 'No', true)
+		.addField('| Category', channel.parent ? channel.parent.name : 'None', true)
+		.addField('| Type', channelTypes[channel.type], true)
+		.addField('| Topic', channel.topic || 'None', true)
+		.addField('| Invite', `[Invite link](${invited})`, true)
+		.addField('| Manageable', channel.manageable ? "yes" : "no", true)
+		.addField('| Category permissions', channel.permissionsLocked ? "Respected" : "Disrespected", true)
+		.addField('| Position',channel.rawPosition + 1, true)
+		.setFooter('This message gets deleted after 2 minutes.')
+		message.util.send(embed)
 			.then(message => {
-				setTimeout(function() {
-					message.delete(embed1)
-				}, 5000);
-			})
-		}
-		let invite = message.channel.createInvite()
-		let invited = await invite
-		let embed = new Discord.MessageEmbed()
-			.setColor(0xaa00cc)
-			.setThumbnail(message.guild.iconURL())
-			.setTitle('Channel Info')
-			.addField('| Name', channel.type === 'dm' ? `<@${channel.recipient.username}>` : channel.name, true)
-			.addField('| ID', channel.id, true)
-			.addField('| Creation Date', channel.createdAt.toDateString(), true)
-			.addField('| NSFW', channel.nsfw ? 'Yes' : 'No', true)
-			.addField('| Category', channel.parent ? channel.parent.name : 'None', true)
-			.addField('| Type', channelTypes[channel.type], true)
-			.addField('| Topic', channel.topic || 'None', true)
-			.addField('| Invite', `[Invite link](${invited})`, true)
-			.addField('| Manageable', channel.manageable ? "yes" : "no", true)
-			.addField('| Category permissions', channel.permissionsLocked ? "Respected" : "Disrespected", true)
-			.addField('| Position',channel.rawPosition + 1, true)
-			.setFooter('This message gets deleted after 2 minutes.')
-			message.util.send(embed)
-				.then(message => {
-				setTimeout(function() {
-					message.delete(embed)
-				}, 60000);
+			setTimeout(function() {
+				message.delete(embed)
+			}, 120000);
 		})
 	}
 };

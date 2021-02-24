@@ -6,15 +6,24 @@ const randomImages = [
     'https://media.tenor.com/images/c84f8b2f69239643243ff50f33bb58e3/tenor.gif',
     'https://media.tenor.com/images/b3f77685f5fed03749ffff22a4c84dbb/tenor.gif',
     'https://media.tenor.com/images/4f6c5ad80164566034ff4854761651bf/tenor.gif',
-    'https://media.tenor.com/images/c10697be7432f846149bf3c44deecefa/tenor.gif'
+    'https://media.tenor.com/images/c10697be7432f846149bf3c44deecefa/tenor.gif',
+    'https://media1.tenor.com/images/69924081e9c60548c2ec6ba42b1ebea9/tenor.gif?itemid=15310734',
+    'https://media1.tenor.com/images/a9eacd8925b5dc9bb2097ec043cfea45/tenor.gif?itemid=16834570',
+    'https://media.tenor.com/images/da20d660939571d12eff04a0c0e30c4a/tenor.gif',
+    'https://media.tenor.com/images/7572533d0f1fdf6425a5dbcb8ca5ed86/tenor.gif',
+    'https://media.tenor.com/images/77b6549ac02fdaf7f8eaefe89fcf0b1d/tenor.gif'
 
 ]
+const randomImage = () => randomImages[Math.floor(Math.random() * randomImages.length)];
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
+const fs = require('fs');
+const xp = require('../xp.json')
+
 class BiteCommand extends Command {
     constructor() {
         super('bite', {
-            aliases: ['bite'],
+            aliases: ['bite', 'eat'],
             category: 'actions',
             description: 'Bite someone',
             ownerOnly: false,
@@ -24,7 +33,11 @@ class BiteCommand extends Command {
                 type: 'user',
                 prompt: {
                     start: 'Who would you like to bite?',
-                    retry: 'Invalid user. Who would you like to bite?'
+                    retry: 'Invalid user. Who would you like to bite?',
+                    limit: 3,
+                    ended: 'Too many retries!',
+                    timeout: 'Ran out of time!',
+                    cancel: 'Cancelled command!'
                 }
             }]
         });
@@ -32,24 +45,58 @@ class BiteCommand extends Command {
 
     async exec(message, args) {
 
-	const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
+// Definitions
+        let purple = 0xaa00cc;
+        let user = message.author;
+        let member = args.user;
+        let client = this.client.user;
 
-	if (args.user.id == this.client.user.id) {
+// If the mentioned user is the bot
+	if (member.id == client.id) {
 		const BotEmbed = new Discord.MessageEmbed()
-			.setTitle('As I\'m a bot, I don\'t have feelings... thus biting won\'t hurt')
-			.setColor(0xaa00cc)
+			.setAuthor(`${user.username}, really?`, user.displayAvatarURL())
+			.setColor(purple)
 		await message.util.send(BotEmbed)
-	} else if (args.user.id == message.author.id) {
+
+// If the mentioned user is the message author
+	} else if (member.id == user.id) {
 		const SelfEmbed = new Discord.MessageEmbed()
-			.setTitle('Don\'t bite yourself, it hurts!')
-			.setColor(0xaa00cc)
+			.setAuthor(`${user.username}, why?`, user.displayAvatarURL())
+			.setColor(purple)
 	await message.util.send(SelfEmbed)
-	} else {
+
+// In all other cases
+    } else {
 		const MentionEmbed = new Discord.MessageEmbed()
-			.setDescription(`**<@${message.author.id}> bites ${args[0]}!**`)
-			.setImage(randomImage)
+			.setDescription(`${user.username} bit ${member.username}`, message.author.displayAvatarURL())
+			.setImage(randomImage())
 			.setColor(randColor())
 		await message.util.send(MentionEmbed)
+        if (!xp[message.author.id]) {
+            xp[message.author.id] = {
+                xp: 0,
+                level: 1,
+                respect: 0,
+                respectLevel: 1,
+                prestige: 0,
+            };
+        }
+        let userXp = xp[message.author.id].xp;
+        let userLevel = xp[message.author.id].level;
+        let userRespect = xp[message.author.id].respect;
+        let userLevelRespect = xp[message.author.id].respectLevel;
+        let xpAdd = Math.floor(Math.random() * 5) + 5;
+        userRespect = userRespect - xpAdd;
+        xp[message.author.id] = {
+            xp: userXp,
+            level: userLevel,
+            respect: userRespect,
+            respectLevel: userLevelRespect,
+            prestige: 0,
+        }
+        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+            if (err) console.log(err)
+        })
 		}
     }
 };

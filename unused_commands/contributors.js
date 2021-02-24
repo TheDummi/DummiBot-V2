@@ -2,8 +2,7 @@ const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const contributors = require('../contributors.json')
 const fs = require('fs')
-const ContributorRole = this.client.roles.cache.get('809814281984933930');
-const ContributorChannel = this.client.channels.cache.get('809823872550567966');
+
 class ContributorsCommand extends Command {
     constructor() {
         super('contributor', {
@@ -15,7 +14,7 @@ class ContributorsCommand extends Command {
             args: [
                 {
                     id: 'user',
-                    type: 'user',
+                    type: 'member',
                     prompt: {
                         start: 'Who would you like to add to the contributor list?',
                         retry: 'Invalid name, try again.',
@@ -24,26 +23,39 @@ class ContributorsCommand extends Command {
             ]
         })
     };
-    async exec(message, error) {
-        let m = message.ContributorChannel.send(`<@${args.user.id}> congratulations, you got added to the contributor team!, you can now use this channel!`)
-        args.user.addRole(ContributorRole)
+    async exec(message, args) {
+        let roles = new Discord.Collection()
+            this.client.guilds.cache.forEach(g => {
+                g.roles.cache.forEach(r => {
+                    roles.set(r.id, r)
+                })
+            })
+        roles.get('id')
+        let member = args.user;
+        const ContributorRole = roles.get('809814281984933930');
+        const ContributorChannel = this.client.channels.cache.get('809823872550567966');
+        let m = ContributorChannel.send(`<@${member.id}> congratulations, you got added to the contributor team!, you can now use this channel!`)
         try {
-        args.user.send(`You got added to the contributor team of ${this.client.user.username}, you can now use <#${channel}>`)
+            member.roles.add(ContributorRole)
+        }
+        catch {
+            message.util.send('Couldn\'t give role due to the new contributor not being in the support server.')
+        }
+            try {
+        member.send(`You got added to the contributor team of ${this.client.user.username}, you can now use <#${channel}>`)
         }
         catch(error) {
             m
+            if (!m) {
+            return await ContributorChannel.send(`Welcome to the contributor team ${member.user.username}`)
+            }
         }
-        if (!m) {
-            return await message.ContributorChannel.send(`Welcome to the contributor team ${args.user.username}`)
+        contributors[member.id] = {
+            contributor: member.user.username
         }
-        if (args.user.id == contributors[args.user.id]) {
-            return await message.util.send(`${args.user} is already a contributor`)
-        }
-        contributors[args.user.id] = {
-            contributor: args.user.id
-        }
-        message.ContributorChannel.send(`${args.user.tag} got added to the contributor team!`)
-        fs.writeFileSync('contributors.json', JSON.stringify(args.user.id[args.user.username]))
+        fs.writeFileSync('contributors.json', JSON.stringify(contributors), (err) => {
+            if (err) console.log(err)
+        });
         }
     }
 
