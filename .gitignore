@@ -129,4 +129,7 @@ dist
 xp.json
 currency.json
 data.json
+contributors.json
 token.txt
+developer.json
+serverData.json
