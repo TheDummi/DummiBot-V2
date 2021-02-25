@@ -16,7 +16,8 @@ class BuyCommand extends Command {
                     id: 'choice',
                     type: ['gold', 'diamond', 'silver'],
                     prompt: {
-                        start: 'What would you like to buy? silver, gold or diamond?',
+                        start: 'What would you like to buy? \n`silver`\n`gold`\n`diamond?`',
+                        retry: 'Invalid item. What would you like to buy? \n`silver`\n`gold`\n`diamond?`',
                     }
                 },
                 {
