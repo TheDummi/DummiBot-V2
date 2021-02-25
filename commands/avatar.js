@@ -17,16 +17,16 @@ class AvatarCommand extends Command {
         });
     }
 
-    async exec(message) {
+    async exec(message, args) {
 
 // Define color, user and url
         let purple = 0xaa00cc;
-        let user = message.mentions.users.first() || message.author;
-        let url = user.displayAvatarURL();
+        let user = args.user || message.author;
+        let url = user.displayAvatarURL({ dynamic: true });
 		let avatarEmbed = new Discord.MessageEmbed()
 			.setDescription(`**[${user.nickname || user.username}'s avatar](${url})**`)
 			.setColor(purple)
-			.setImage(user.displayAvatarURL())
+			.setImage(user.displayAvatarURL({ dynamic: true}))
 		await message.util.send(avatarEmbed);
     }
 };

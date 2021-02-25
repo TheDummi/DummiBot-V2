@@ -8,7 +8,7 @@ class WeeklyCommand extends Command {
     constructor() {
         super('weekly', {
             aliases: ['weekly', 'w'],
-            category: 'fun',
+            category: 'economy',
             description: 'Claim a reward every week!',
             channel: 'guild',
             cooldown: 604800000,

@@ -7,7 +7,7 @@ class RobCommand extends Command {
     constructor() {
         super('rob', {
             aliases: ['rob', 'steal'],
-            category: 'actions',
+            category: 'economy',
             ratelimit: 3,
             cooldown: 300000,
             description: 'Steal Dummicoins from someone.',

@@ -90,26 +90,27 @@ class AddRoleCommand extends Command {
                 .setColor(purple)
             await message.util.send(blockedEmbed);
         }
-//        let reportEmbed = new Discord.MessageEmbed()
-//                .setTitle('Moderation command used!')
-//                .addField(`Name`, message.author, true)
-//                .addField(`Command`, "addrole", true)
-//                .addField(`Command specifics`, `Given ${args.role} to ${args.member}`)
-//                .setTimestamp()
-//                .setColor(0xaa00cc)
-//        try {
-//            let channel = moderation[message.guild.id].moderation;
-//            this.client.channels.cache.get(channel);
-//            channel.send(reportEmbed);
-//        }
-//        catch {
-//            message.channel.send('No moderation channel set-up, no logging of this command.')
-//            .then(message => {
-//                setTimeout(function() {
-//                    message.delete()
-//                }, 30000)
-//            });
-//        }
+        let reportEmbed = new Discord.MessageEmbed()
+                .setTitle('Moderation command used!')
+                .addField(`Name`, message.author, true)
+                .addField(`Command`, "addrole", true)
+                .addField(`Command specifics`, `Given ${args.role} to ${args.member}`)
+                .setTimestamp()
+                .setColor(0xaa00cc)
+        try {
+            let channel = moderation[message.guild.id].moderation;
+            channel = this.client.channels.cache.get(channel);
+            await channel.send(reportEmbed);
+        }
+        catch(e) {
+            console.log(e)
+            message.channel.send('No moderation channel set-up, no logging of this command.')
+            .then(message => {
+                setTimeout(function() {
+                    message.delete()
+                }, 30000)
+            });
+        }
     }
 };
 

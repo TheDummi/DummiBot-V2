@@ -17,19 +17,18 @@ const names = {
 	'economy' : 'Economy commands'
 }
 const nameWeight = {
-	'fun': 1,
-	'emotions': 2,
-	'actions': 3,
-	'info': 4,
+	'fun': 2,
+	'emotion': 3,
+	'actions': 4,
+	'info': 6,
 	'music': 5,
-	'utility': 6,
-	'moderation': 7,
-	'admin': 8,
+	'utility': 7,
+	'moderation': 8,
+	'admin': 11,
 	'help': 9,
 	'support': 10,
-	'wom': 11,
 	'bot maker': 12,
-	'economy' : 13
+	'economy' : 1
 }
 class CommandsCommand extends Command {
 	constructor() {

@@ -12,7 +12,7 @@ class CryCommand extends Command {
 	constructor() {
 		super('cry', {
 			aliases: ['cry', 'sad', 'sob'],
-			category: 'emotions',
+			category: 'emotion',
 			description: 'Cry.',
 			ownerOnly: false,
 			channel: ['guild', 'dm']

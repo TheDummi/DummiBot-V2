@@ -22,25 +22,18 @@ class ChannelinfoCommand extends Command {
 				{
 					id: 'channel',
 					type: 'channel',
-					prompt: {
-						start: 'What channel do you want to get more info on?',
-						retry: 'Invalid channel, what channel do you want to get more info on?',
-						limit: 3,
-						ended: 'Too many retries!',
-						timeout: 'Ran out of time.'
-					}
 				}
 			]
 		});
 	}
 
 async exec(message, args) {
-	let channel = args.channel
+	let channel = args.channel || message.channel
 	let invite = message.channel.createInvite()
 	let invited = await invite
 	let embed = new Discord.MessageEmbed()
 		.setColor(0xaa00cc)
-		.setThumbnail(message.guild.iconURL())
+		.setThumbnail(message.guild.iconURL({ dynamic: true}))
 		.setTitle('Channel Info')
 		.addField('| Name', channel.type === 'dm' ? `<@${channel.recipient.username}>` : channel.name, true)
 		.addField('| ID', channel.id, true)

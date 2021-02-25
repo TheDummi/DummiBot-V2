@@ -19,7 +19,7 @@ const ball = () => bal[Math.floor(Math.random() * bal.length)];
 class BallCommand extends Command {
     constructor() {
         super('8ball', {
-            aliases: ['8ball'],
+            aliases: ['8ball', '8b'],
             category: 'fun',
             description: '8ball command',
             channel: ['guild', 'dm'],

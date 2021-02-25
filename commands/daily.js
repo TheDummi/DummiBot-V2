@@ -10,7 +10,7 @@ class DailyCommand extends Command {
     constructor() {
         super('daily', {
             aliases: ['daily', 'd'],
-            category: 'fun',
+            category: 'economy',
             description: 'Claim a reward everyday!',
             channel: 'guild',
             cooldown: 86400000,

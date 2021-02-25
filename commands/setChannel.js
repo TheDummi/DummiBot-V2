@@ -57,17 +57,17 @@ class SetChannelCommand extends Command {
         if (option == 'level') {
             channels[message.guild.id] = {
                 level: channel,
-                    report: report,
-                    warn: warn,
-                    moderation: moderation,
+                report: report,
+                warn: warn,
+                moderation: moderation,
             }
         }
         if (option == 'report') {
                 channels[message.guild.id] = {
-                    level: level,
-                    report: channel,
-                    warn: warn,
-                    moderation: moderation,
+                level: level,
+                report: channel,
+                warn: warn,
+                moderation: moderation,
             }
         }
         if (option == 'warn') {

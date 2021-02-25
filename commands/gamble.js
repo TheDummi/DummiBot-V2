@@ -7,7 +7,7 @@ class GambleCommand extends Command {
     constructor() {
         super('gamble', {
             aliases: ['gamble'],
-            category: 'actions',
+            category: 'economy',
             description: 'Gamble your coins',
             ownerOnly: false,
 			channel: 'guild',

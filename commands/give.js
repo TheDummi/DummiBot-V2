@@ -7,7 +7,7 @@ class GiveCommand extends Command {
     constructor() {
         super('give', {
             aliases: ['give', 'pay'],
-            category: 'actions',
+            category: 'economy',
             cooldown: 240000,
             description: 'Give Dummicoins to someone.',
             ownerOnly: false,

@@ -12,7 +12,7 @@ class LaughCommand extends Command {
 	constructor() {
 		super('laugh', {
 			aliases: ['laugh',],
-			category: 'emotions',
+			category: 'emotion',
 			description: 'Laugh',
 			ownerOnly: false,
 			channel: ['guild', 'dm']

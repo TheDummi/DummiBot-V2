@@ -6,7 +6,7 @@ class CleanCommand extends Command {
 		super('clean', {
 			aliases: ['clean', 'clear', 'cl'],
 			category: 'moderation',
-			description: 'Clean all messages in current channel send by DummiBot.',
+			description: 'Delete up to 50 messages in current channel',
 			ownerOnly: false,
 			channel: 'guild',
 			clientPermissions: ['MANAGE_MESSAGES'],

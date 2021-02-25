@@ -7,7 +7,7 @@ class BuyCommand extends Command {
     constructor() {
         super('buy', {
             aliases: ['buy',],
-            category: 'actions',
+            category: 'economy',
             description: 'buy golden Dummicoins',
             ownerOnly: false,
 			channel: 'guild',
@@ -62,7 +62,7 @@ class BuyCommand extends Command {
 // If the message author does have enough, subtract userCoins, add userGold
         if (choice == 'silver') {
             if (userCoins < args.message * 10000) {
-                return await message.util.send('Not enough coins!')
+                return await message.util.send('Not enough coins! 1 silver costs 10000 coins')
             }
             coins[message.author.id] = {
                 Dimboins: userCoins - parseInt(args.message * 10000),
@@ -75,7 +75,7 @@ class BuyCommand extends Command {
 
         if (choice == 'gold') {
             if (userSilver < args.message * 1000) {
-                return await message.util.send('Not enough silver!')
+                return await message.util.send('Not enough silver! 1 gold costs 1000 silver')
             }
             coins[message.author.id] = {
             Dimboins: userCoins,
@@ -88,7 +88,7 @@ class BuyCommand extends Command {
         }
         if (choice == 'diamond') {
             if (userGold < args.message * 100) {
-                return await message.util.send('Not enough gold!')
+                return await message.util.send('Not enough gold! 1 diamond costs 100 gold')
             }
             coins[message.author.id] = {
                 Dimboins: userCoins,

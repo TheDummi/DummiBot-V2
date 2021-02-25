@@ -11,8 +11,8 @@ class BalanceCommand extends Command {
             channel: ['guild'],
             args: [
                 {
-                    id: 'member',
-                    type: 'member',
+                    id: 'user',
+                    type: 'user',
                 }
             ]
         })
@@ -21,7 +21,7 @@ class BalanceCommand extends Command {
     async exec(message, args) {
 
 // Define member as first mentioned member or message author, define gold, and balance for member
-        let member = message.mentions.users.first() || message.author;
+        let member = args.user || message.author;
 
 // If the member doesn't have any dummicoins, set defaults
         if (!currency[message.author.id]){

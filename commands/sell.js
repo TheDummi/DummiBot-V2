@@ -6,7 +6,7 @@ class SellCommand extends Command {
     constructor() {
         super('sell', {
             aliases: ['sell'],
-            category: 'actions',
+            category: 'economy',
             description: 'sell golden Dummicoins',
             ownerOnly: false,
 			channel: 'guild',
