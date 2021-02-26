@@ -61,6 +61,7 @@ const randomImages = [
     "https://media1.tenor.com/images/e691e2cff6c4026b54e624e08dbc2261/tenor.gif?itemid=19687211",
 
 ]
+const fs = require('fs')
 const xp = require('../xp.json')
 const randomFooters = [ 
     "Dummi was born on the 13th of may \n2005 and died on 19th of august 2019.",

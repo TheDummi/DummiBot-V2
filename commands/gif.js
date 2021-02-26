@@ -7,12 +7,12 @@ const google = new Scraper({
     },
 });
 
-class ImageCommand extends Command {
+class GifCommand extends Command {
     constructor() {
-        super('image', {
-            aliases: ['image'],
+        super('gif', {
+            aliases: ['gif'],
             category: 'utility',
-            description: 'Get an image on google by your wish.',
+            description: 'Get a gif of your wish.',
             args: [
             {
                 id: 'message',
@@ -29,7 +29,7 @@ class ImageCommand extends Command {
     async exec(message, args) {
         const random = Math.floor(Math.random() * Math.floor(50)) + 1
         const image = args.message;
-        const results = await google.scrape(image, 50);
+        const results = await google.scrape(image + " gif", 50);
         try {
             if (random == 0) {
                 let embed = new Discord.MessageEmbed()
@@ -438,4 +438,4 @@ class ImageCommand extends Command {
     }
 }
 
-module.exports = ImageCommand;
+module.exports = GifCommand;
