@@ -19,19 +19,23 @@ class LevelCommand extends Command {
         let member = message.mentions.users.first() || message.author
         if (!xp[member.id]) {
             xp[member.id] = {
-                    xp: 0,
-                    level: 0,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
+                xp: 0,
+                level: 0,
+                respect: 0,
+                respectLevel: 1,
+                prestige: 0,
                 
             }
         };
+
+        // Sorts the xp list by amount of xp
+        let ranks = xp.sort((a,b) => a.xp - b.xp)
+
         let curXp = xp[member.id].xp;
         let level = xp[member.id].level;
         let respect = xp[member.id].respect;
         let respectLevel = xp[member.id].respectLevel;
-        let rank = [xp].sort().reverse().indexOf(xp[message.author.id].xp);
+        let rank = ranks.indexOf(ranks[member.id]);
         let reqXp = level * 1000 * 2;
         let reqRespect = respectLevel * 500
         let embed = new Discord.MessageEmbed()
