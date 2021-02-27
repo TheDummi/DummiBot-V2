@@ -16,9 +16,9 @@ class SetChannelCommand extends Command {
             args: [
                 {
                     id: 'option',
-                    type: ['level','report', 'warn', 'moderation'],
+                    type: ['level','report', 'warn', 'moderation', 'welcome', 'leave'],
                     prompt: {
-                        start: 'What would you like to set?',
+                        start: 'What would you like to set?\n`level`\n`report`\n`warn`\n`moderation`\n`welcome`\n`leave`',
                         retry: 'not an option'
                     }
                 },
@@ -42,6 +42,7 @@ class SetChannelCommand extends Command {
     async exec(message, args) {
         let channel = args.channel.id;
         let option = args.option;
+        console.log("🚀 ~ file: setChannel.js ~ line 45 ~ SetChannelCommand ~ exec ~ option", option)
         
         if (!channels[message.guild.id]) 
                 channels[message.guild.id] = {
@@ -49,17 +50,23 @@ class SetChannelCommand extends Command {
                     report: null,
                     warn: null,
                     moderation: null,
+                    welcome: null,
+                    leave: null,
             }
         let level = channels[message.guild.id].level;
         let report = channels[message.guild.id].report;
         let warn = channels[message.guild.id].warn;
         let moderation = channels[message.guild.id].moderation;
+        let welcome = channels[message.guild.id].welcome;
+        let leave = channels[message.guild.id].leave;
         if (option == 'level') {
             channels[message.guild.id] = {
                 level: channel,
                 report: report,
                 warn: warn,
                 moderation: moderation,
+                welcome: welcome,
+                leave: leave,
             }
         }
         if (option == 'report') {
@@ -68,6 +75,8 @@ class SetChannelCommand extends Command {
                 report: channel,
                 warn: warn,
                 moderation: moderation,
+                welcome: welcome,
+                leave: leave,
             }
         }
         if (option == 'warn') {
@@ -76,6 +85,8 @@ class SetChannelCommand extends Command {
                     report: report,
                     warn: channel,
                     moderation: moderation,
+                    welcome: welcome,
+                    leave: leave,
             }
         }
         if (option == 'moderation') {
@@ -84,8 +95,30 @@ class SetChannelCommand extends Command {
                     report: report,
                     warn: warn,
                     moderation: channel,
+                    welcome: welcome,
+                    leave: leave,
             }
         }
+        if (option == 'welcome') {
+            channels[message.guild.id] = {
+                level: level,
+                report: report,
+                warn: warn,
+                moderation: moderation,
+                welcome: channel,
+                leave: leave,
+        }
+        }
+        if (option == 'leave') {
+            channels[message.guild.id] = {
+                level: level,
+                report: report,
+                warn: warn,
+                moderation: moderation,
+                welcome: welcome,
+                leave: channel,
+        }
+    }
             fs.writeFile("serverData.json", JSON.stringify(channels), (err) => {
                 if (err) console.log(err)
             })
