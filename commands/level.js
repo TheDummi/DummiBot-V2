@@ -1,4 +1,3 @@
-
 const fs = require('fs')
 const Discord = require('discord.js')
 const { Command } = require('discord-akairo')
@@ -29,15 +28,16 @@ class LevelCommand extends Command {
         };
 
         // Sorts the xp list by amount of xp
-        let ranks = xp.sort((a,b) => a.xp - b.xp)
 
+        let ranks = Object.values(xp).sort((a,b) => a.xp - b.xp)
+        
         let curXp = xp[member.id].xp;
         let level = xp[member.id].level;
         let respect = xp[member.id].respect;
         let respectLevel = xp[member.id].respectLevel;
         let rank = ranks.indexOf(ranks[member.id]);
         let reqXp = level * 1000 * 2;
-        let reqRespect = respectLevel * 500
+        let reqRespect = respectLevel * 100
         let embed = new Discord.MessageEmbed()
         .setDescription(`<@${member.id}> level progress`)
         .addField('level', `\`\`\`glsl\n${level}\`\`\``, true)

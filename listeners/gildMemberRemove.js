@@ -4,9 +4,9 @@ const randColor =  require('../funcs.js')
 const channels = require('../serverData.json');
 class GuildMemberRemoveListener extends Listener {
     constructor() {
-        super('GuildMemberRemove', {
+        super('guildmemberremove', {
             emitter: 'client',
-            event: 'GuildMemberRemove'
+            event: 'guildMemberRemove'
         });
     }
     
@@ -15,9 +15,8 @@ async exec(member) {
     channel = this.client.channels.cache.get(channel)
     let embed = new Discord.MessageEmbed()
 	    .setTitle(`${member.user.username} Left!`)
-	    .addField('Account age', member.user.createdAt.toDateString(),true)
         .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
-	    .setFooter(`You're now left with ${member.guild.members.cache.size - 1} members.`)
+	    .setFooter(`You're now left with ${member.guild.members.cache.size} members.`)
 	    .setColor(0xaa00cc)
         try {
             await channel.send(embed)
