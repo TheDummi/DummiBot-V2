@@ -23,24 +23,24 @@ class LevelCommand extends Command {
                 respect: 0,
                 respectLevel: 1,
                 prestige: 0,
-                
+
             }
         };
 
         // Sorts the xp list by amount of xp
 
-        let ranks = Object.values(xp).sort((a,b) => a.xp - b.xp)
+        let ranks = Object.entries(xp).sort((a,b) => { return(Object.entries(a[1])[1] - Object.entries(a[1])[1]) });
         
         let curXp = xp[member.id].xp;
         let level = xp[member.id].level;
         let respect = xp[member.id].respect;
         let respectLevel = xp[member.id].respectLevel;
-        let rank = ranks.indexOf(ranks[member.id]);
+        let rank = ranks.indexOf([member.id, curXp]);
         let reqXp = level * 1000 * 2;
         let reqRespect = respectLevel * 100
         let embed = new Discord.MessageEmbed()
         .setDescription(`<@${member.id}> level progress`)
-        .addField('level', `\`\`\`glsl\n${level}\`\`\``, true)
+        .addField('Level', `\`\`\`glsl\n${level}\`\`\``, true)
         .addField('XP', `\`\`\`glsl\n${curXp}|${reqXp}\`\`\``, true)
         .addField('Next level', `\`\`\`glsl\n${level + 1}\`\`\``, true)
         .addField('Respect level', `\`\`\`glsl\n${respectLevel}\`\`\``, true)
