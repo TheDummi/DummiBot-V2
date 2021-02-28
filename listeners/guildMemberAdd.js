@@ -18,6 +18,7 @@ async exec(member) {
         .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 	    .setFooter(`This is the ${member.guild.members.cache.size} member!`)
 	    .setColor(0xaa00cc)
+        .setTimestamp()
         try {
             let channel = channels[member.guild.id].welcome;
             channel = this.client.channels.cache.get(channel)
