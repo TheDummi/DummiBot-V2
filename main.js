@@ -4,13 +4,9 @@ const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler, setEmit
 class MyClient extends AkairoClient {
     constructor() {
         super({
-<<<<<<< HEAD
             ownerID: ['482513687417061376', '487443883127472129', '511655498676699136'],
-        }, 
+        },
         {
-=======
-            ownerID: ['482513687417061376', '487443883127472129', '511655498676699136'],        }, {
->>>>>>> 0aa75b551da5b18b1ef04c46e1f22f2be3d8db21
             disableMentions: 'everyone'
         });
         this.commandHandler = new CommandHandler(this, {

@@ -10,7 +10,7 @@ class WorkCommand extends Command {
         super('work', {
             aliases: ['work'],
             category: 'economy',
-            description: 'Work for dummicoins',
+            description: 'Work for coins',
             cooldown: 3600000,
         })
     }
@@ -26,10 +26,8 @@ class WorkCommand extends Command {
 
         if (!coins[message.author.id]) {
             coins[message.author.id] = {
-                Dimboins: 0,
-                silver: 0,
-                Gold: 0,
-                diamonds: 0,
+                coins: 0,
+                bank: 0
             }
         }
 
@@ -39,16 +37,14 @@ class WorkCommand extends Command {
             return await message.channel.send('You need to claim 1 daily before you can start working')
         }
         coins[message.author.id] = {
-            Dimboins: coins[message.author.id].Dimboins + parseInt(work + hour),
-            silver: coins[message.author.id].silver,
-            Gold: coins[message.author.id].Gold,
-            diamond: coins[message.author.id].diamond
+            coins: coins[message.author.id].coins + parseInt(work + hour),
+            bank: coins[message.author.id].bank
         }
         data[message.author.id] = {
             work: data[message.author.id].work,
             day: data[message.author.id].day + 1
         }
-        await message.util.send(`Your ${data[message.author.id].work}days of work has been rewarded in ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ${hour}`)
+        await message.util.send(`Your ${data[message.author.id].work} days of work has been rewarded in ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ${hour}`)
         if (!xp[message.author.id]) {
             xp[message.author.id] = {
                 xp: 0,

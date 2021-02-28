@@ -18,10 +18,8 @@ class WeeklyCommand extends Command {
             
             if (!coins[message.author.id]) {
                 coins[message.author.id] = {
-                    Dimboins: 0,
-                    silver: 0,
-                    Gold: 0,
-                    diamond: 0
+                    coins: 0,
+                    bank: 0
                 }
             }
             
@@ -31,19 +29,20 @@ class WeeklyCommand extends Command {
                     level: 1,
                     respect: 0,
                     respectLevel: 0,
+                    prestige: 0
                 }
             }
                 let UserLevel = level[message.author.id].level;
-                let UserCoins = coins[message.author.id].Dimboins;
+                let userCoins = coins[message.author.id].coins;
+                let userBank = coins[message.author.id].bank;
+
                 let Weekly = 100000 * UserLevel;
-                let coin = UserCoins + Weekly;
+                let coin = userCoins + Weekly;
                 coins[message.author.id] = {
-                    Dimboins: UserCoins + parseInt(Weekly),
-                    silver: coins[message.author.id].silver,
-                    Gold: coins[message.author.id].Gold,
-                    diamond: coins[message.author.id].diamond
+                    coins: userCoins + parseInt(Weekly),
+                    bank: userBank
                 }
-                await message.util.send(`You received ${Weekly}, you now have ${coin}`)
+                await message.util.send(`You received ${Weekly}, you now have ${coin} in your wallet!`)
             fs.writeFile("currency.json", JSON.stringify(coins), (err) => {
                 if(err) console.log(err)
             });

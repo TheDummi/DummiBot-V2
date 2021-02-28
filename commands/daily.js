@@ -28,10 +28,8 @@ class DailyCommand extends Command {
 
             if (!coins[message.author.id]) {
                 coins[message.author.id] = {
-                    Dimboins: 0,
-                    silver: 0,
-                    Gold: 0,
-                    diamond: 0
+                    coins: 0,
+                    bank: 0
                 }
             }
             
@@ -45,29 +43,19 @@ class DailyCommand extends Command {
                 }
             }
                 let UserLevel = level[message.author.id].level;
-                let UserCoins = coins[message.author.id].Dimboins;
+                let userCoins = coins[message.author.id].coins;
+                let userBank = coins[message.author.id].bank;
                 let daily = 1000 * UserLevel;
-                let coin = UserCoins + daily;
+                let coin = userCoins + daily;
                 data[message.author.id] = {
                     work: data[message.author.id].work + 1,
                     day: data[message.author.id].day
                 }
                 coins[message.author.id] = {
-                    Dimboins: UserCoins + parseInt(daily),
-                    silver: coins[message.author.id].silver,
-                    Gold: coins[message.author.id].Gold,
-                    diamond: coins[message.author.id].diamond
+                    coins: userCoins + parseInt(daily),
+                    bank: userBank
                 }
-                await message.util.send(`You received ${daily}, you now have ${coin}`)
-                if (!level[message.author.id]) {
-                    level[message.author.id] = {
-                        xp: 0,
-                        level: 1,
-                        respect: 0,
-                        respectLevel: 1,
-                        prestige: 0,
-                    };
-                }
+                await message.util.send(`You received ${daily}, you now have ${coin} in your wallet!`)
                 let userXp = xp[message.author.id].xp;
                 let userLevel = xp[message.author.id].level;
                 let userRespect = xp[message.author.id].respect;

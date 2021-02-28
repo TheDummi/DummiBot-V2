@@ -108,22 +108,18 @@ class MessageListener extends Listener {
 // Set reasonable defaults for coins
     if (!Dimboins[message.author.id]) {
         Dimboins[message.author.id] = {
-            Dimboins: 0,
-            silver: 0,
-            Gold: 0,
-            diamond: 0
+            coins: 0,
+            bank: 0
         };
     }
 
 // Defined variables
-    let userCoins = Dimboins[message.author.id].Dimboins;
-    let userGold = Dimboins[message.author.id].Gold;
+    let userCoins = Dimboins[message.author.id].coins;
+    let userBank = Dimboins[message.author.id].bank;
     let userXp = xp[message.author.id].xp;
     let userLevel = xp[message.author.id].level;
     let userRespect = xp[message.author.id].respect;
     let userLevelRespect = xp[message.author.id].respectLevel;
-    let userDiamond = Dimboins[message.author.id].diamond;
-    let userSilver = Dimboins[message.author.id].silver;
     let rank = [xp.level].sort().reverse().indexOf(userXp);
     if (!settings) {
         settings = {
@@ -133,11 +129,10 @@ class MessageListener extends Listener {
     }
     let xpRate = settings.xp;
     let coinsRate = settings.coins;
-
+    
 // on message, Dummicoins per message
     let coinsAdd = Math.floor(Math.random() * Math.random(coinsRate)) + 1;
     userCoins = userCoins + coinsAdd;
-    console.log(`${message.author.username}, has ${userCoins} coins, ${userSilver} silver, ${userGold} gold, ${userDiamond} diamonds, ${userXp} xp and is level ${userLevel}. Respect: ${userRespect}, level: ${userLevelRespect}`)
 // On message, level xp
     let xpAdd = Math.floor(Math.random() * xpRate) + 15;
     userXp = userXp + xpAdd;
@@ -183,7 +178,7 @@ class MessageListener extends Listener {
 // On level up, send a message to the current channel, delete in 5 seconds
     let lvlUp = new Discord.MessageEmbed()
         .setTitle('Level up!🎉')
-        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} Dummicoins!`)
+        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins!`)
         .setColor(0xaa00cc)
         .setThumbnail(message.author.displayAvatarURL())
     try {
@@ -207,8 +202,8 @@ class MessageListener extends Listener {
         .addField(`Level`, userLevel, true)
         .addField('XP', userXp, true)
         .addField('Server', message.guild.name, true)
-        .addField(`Dummicoins`, userCoins + " 💰")
-        .addField('Golden dummicoins', userGold + " :coin:", true)
+        .addField(`Coins`, userCoins)
+        .addField('Bank', userBank, true)
         .setColor(0xaa00cc)
         .setFooter(`${message.author.username}`)
         .setThumbnail(message.author.displayAvatarURL())
@@ -227,10 +222,8 @@ class MessageListener extends Listener {
         if (err) console.log(err)
     });
     Dimboins[message.author.id] = {
-        Dimboins: userCoins,
-        silver: userSilver,
-        Gold: userGold,
-        diamond: userDiamond
+        coins: userCoins,
+        bank: userBank
     }
 // Update currency.json with dummicoins and golden dummicoins
     fs.writeFile('currency.json', JSON.stringify(Dimboins), (err) => {

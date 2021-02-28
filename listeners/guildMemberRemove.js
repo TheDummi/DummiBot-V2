@@ -11,18 +11,18 @@ class GuildMemberRemoveListener extends Listener {
     }
     
 async exec(member) {
-    let channel = channels[member.guild.id].leave
-    channel = this.client.channels.cache.get(channel)
+    
     let embed = new Discord.MessageEmbed()
 	    .setTitle(`${member.user.username} Left!`)
         .setThumbnail(member.user.displayAvatarURL({ dynamic: true }))
 	    .setFooter(`You're now left with ${member.guild.members.cache.size} members.`)
 	    .setColor(0xaa00cc)
         try {
+            let channel = channels[member.guild.id].leave
+            channel = this.client.channels.cache.get(channel)
             await channel.send(embed)
         }
-        catch(e) {
-            console.log(e)
+        catch {
             return;
         }
     }

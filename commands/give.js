@@ -14,13 +14,6 @@ class GiveCommand extends Command {
 			channel: 'guild',
             args: [
                 {
-                    id: 'choice',
-                    type: ['coins', 'silver', 'gold', 'diamond'],
-                    prompt: {
-                        start: 'What would you like to give? coins, silver, gold, or diamond?'
-                    }
-                },
-                {
                     id: 'user',
                     type: 'user',
                     prompt: {
@@ -56,15 +49,15 @@ class GiveCommand extends Command {
             
             if(!coins[member]){
                 coins[member] ={
-                    Dimboins: 0,
+                    coins: 0,
                     silver: 0,
                     Gold: 0,
                     diamond: 0
                 };
             }
 
-            let memberCoins = coins[member].Dimboins;
-            let userCoins = coins[message.author.id].Dimboins;
+            let memberCoins = coins[member].coins;
+            let userCoins = coins[message.author.id].coins;
 
             if(userCoins < args.message) {
                 let NotEnoughEmbed = new Discord.MessageEmbed()
@@ -78,18 +71,14 @@ class GiveCommand extends Command {
             }
 
             coins[message.author.id] = {
-                Dimboins: userCoins - parseInt(args.message),
-                silver: coins[message.author.id].silver,
-                Gold: coins[message.author.id].Gold,
-                diamond: coins[message.author.id].diamond
+                coins: userCoins - parseInt(args.message),
+                bank: coins[message.author.id].bank
             }
             
 
             coins[member] = {
-                Dimboins: memberCoins + parseInt(args.message),
-                silver: coins[member].silver,
-                Gold: coins[member].Gold,
-                diamond: coins[member].diamond
+                coins: memberCoins + parseInt(args.message),
+                bank: coins[member].bank
             }
             let WithDrawEmbed = new Discord.MessageEmbed()
             .setTitle('Withdraw receipt')

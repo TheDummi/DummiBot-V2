@@ -11,8 +11,7 @@ class GuildMemberAddListener extends Listener {
     }
     
 async exec(member) {
-    let channel = channels[member.guild.id].welcome
-    channel = this.client.channels.cache.get(channel)
+    
     let embed = new Discord.MessageEmbed()
 	    .setTitle(`Welcome ${member.user.username}!`)
 	    .addField('Account age', member.user.createdAt.toDateString(),true)
@@ -20,10 +19,11 @@ async exec(member) {
 	    .setFooter(`This is the ${member.guild.members.cache.size} member!`)
 	    .setColor(0xaa00cc)
         try {
+            let channel = channels[member.guild.id].welcome;
+            channel = this.client.channels.cache.get(channel)
             await channel.send(embed)
         }
-        catch(e) {
-            console.log(e)
+        catch {
             return;
         }
     }

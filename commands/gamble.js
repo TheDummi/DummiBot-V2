@@ -9,6 +9,8 @@ class GambleCommand extends Command {
             aliases: ['gamble'],
             category: 'economy',
             description: 'Gamble your coins',
+            cooldown: 3600000,
+            ratelimit: 30,
             ownerOnly: false,
 			channel: 'guild',
             args: [
@@ -37,9 +39,10 @@ class GambleCommand extends Command {
         }
 
             let member = message.author;
-            let memberCoins = coins[member.id].Dimboins;
+            let memberCoins = coins[member.id].coins;
+            let memberBank = coins[member.id].bank
             let success = Math.floor(Math.random() * Math.floor(6));
-            console.log(success)
+
             if(memberCoins < args.message) {
                 let NotEnoughEmbed = new Discord.MessageEmbed()
                 .setTitle('Not enough coins to give!')
@@ -54,11 +57,9 @@ class GambleCommand extends Command {
             if (success === 0) {
             //fail - all
             coins[member.id] = {
-                Dimboins: memberCoins - parseInt(args.message),
-                silver: coins[member.id].silver,
-                Gold: coins[member.id].Gold,
-                diamond: coins[member.id].diamond
-                }
+                coins: memberCoins - parseInt(args.message),
+                bank: memberBank
+            }
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {
                     xp: 0,
@@ -86,10 +87,8 @@ class GambleCommand extends Command {
             if (success === 1) {
             //fail - 1/2
             coins[member.id] = {
-                Dimboins: memberCoins - parseInt(Math.round(args.message / 2)),
-                silver: coins[member.id].silver,
-                Gold: coins[member.id].Gold,
-                diamond: coins[member.id].diamond
+                coins: memberCoins - parseInt(Math.round(args.message / 2)),
+                bank: memberBank
                 }
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {
@@ -144,10 +143,8 @@ class GambleCommand extends Command {
             if (success === 3) {
             //success double gamble
             coins[member.id] = {
-                Dimboins: memberCoins + parseInt(args.message),
-                silver: coins[member.id].silver,
-                Gold: coins[member.id].Gold,
-                diamond: coins[member.id].diamond
+                coins: memberCoins + parseInt(args.message),
+                bank: memberBank
                 }
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {
@@ -177,10 +174,8 @@ class GambleCommand extends Command {
             if (success === 4) {
             //success triple gamble
             coins[member.id] = {
-                Dimboins: memberCoins + parseInt(args.message * 2),
-                silver: coins[member.id].silver,
-                Gold: coins[member.id].Gold,
-                diamond: coins[member.id].diamond
+                coins: memberCoins + parseInt(args.message * 2),
+                bank: memberBank
                 }
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {
@@ -210,10 +205,8 @@ class GambleCommand extends Command {
             if (success === 5) {
             //success quadruple gamble
             coins[member.id] = {
-                Dimboins: memberCoins + parseInt(args.message * 3),
-                silver: coins[member.id].silver,
-                Gold: coins[member.id].Gold,
-                diamond: coins[member.id].diamond
+                coins: memberCoins + parseInt(args.message * 3),
+                bank: memberBank
                 }
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {

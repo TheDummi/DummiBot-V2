@@ -39,17 +39,12 @@ class RobCommand extends Command {
                 prestige: 0,
             };
         }
-        let argsCoins = coins[member.id].Dimboins;
-        let userCoins = coins[message.author.id].Dimboins;
-        let userDiamond = coins[message.author.id].diamond;
-        let userSilver = coins[message.author.id].silver;
-        let argsSilver = coins[member.id].silver;
-        let argsDiamond = coins[member.id].diamond;
-        let argsGolds = coins[member.id].Gold;
-        let userGolds = coins[message.author.id].Gold;
+        let argsCoins = coins[member.id].coins;
+        let argsBank = coins[member.id].bank;
+        let userCoins = coins[message.author.id].coins;
+        let userBank = coins[message.author.id].bank;
 
         const random = Math.floor(Math.random() * argsCoins);
-        console.log("🚀 ~ file: rob.js ~ line 38 ~ RobCommand ~ exec ~ random", random)
         const failure = [
             'You got caught sneaking!',
             'You were found!',
@@ -71,10 +66,8 @@ class RobCommand extends Command {
 // If the mentioned user does not have any coins, set amount, and send a message to current channel
         if(!coins[member.id]) {
             coins[member.id] = {
-                Dimboins: 0,
-                silver: 0,
-                Gold: 0,
-                diamond: 0
+                coins: 0,
+                bank: 0,
             }
         return await message.util.send(`${member} does not have any dummicoins!`)
         }
@@ -82,17 +75,13 @@ class RobCommand extends Command {
 // If successRate is 0 you steal a certain amount
         if (successRate === 0) {
             coins[message.author.id] = {
-                Dimboins: userCoins + parseInt(random),
-                silver: userSilver,
-                Gold: userGolds,
-                diamond: userDiamond
+                coins: userCoins + parseInt(random),
+                bank: userBank
             }
 
             coins[args.user.id] = {
-                Dimboins: argsCoins - parseInt(random),
-                silver: argsSilver,
-                Gold: argsGolds,
-                diamond: argsDiamond
+                coins: argsCoins - parseInt(random),
+                bank: argsBank
             }
             let WinEmbed = new Discord.MessageEmbed()
                 .setColor(0xaa00cc)
