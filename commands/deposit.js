@@ -49,7 +49,8 @@ class DepositCommand extends Command {
         let userBank = coins[message.author.id].bank;
         let userLevel = xp[message.author.id].level;
         let work = data[message.author.id].work;
-        let bankLimit = userLevel * 10000 * work
+        let day = data[message.author.id].day;
+        let bankLimit = userLevel * 10000 * day
 
 // If the message author does have enough, subtract userCoins, add userGold
         
@@ -63,8 +64,11 @@ class DepositCommand extends Command {
             coins: userCoins - parseInt(args.message),
             bank: userBank + parseInt(args.message),
         }
-        message.util.send(`You deposited ${args.message} coins!`)
-// Write changes to ../currency.json
+        let embed = new Discord.MessageEmbed()
+        .setAuthor(`${message.author.username} you deposited ${args.message}, you now have ${userCoins} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+        .setColor(0xaa00cc)
+        message.util.send(embed)
+        // Write changes to ../currency.json
         fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
             if(err) console.log(err)
         });

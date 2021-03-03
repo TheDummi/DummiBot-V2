@@ -32,5 +32,5 @@ class CommandBlockedListener extends Listener {
         if (reason == "guild") return message.channel.send(`<@${message.author.id}> you can only use \`${command.id}\` in guilds.`)
     }
 };
-
+console.log('[DummiBot] Command blocked handler ready!')
 module.exports = CommandBlockedListener;

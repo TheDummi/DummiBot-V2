@@ -37,7 +37,7 @@ class BlushCommand extends Command {
 // If there is no mentioned user
 		if (member == undefined) {
 			let noEmbed = new Discord.MessageEmbed()
-				.setAuthor(`${user.username} blushes...`, user.displayAvatarURL())
+				.setAuthor(`${user.username} blushes...`, user.displayAvatarURL({ dynamic: true }))
 				.setImage(randomImage())
 				.setColor(randColor())
 			return await message.util.send(noEmbed);
@@ -46,7 +46,7 @@ class BlushCommand extends Command {
 // If the mentioned user is the bot
 		if (member.id == client.id) {
 			let clientEmbed = new Discord.MessageEmbed()
-				.setAuthor(`${user.username}, why at me?`, user.displayAvatarURL())
+				.setAuthor(`${user.username}, why at me?`, user.displayAvatarURL({ dynamic: true }))
 				.setColor(purple)
 			return await message.util.send(clientEmbed)
 		}
@@ -54,7 +54,7 @@ class BlushCommand extends Command {
 // If the mentioned user is the message author
 		if (member.id == user.id) {
 			let userEmbed = new Discord.MessageEmbed()
-				.setAuthor(`${user.username}, self appreciation is very important!`, user.displayAvatarURL())
+				.setAuthor(`${user.username}, self appreciation is very important!`, user.displayAvatarURL({ dynamic: true }))
 				.setColor(purple)
 			return await message.util.send(userEmbed)
 		}
@@ -62,7 +62,7 @@ class BlushCommand extends Command {
 // In all other cases
 		else {
 			let yesEmbed = new Discord.MessageEmbed()
-				.setAuthor(`${user.username} blushes at ${member.username}!`, user.displayAvatarURL())
+				.setAuthor(`${user.username} blushes at ${member.username}!`, user.displayAvatarURL({ dynamic: true }))
 				.setImage(randomImage())
 				.setColor(randColor())
 			return await message.util.send(yesEmbed)

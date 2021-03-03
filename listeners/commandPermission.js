@@ -34,5 +34,5 @@ class CommandPermissionsListener extends Listener {
         else return;
     }
 };
-
+console.log('[DummiBot] Command permission handler ready!')
 module.exports = CommandPermissionsListener;

@@ -28,18 +28,20 @@ class BiteCommand extends Command {
             description: 'Bite someone',
             ownerOnly: false,
 			channel: 'guild',
-			args: [{
-                id: 'user',
-                type: 'user',
-                prompt: {
-                    start: 'Who would you like to bite?',
-                    retry: 'Invalid user. Who would you like to bite?',
-                    limit: 3,
-                    ended: 'Too many retries!',
-                    timeout: 'Ran out of time!',
-                    cancel: 'Cancelled command!'
+			args: [
+                {
+                    id: 'user',
+                    type: 'user',
+                    prompt: {
+                        start: 'Who would you like to bite?',
+                        retry: 'Invalid user. Who would you like to bite?',
+                        limit: 3,
+                        ended: 'Too many retries!',
+                        timeout: 'Ran out of time!',
+                        cancel: 'Cancelled command!'
+                    }
                 }
-            }]
+            ]
         });
     }
 
@@ -54,21 +56,21 @@ class BiteCommand extends Command {
 // If the mentioned user is the bot
 	if (member.id == client.id) {
 		const BotEmbed = new Discord.MessageEmbed()
-			.setAuthor(`${user.username}, really?`, user.displayAvatarURL())
+			.setAuthor(`${user.username}, really?`, user.displayAvatarURL({ dynamic: true }))
 			.setColor(purple)
 		await message.util.send(BotEmbed)
 
 // If the mentioned user is the message author
 	} else if (member.id == user.id) {
 		const SelfEmbed = new Discord.MessageEmbed()
-			.setAuthor(`${user.username}, why?`, user.displayAvatarURL())
+			.setAuthor(`${user.username}, why?`, user.displayAvatarURL({ dynamic: true }))
 			.setColor(purple)
 	await message.util.send(SelfEmbed)
 
 // In all other cases
     } else {
 		const MentionEmbed = new Discord.MessageEmbed()
-			.setDescription(`${user.username} bit ${member.username}`, message.author.displayAvatarURL())
+			.setDescription(`${user.username} bit ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
 			.setImage(randomImage())
 			.setColor(randColor())
 		await message.util.send(MentionEmbed)

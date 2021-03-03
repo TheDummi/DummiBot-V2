@@ -14,7 +14,7 @@ class DocsCommand extends Command {
 				{
 					id: 'class',
 					type: 'string',
-					match: 'content'
+					match: 'rest'
 				}
 			]
 		})

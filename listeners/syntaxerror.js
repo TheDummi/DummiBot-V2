@@ -42,5 +42,5 @@ class SyntaxErrorListener extends Listener {
     }
 }
 
-console.log('Syntax error handler ready!')
+console.log('[DummiBot] Syntax error handler ready!')
 module.exports = SyntaxErrorListener;

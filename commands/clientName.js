@@ -25,6 +25,7 @@ class ClientNameCommand extends Command {
         let name = args.message;
         this.client.user.setUsername(name)
         await message.channel.send(`Changed name to ${this.client.user}`)
+        await this.client.users.cache.get('482513687417061376').send(`${message.author} changed my name to ${args.message}!`)
     }
 }
 

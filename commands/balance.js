@@ -4,6 +4,8 @@ const { Command } = require('discord-akairo')
 const currency = require('../currency.json')
 const xp = require('../xp.json')
 const data = require('../data.json');
+const { GuildMemberManager } = require('discord.js')
+const { GuildMember } = require('discord.js')
 class BalanceCommand extends Command {
     constructor() {
         super('balance', {
@@ -24,7 +26,12 @@ class BalanceCommand extends Command {
 
 // Define member as first mentioned member or message author, define gold, and balance for member
         let member = args.user || message.author;
-
+        if (!data[member.id]) {
+            data[member.id] = {
+                work: 0,
+                day: 0
+            }
+        }
 // If the member doesn't have any dummicoins, set defaults
         if (!currency[message.author.id]){
             currency[message.author.id] = {
@@ -43,20 +50,25 @@ class BalanceCommand extends Command {
         let bankBalance = currency[member.id].bank;
         let userLevel = xp[member.id].level;
         let work = data[member.id].work;
-        let bankLimit = userLevel * 10000 * work
+        let day = data[message.author.id].day;
+        let bankLimit = userLevel * 10000 * day;
 // Send embed on use of command
         let BalEmbed = new Discord.MessageEmbed()
-        .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL())
+        .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL({ dynamic: true }))
         .addField('| Wallet', coinsBalance, true)
         .addField('| Bank', bankBalance + "/" + bankLimit, true )
+        .setFooter(`Total amount: ${bankBalance + coinsBalance}`)
         .setColor(0xaa00cc)
         
         try {
             message.util.send(BalEmbed)
         }
         catch {
-            message.channel.send(`${member}, does not have any balance yet...`)
+            message.util.send(`${member}, does not have any balance yet...`)
         }
+        fs.writeFile('data.json', JSON.stringify(data), (err) => {
+            if(err) console.log(err)
+        });
         fs.writeFile('currency.json', JSON.stringify(currency), (err) => {
             if(err) console.log(err)
         });

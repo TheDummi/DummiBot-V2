@@ -1,13 +1,14 @@
 const { Listener } = require('discord-akairo');
+const moment = require('moment');
 const Discord = require('discord.js');
 const fs = require('fs');
 const data = require('../data.json')
 const { getReactions} = require('../funcs.js');
-let xp = require('../xp.json');
-let Dimboins = require('../currency.json')
+const xp = require('../xp.json');
+const Dimboins = require('../currency.json')
 const channelID = require('../serverData.json');
 const settings = require('../developer.json');
-
+const customCooldown = new Set()
 class MessageListener extends Listener {
     constructor() {
         super('message', {
@@ -56,14 +57,6 @@ class MessageListener extends Listener {
 	if (message.content.startsWith('=>')) return;
 	message.react('\u2705')
 	message.react('\u274c')
-	return;
-    }
-//temp
-    if (this.client.channels.cache.get('798633664060719114') === message.channel) {
-	if (message.content.startsWith('=>')) return;
-	message.react('\u2705')
-	message.react('\u274c')
-	message.react('⏹️')
 	return;
     }
     if (this.client.channels.cache.get('812453291593957426') === message.channel) {
@@ -121,6 +114,9 @@ class MessageListener extends Listener {
     let userRespect = xp[message.author.id].respect;
     let userLevelRespect = xp[message.author.id].respectLevel;
     let rank = [xp.level].sort().reverse().indexOf(userXp);
+    let timestamp = Number(new Date());
+    const TimeMoment = () => moment(timestamp).format("H:mm");
+    console.log(`${TimeMoment()} | ${message.author.username}, xp: ${userXp}, coins: ${userCoins + userBank}`)
     if (!settings) {
         settings = {
             xp: 15,
@@ -135,8 +131,14 @@ class MessageListener extends Listener {
     userCoins = userCoins + coinsAdd;
 // On message, level xp
     let xpAdd = Math.floor(Math.random() * xpRate) + 15;
+    if (customCooldown.has(message.author.id)) return;
+    else {
     userXp = userXp + xpAdd;
-
+    customCooldown.add(message.author.id);
+        setTimeout(() => {
+            customCooldown.delete(message.author.id)
+        }, 10000);
+    }
 // On next level, level up
     let nextLvl = userLevel * 1000 * 2;
     let nextRespectLevel = userLevelRespect * 100;
@@ -205,8 +207,8 @@ class MessageListener extends Listener {
         .addField(`Coins`, userCoins)
         .addField('Bank', userBank, true)
         .setColor(0xaa00cc)
-        .setFooter(`${message.author.username}`)
-        .setThumbnail(message.author.displayAvatarURL())
+        .setFooter(`${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
+        .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
         .setTimestamp();
     await this.client.channels.cache.get('806243387740389406').send(globalLvlUp);
     }
@@ -229,9 +231,8 @@ class MessageListener extends Listener {
     fs.writeFile('currency.json', JSON.stringify(Dimboins), (err) => {
         if (err) console.log(err)
     });
-    };
-}
+    }
+};
 
-
-console.log('Message handler ready!');
+console.log('[DummiBot] Message handler ready!');
 module.exports = MessageListener;

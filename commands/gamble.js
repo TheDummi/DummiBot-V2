@@ -1,8 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
-const fs = require('fs')
-let coins = require('../currency.json')
-const xp = require('../xp.json')
+const fs = require('fs');
+let coins = require('../currency.json');
 class GambleCommand extends Command {
     constructor() {
         super('gamble', {
@@ -40,8 +39,8 @@ class GambleCommand extends Command {
 
             let member = message.author;
             let memberCoins = coins[member.id].coins;
-            let memberBank = coins[member.id].bank
-            let success = Math.floor(Math.random() * Math.floor(6));
+            let memberBank = coins[member.id].bank;
+            let success = Math.floor(Math.random() * Math.floor(18));
 
             if(memberCoins < args.message) {
                 let NotEnoughEmbed = new Discord.MessageEmbed()
@@ -60,182 +59,136 @@ class GambleCommand extends Command {
                 coins: memberCoins - parseInt(args.message),
                 bank: memberBank
             }
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
-            }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 5) + 5;
-            userRespect = userRespect - xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
-            return await message.util.send(`You lost all of your bet, ${args.message}`)
+            return await message.util.send(`You lost all of your bet, -${args.message}`)
             }
             if (success === 1) {
+                //fail - all
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(args.message),
+                    bank: memberBank
+                }
+                return await message.util.send(`You lost all of your bet, -${args.message}`)
+            }
+            if (success === 2) {
+                //fail - all
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(args.message),
+                    bank: memberBank
+                }
+                return await message.util.send(`You lost all of your bet, -${args.message}`)
+            }
+            if (success === 3) {
+                //fail - all
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(args.message),
+                    bank: memberBank
+                }
+                return await message.util.send(`You lost all of your bet, -${args.message}`)
+            }
+            if (success === 4) {
             //fail - 1/2
             coins[member.id] = {
                 coins: memberCoins - parseInt(Math.round(args.message / 2)),
                 bank: memberBank
                 }
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
+            return await message.util.send(`You lost half of your bet, -${Math.round(args.message / 2)}`)
             }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 5) + 5;
-            userRespect = userRespect - xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
-            return await message.util.send(`You lost half of your bet, ${Math.round(args.message / 2)}`)
-            }
+            if (success === 5) {
+                //fail - 1/2
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(Math.round(args.message / 2)),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You lost half of your bet, -${Math.round(args.message / 2)}`)
+                }
+            if (success === 6) {
+                //fail - 1/2
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(Math.round(args.message / 2)),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You lost half of your bet, -${Math.round(args.message / 2)}`)
+                }
+            if (success === 7) {
+                //fail - 1/2
+                coins[member.id] = {
+                    coins: memberCoins - parseInt(Math.round(args.message / 2)),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You lost half of your bet, -${Math.round(args.message / 2)}`)
+                }
             
-            if (success === 2) {
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
-            }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 15) + 5;
-            userRespect = userRespect + xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
+            if (success === 8) {
             return await message.util.send(`You won your betting back! ${args.message}`)
             }
-            if (success === 3) {
+            if (success === 9) {
+                return await message.util.send(`You won your betting back! ${args.message}`)
+                }
+            if (success === 10) {
             //success double gamble
             coins[member.id] = {
                 coins: memberCoins + parseInt(args.message),
                 bank: memberBank
                 }
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
+            return await message.util.send(`You won 2x of your betting! +${args.message * 2}`)
             }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 15) + 5;
-            userRespect = userRespect + xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
-            return await message.util.send(`You won double of your betting! ${args.message * 2}`)
-            }
+            if (success === 11) {
+                //success double gamble
+                coins[member.id] = {
+                    coins: memberCoins + parseInt(args.message),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You won 2x of your betting! +${args.message * 2}`)
+                }
             
-            if (success === 4) {
+            if (success === 12) {
             //success triple gamble
             coins[member.id] = {
                 coins: memberCoins + parseInt(args.message * 2),
                 bank: memberBank
                 }
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
+            return await message.util.send(`You won 3x your betting, +${args.message * 3}`)
             }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 15) + 5;
-            userRespect = userRespect + xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
-            return await message.util.send(`You won triple your betting, ${args.message * 3}`)
-            }
-            
-            if (success === 5) {
+            if (success === 13) {
+                //success triple gamble
+                coins[member.id] = {
+                    coins: memberCoins + parseInt(args.message * 2),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You won 3x your betting, +${args.message * 3}`)
+                }
+            if (success === 14) {
             //success quadruple gamble
             coins[member.id] = {
                 coins: memberCoins + parseInt(args.message * 3),
                 bank: memberBank
                 }
-            if (!xp[message.author.id]) {
-                xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
-                    respect: 0,
-                    respectLevel: 1,
-                    prestige: 0,
-                };
+            return await message.util.send(`You won 4x your betting, +${args.message * 4}`)
             }
-            let userXp = xp[message.author.id].xp;
-            let userLevel = xp[message.author.id].level;
-            let userRespect = xp[message.author.id].respect;
-            let userLevelRespect = xp[message.author.id].respectLevel;
-            let xpAdd = Math.floor(Math.random() * 15) + 5;
-            userRespect = userRespect + xpAdd;
-            xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
-                respect: userRespect,
-                respectLevel: userLevelRespect,
-                prestige: 0,
-            }
-            
-            return await message.util.send(`You won quadruple your betting, ${args.message * 4}`)
-            }
-            fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
-                if (err) console.log(err)
-            })
+            if (success === 15) {
+                //success quadruple gamble
+                coins[member.id] = {
+                    coins: memberCoins + parseInt(args.message * 3),
+                    bank: memberBank
+                    }
+                return await message.util.send(`You won 4x your betting, +${args.message * 4}`)
+                }
+                if (success === 16) {
+                    //success quadruple gamble
+                    coins[member.id] = {
+                        coins: memberCoins + parseInt(args.message * 4),
+                        bank: memberBank
+                        }
+                    return await message.util.send(`You won 5x your betting, +${args.message * 5}`)
+                }
+                if (success === 17) {
+                    //success quadruple gamble
+                    coins[member.id] = {
+                        coins: memberCoins + parseInt(args.message * 3),
+                        bank: memberBank
+                        }
+                    return await message.util.send(`You won 6x your betting, +${args.message * 6}`)
+                }
             fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
                 if(err) console.log(err)
             })

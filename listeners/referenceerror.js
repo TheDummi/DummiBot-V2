@@ -42,5 +42,5 @@ class ReferenceErrorListener extends Listener {
     }
 }
 
-console.log('Reference error handler ready!')
+console.log('[DummiBot] Reference error handler ready!')
 module.exports = ReferenceErrorListener;

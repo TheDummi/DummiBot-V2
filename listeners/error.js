@@ -46,5 +46,5 @@ class ErrorListener extends Listener {
     }
 }
 
-console.log('Command error handler ready!')
+console.log('[DummiBot] Command error handler ready!')
 module.exports = ErrorListener;

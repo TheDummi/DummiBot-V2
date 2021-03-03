@@ -26,5 +26,5 @@ class UnhandledRejectionListener extends Listener {
     }
 }
 
-console.log('UnhandledRejection handler ready!')
+console.log('[DummiBot] UnhandledRejection handler ready!')
 module.exports = UnhandledRejectionListener;

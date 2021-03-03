@@ -10,24 +10,38 @@ class AvatarCommand extends Command {
             channel: ['guild', 'dm'],
             args: [
                 {
+                    id: 'advanced',
+                    match: 'none',
+                    flag: 'server'
+                },
+                {
                     id: 'user',
                     type: 'user'
-                }
+                },
+                
             ]
         });
     }
 
     async exec(message, args) {
 
-// Define color, user and url
+// Define color, user
         let purple = 0xaa00cc;
         let user = args.user || message.author;
-        let url = user.displayAvatarURL({ dynamic: true });
-		let avatarEmbed = new Discord.MessageEmbed()
-			.setDescription(`**[${user.nickname || user.username}'s avatar](${url})**`)
+        if (args.advanced) {
+            let embed = new Discord.MessageEmbed()
+                .setDescription(`**[${message.guild.name} icon](${message.guild.iconURL({ dynamic: true})})**`)
+                .setColor(purple)
+                .setImage(message.guild.iconURL({ dynamic: true}))
+            message.util.send(embed)
+        }
+        else {
+        let avatarEmbed = new Discord.MessageEmbed()
+			.setDescription(`**[${user.nickname || user.username}'s avatar](${user.displayAvatarURL({ dynamic: true })})**`)
 			.setColor(purple)
 			.setImage(user.displayAvatarURL({ dynamic: true}))
 		await message.util.send(avatarEmbed);
+        }
     }
 };
 

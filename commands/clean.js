@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-
+const channels = require('../serverData.json');
 class CleanCommand extends Command {
 	constructor() {
 		super('clean', {
@@ -24,19 +24,10 @@ class CleanCommand extends Command {
 	}
 
 	async exec(message, args) {
-		let embed = new Discord.MessageEmbed()
-			.setTitle('Please specify an amount from 0-50 to delete.')
-			.setColor(0xaa00cc)
-		if (!args.message) return message.reply(embed)
-		.then(message => {
-			setTimeout(function() {
-				message.delete(embed)
-			}, 5000);
-		})
 		let embed1 = new Discord.MessageEmbed()
 			.setTitle('There is a maximum of 50 messages.')
 			.setColor(0xaa00cc)
-		if (Number(args.message) > 100) return message.reply(embed1)
+		if (Number(args.message) >= 50) return message.reply(embed1)
 		.then(message => {
 			setTimeout(function() {
 				message.delete(embed1)
@@ -56,12 +47,22 @@ class CleanCommand extends Command {
 				let embed3 = new Discord.MessageEmbed()
 					.setTitle(`${args.message} messages deleted`)
 					.setColor(0xaa00cc)
-				return message.reply(embed3)
+				message.reply(embed3)
 				.then(message => {
 					setTimeout(function() {
 						message.delete(embed3)
 					}, 5000);
 				})
+			let channel = channels[message.guild.id].moderation;
+			channel = this.client.channels.cache.get(channel);
+			let logEmbed = new Discord.MessageEmbed()
+			.setTitle('Moderation command used!')
+			.addField(`Name`, message.author, true)
+			.addField(`Command`, "clean", true)
+			.addField(`Command specifics`, `Cleaned ${args.message} messages in ${message.channel}.`)
+			.setTimestamp()
+			.setColor(0xaa00cc)
+			channel.send(logEmbed)
 		}
 		catch {
 			let embed4 = new Discord.MessageEmbed()

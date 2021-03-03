@@ -26,7 +26,7 @@ let Guild = message.guild
 let embed = new Discord.MessageEmbed()
 	.setColor(0xaa00cc)    
 	.setTitle('Server info:')
-	.setThumbnail(message.guild.iconURL())
+	.setThumbnail(message.guild.iconURL( { dynamic: true }))
 	.addField('| Server owner', Guild.owner, true)
 	.addField('| Server name', Guild.name, true)
 	.addField('| Guild ID', Guild.id, true)

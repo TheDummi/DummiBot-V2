@@ -55,7 +55,10 @@ class DailyCommand extends Command {
                     coins: userCoins + parseInt(daily),
                     bank: userBank
                 }
-                await message.util.send(`You received ${daily}, you now have ${coin} in your wallet!`)
+                let embed = new Discord.MessageEmbed()
+                    .setAuthor(`${message.author.username} you claimed a daily of ${daily}, you now have ${coin} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+                    .setColor(0xaa00cc)
+                await message.util.send(embed)
                 let userXp = xp[message.author.id].xp;
                 let userLevel = xp[message.author.id].level;
                 let userRespect = xp[message.author.id].respect;

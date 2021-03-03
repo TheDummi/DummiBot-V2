@@ -27,8 +27,8 @@ class CloseCommand extends Command {
         }
         if (message.util.parsed.alias === 'delete') {
             let DeleteEmbed = new Discord.MessageEmbed()
-            .setTitle('Deleting message in 1 second')
-            .setColor(0xaa00cc)
+                .setTitle('Deleting message in 1 second')
+                .setColor(0xaa00cc)
             message.util.send(DeleteEmbed)
             .then(message => {
                 setTimeout(function(){

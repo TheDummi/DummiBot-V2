@@ -1,6 +1,8 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const {getUptime} = require('../funcs.js');
+const package = require('../package.json');
+let version = package.version;
 const contributors = [
 	'Minion3665#6456',
 	'Avril Lavigne#1474'
@@ -27,7 +29,8 @@ class InfoCommand extends Command {
 			.addField(`| Servers`, `\`\`\`glsl\n${this.client.guilds.cache.array().length}\`\`\``, true)
 			.addField(`| Users`, `\`\`\`glsl\n${this.client.users.cache.size}\`\`\``, true)
 			.addField(`| Library`, '```glsl\nDiscord.js```', true)
-			.addField(`| Version`, '```glsl\nV2.0.0```', true)
+			.addField(`| Version`, `\`\`\`glsl\nV${version}\`\`\``, true)
+			.addField(`| Git repository`, '[DummiBot v2](https://github.com/TheDummi/DummiBot-v2.0.git)', true)
 			.addField(`| Uptime`, `\`\`\`glsl\n${uptime}\`\`\``)
 			.setColor(0xaa00cc) 
 			.setFooter('This message gets deleted after 2 minutes.')

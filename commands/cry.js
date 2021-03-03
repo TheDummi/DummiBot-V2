@@ -19,12 +19,12 @@ class CryCommand extends Command {
 		})
 	}
 async exec(message) {
-		const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
-var embed = new Discord.MessageEmbed()
-		.setDescription(`**<@${message.author.id}> cries...**`)
+	const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
+	let embed = new Discord.MessageEmbed()
+		.setAuthor(`${message.author.username} cries...`, message.author.displayAvatarURL({ dynamic: true }))
 		.setImage(randomImage)
 		.setColor(randColor())
-        await message.util.send(embed);
+    await message.util.send(embed);
     }
 };
 

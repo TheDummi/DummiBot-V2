@@ -9,20 +9,32 @@ class HasteCommand extends Command {
             category: 'bot maker',
             description: 'Get bot code',
             ownerOnly: true,
-            channel: ['guild', 'dm']
+            channel: ['guild', 'dm'],
+			args: [
+				{
+					id: 'message',
+					type: 'string',
+					match: 'rest',
+					prompt: {
+						start: 'What path would you like to find?'
+					}
+				}
+			]
         });
     }
 
 	async exec(message, args) {
+		let b;
 		try {
-			d = fs.readFileSync(args.join(" "))
+			b = fs.readFileSync(args.message)
 		}
-		catch {
+		catch(e) {
+			console.log(e)
 			return await message.reply("Not a valid file path")
 		}
 		try {
 			const {body} = await got.post('https://hastebin.com/documents', {
-				body: d
+				body: b
 			});
 			message.util.send(`https://hastebin.com/${JSON.parse(body).key}.js`);
 		} catch (error) {

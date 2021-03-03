@@ -30,5 +30,5 @@ async exec(member) {
     }
 } 
 
-console.log('Guild member add handler ready!')
+console.log('[DummiBot] Guild member add handler ready!')
 module.exports = GuildMemberAddListener;

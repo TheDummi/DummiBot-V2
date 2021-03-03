@@ -66,7 +66,7 @@ class CommandsCommand extends Command {
 		for (let i = 0; i < categories.length; i++) {
 			embeds[i] = new Discord.MessageEmbed()
 			.setTitle(names[categories[i]] || categories[i])
-			.setThumbnail(message.guild.iconURL())
+			.setThumbnail(message.guild.iconURL({ dynamic: true }))
 			.setColor(color)
 			for (const item of this.handler.modules.filter(e => e.category.id === categories[i]).sort().array()) {
 				if (!runnableCommands.includes(item)) continue;

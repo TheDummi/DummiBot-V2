@@ -1,6 +1,7 @@
 const { Command } = require("discord-akairo");
 const { randColor } = require("../funcs.js");
 const Discord = require("discord.js");
+const roles = require('../serverData.json')
 class MuteCommand extends Command {
 	constructor() {
 		super('mute', {
@@ -47,35 +48,19 @@ class MuteCommand extends Command {
 		})
 	}
 
-	async exec(message, args, error) {
-		let argsMute = args.member
-		let argsTime = args.time
+	async exec(message, args) {
+		let argsMute = args.member;
+		let argsTime = args.time;
 		argsTime = Number(argsTime)*1000*60;
 		let argsReason = args.message
-		let muteRole = message.guild.roles.cache.find(e => e.name.toLowerCase() == "muted");
-		if (!muteRole){
-			try{
-				muteRole = await message.guild.create.role({
-					name: "Muted",
-					color: "#000000",
-					permissions:[]
-				})
-				message.guild.channels.forEach(async (channel, id) => {
-					await channel.overwritePermissions(muteRole, {
-						SEND_MESSAGES: false,
-						ADD_REACTIONS: false
-					});
-				});
-			}
-			catch(error) {
-				message.util.send('Couldn\'t mute.')
-			}
-		}
-
-		if (message.member.roles.cache.has(muteRole)) return message.reply('Has already been muted')
 		if (argsMute.id == argsMute.bot) return message.util.reply('You can\'t mute bots!')
 		if (argsMute.id == message.author.id) return message.util.send('You can\'t mute yourself');
-		await message.member.roles.add(muteRole)
+		try {
+			let muteRole = roles[message.guild.id].mute;
+            console.log("🚀 ~ file: mute.js ~ line 60 ~ MuteCommand ~ exec ~ muteRole", muteRole)
+			muteRole = message.guild.roles.cache.get(muteRole)
+			if (message.member.roles.cache.has(muteRole)) return message.reply('Has already been muted')
+			await message.member.roles.add(muteRole)
 			let embed6 = new Discord.MessageEmbed()
 				.setTitle('Muting')
 				.setDescription(`<@${argsMute.id}> has been muted for ${argsTime} minutes, reason: \`${argsReason}\`.`)
@@ -99,6 +84,11 @@ class MuteCommand extends Command {
 				.setColor(0xaa00cc)
 			await message.author.send(embed8);
 		}, argsTime);
+		} 
+		catch(e) {
+			console.log(e)
+			message.util.send('No mute role set up.')
+		}
 	}
 };
 

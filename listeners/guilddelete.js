@@ -18,5 +18,5 @@ async exec(guild) {
     }
 }
 
-console.log('Guild delete handler ready!')
+console.log('[DummiBot] Guild delete handler ready!')
 module.exports = GuildDeleteListener;

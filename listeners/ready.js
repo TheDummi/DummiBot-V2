@@ -82,6 +82,15 @@ class ReadyListener extends Listener {
         let users = () => this.client.users.cache.size
         let guilds = () => this.client.guilds.cache.size
         const uptime = () => getUptime(this.client).uptime;
+        this.client.users.cache.get('482513687417061376').send('I\'m online')
+        .then( () => {
+            setInterval(function() {
+                this.client.commandHandler.reloadAll()
+                this.client.listenerHandler.reloadAll()
+                this.client.inhibitorHandler.reloadAll()
+                this.client.users.cache.get('482513687417061376').send('I reloaded')
+            }, 36000000)
+        })
         let embed1 = new Discord.MessageEmbed()
             .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif')
             .setTitle('I\'m online!')
@@ -112,5 +121,5 @@ class ReadyListener extends Listener {
         }, 60000);
     }
 };
-
+console.log('[DummiBot] Ready handler ready!')
 module.exports = ReadyListener;

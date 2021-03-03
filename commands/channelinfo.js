@@ -33,7 +33,7 @@ async exec(message, args) {
 	let invited = await invite
 	let embed = new Discord.MessageEmbed()
 		.setColor(0xaa00cc)
-		.setThumbnail(message.guild.iconURL({ dynamic: true}))
+		.setThumbnail(message.guild.iconURL({ dynamic: true }))
 		.setTitle('Channel Info')
 		.addField('| Name', channel.type === 'dm' ? `<@${channel.recipient.username}>` : channel.name, true)
 		.addField('| ID', channel.id, true)

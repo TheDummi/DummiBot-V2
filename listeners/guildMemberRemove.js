@@ -30,5 +30,5 @@ async exec(member) {
     }
 } 
 
-console.log('Guild member remove handler ready!')
+console.log('[DummiBot] Guild member remove handler ready!')
 module.exports = GuildMemberRemoveListener;

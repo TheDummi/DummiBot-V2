@@ -23,5 +23,5 @@ async exec(guild) {
     }
 } 
 
-console.log('Guild create handler ready!')
+console.log('[DummiBot] Guild create handler ready!')
 module.exports = GuildCreateListener;
