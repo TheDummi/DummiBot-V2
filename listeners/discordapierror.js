@@ -42,5 +42,4 @@ class DiscordAPIErrorListener extends Listener {
     }
 }
 
-console.log('[DummiBot] Discord API error handler ready!')
 module.exports = DiscordAPIErrorListener;

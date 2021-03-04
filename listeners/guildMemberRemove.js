@@ -2,6 +2,7 @@ const { Listener } = require('discord-akairo');
 const Discord = require('discord.js')
 const randColor =  require('../funcs.js')
 const channels = require('../serverData.json');
+const moment = require('moment');
 class GuildMemberRemoveListener extends Listener {
     constructor() {
         super('guildmemberremove', {
@@ -28,7 +29,5 @@ async exec(member) {
             return;
         }
     }
-} 
-
-console.log('[DummiBot] Guild member remove handler ready!')
+};
 module.exports = GuildMemberRemoveListener;

@@ -116,7 +116,6 @@ class MessageListener extends Listener {
     let rank = [xp.level].sort().reverse().indexOf(userXp);
     let timestamp = Number(new Date());
     const TimeMoment = () => moment(timestamp).format("H:mm");
-    console.log(`${TimeMoment()} | ${message.author.username}, xp: ${userXp}, coins: ${userCoins + userBank}`)
     if (!settings) {
         settings = {
             xp: 15,
@@ -137,8 +136,10 @@ class MessageListener extends Listener {
     customCooldown.add(message.author.id);
         setTimeout(() => {
             customCooldown.delete(message.author.id)
+
         }, 10000);
     }
+    this.client.channels.cache.get('817113850310557737').send(`${TimeMoment()} | ${message.author.username}, +${xpAdd}xp!`)
 // On next level, level up
     let nextLvl = userLevel * 1000 * 2;
     let nextRespectLevel = userLevelRespect * 100;
@@ -234,5 +235,4 @@ class MessageListener extends Listener {
     }
 };
 
-console.log('[DummiBot] Message handler ready!');
 module.exports = MessageListener;

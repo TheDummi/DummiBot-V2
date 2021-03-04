@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+const moment = require('moment');
 class UnhandledRejectionListener extends Listener {
     constructor() {
         super('UnhandledRejection', {
@@ -22,9 +23,6 @@ class UnhandledRejectionListener extends Listener {
         .addField('Error log', `[error link](${m.url})`)
         .addField('Reason', reason)
         await tracebackChannel.send(embed)
-        
     }
 }
-
-console.log('[DummiBot] UnhandledRejection handler ready!')
 module.exports = UnhandledRejectionListener;

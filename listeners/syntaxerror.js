@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+const moment = require('moment');
 class SyntaxErrorListener extends Listener {
     constructor() {
         super('syntaxerror', {
@@ -38,9 +39,6 @@ class SyntaxErrorListener extends Listener {
             .addField('Command', command.id)
             .addField('Reason', reason)
         await tracebackChannel.send(embed)
-        
     }
 }
-
-console.log('[DummiBot] Syntax error handler ready!')
 module.exports = SyntaxErrorListener;

@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+const moment = require('moment');
 class ReferenceErrorListener extends Listener {
     constructor() {
         super('referenceerror', {
@@ -38,9 +39,7 @@ class ReferenceErrorListener extends Listener {
             .addField('Command', command.id)
             .addField('Reason', reason)
         await tracebackChannel.send(embed)
-        
     }
 }
 
-console.log('[DummiBot] Reference error handler ready!')
 module.exports = ReferenceErrorListener;

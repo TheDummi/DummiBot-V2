@@ -121,5 +121,4 @@ class ReadyListener extends Listener {
         }, 60000);
     }
 };
-console.log('[DummiBot] Ready handler ready!')
 module.exports = ReadyListener;

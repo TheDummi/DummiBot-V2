@@ -20,5 +20,4 @@ class CommandCooldownListener extends Listener {
         })
     }
 };
-console.log('[DummiBot] Command cooldown listener ready!')
 module.exports = CommandCooldownListener;

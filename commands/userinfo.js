@@ -82,8 +82,8 @@ async exec(message, args) {
 		.addField('| Boosted the server', boosted, true)
 // If yes, than it shows for how long.
 	if (member.premiumSince !== null) {
-		months = Math.floor((new Date() - member.premiumSince) / 1000 / 60 / 60 / 24 / 30);
-		days = Math.floor((new Date() - member.premiumSince) / 1000 / 60 / 60 / 24) - (months * 30);
+		let months = Math.floor((new Date() - member.premiumSince) / 1000 / 60 / 60 / 24 / 30);
+		let days = Math.floor((new Date() - member.premiumSince) / 1000 / 60 / 60 / 24) - (months * 30);
 		embed = embed.addField('| Time boosted', Math.floor(days) + " days")
 	}
 	embed

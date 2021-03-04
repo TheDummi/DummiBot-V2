@@ -1,7 +1,8 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js')
-const randColor =  require('../funcs.js')
+const Discord = require('discord.js');
+const randColor =  require('../funcs.js');
 const channels = require('../serverData.json');
+const moment = require('moment');
 class GuildMemberAddListener extends Listener {
     constructor() {
         super('guildMemberAdd', {
@@ -30,5 +31,4 @@ async exec(member) {
     }
 } 
 
-console.log('[DummiBot] Guild member add handler ready!')
 module.exports = GuildMemberAddListener;

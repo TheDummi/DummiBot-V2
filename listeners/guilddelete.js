@@ -1,5 +1,6 @@
 const { Listener } = require('discord-akairo');
-const Discord = require('discord.js')
+const Discord = require('discord.js');
+const moment = require('moment');
 class GuildDeleteListener extends Listener {
     constructor() {
         super('guildDelete', {
@@ -18,5 +19,4 @@ async exec(guild) {
     }
 }
 
-console.log('[DummiBot] Guild delete handler ready!')
 module.exports = GuildDeleteListener;
