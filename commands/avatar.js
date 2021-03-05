@@ -32,14 +32,14 @@ class AvatarCommand extends Command {
             let embed = new Discord.MessageEmbed()
                 .setDescription(`**[${message.guild.name} icon](${message.guild.iconURL({ dynamic: true, size: 4096})})**`)
                 .setColor(purple)
-                .setImage(message.guild.iconURL({ dynamic: true}))
+                .setImage(message.guild.iconURL({ dynamic: true, size: 4096}))
             message.util.send(embed)
         }
         else {
         let avatarEmbed = new Discord.MessageEmbed()
 			.setDescription(`**[${user.nickname || user.username}'s avatar](${user.displayAvatarURL({ dynamic: true, size: 4096 })})**`)
 			.setColor(purple)
-			.setImage(user.displayAvatarURL({ dynamic: true}))
+			.setImage(user.displayAvatarURL({ dynamic: true, size: 4096}))
 		await message.util.send(avatarEmbed);
         }
     }
