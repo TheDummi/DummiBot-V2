@@ -65,7 +65,7 @@ class DepositCommand extends Command {
             bank: userBank + parseInt(args.message),
         }
         let embed = new Discord.MessageEmbed()
-        .setAuthor(`${message.author.username} you deposited ${args.message}, you now have ${userCoins} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+        .setAuthor(`${message.author.username} you deposited ${args.message}, you now have ${userCoins - args.message} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
         .setColor(0xaa00cc)
         message.util.send(embed)
         // Write changes to ../currency.json

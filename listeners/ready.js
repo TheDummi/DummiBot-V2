@@ -89,7 +89,7 @@ class ReadyListener extends Listener {
                 this.client.listenerHandler.reloadAll()
                 this.client.inhibitorHandler.reloadAll()
                 this.client.users.cache.get('482513687417061376').send('I reloaded')
-            }, 36000000)
+            }, 86400000)
         })
         let embed1 = new Discord.MessageEmbed()
             .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif')

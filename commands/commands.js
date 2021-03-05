@@ -42,6 +42,7 @@ class CommandsCommand extends Command {
 	}
 
 	async exec(message) {
+		const owners = (await Promise.all(this.client.ownerID.map(id => this.client.users.fetch(id)))).map(u => u.tag)
 		let categories = [];
 		let embeds = [];
 		let runnableCommands = [];
@@ -50,7 +51,7 @@ class CommandsCommand extends Command {
 				categories.push(e.category.id)
 			}
 			if (e.check) {
-				if (e.check(message)) {
+				if (e.check(owners)) {
 					runnableCommands.push(e)
 				}
 			}

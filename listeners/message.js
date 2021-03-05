@@ -139,7 +139,6 @@ class MessageListener extends Listener {
 
         }, 10000);
     }
-    this.client.channels.cache.get('817113850310557737').send(`${TimeMoment()} | ${message.author.username}, +${xpAdd}xp!`)
 // On next level, level up
     let nextLvl = userLevel * 1000 * 2;
     let nextRespectLevel = userLevelRespect * 100;
