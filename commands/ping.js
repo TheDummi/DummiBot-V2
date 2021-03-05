@@ -1,5 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
+
 class PingCommand extends Command {
     constructor() {
         super('ping', {
