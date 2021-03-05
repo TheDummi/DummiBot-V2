@@ -50,7 +50,7 @@ class BalanceCommand extends Command {
         let bankBalance = currency[member.id].bank;
         let userLevel = xp[member.id].level;
         let work = data[member.id].work;
-        let day = data[message.author.id].day;
+        let day = data[member.id].day;
         let bankLimit = userLevel * 10000 * day;
 // Send embed on use of command
         let BalEmbed = new Discord.MessageEmbed()
