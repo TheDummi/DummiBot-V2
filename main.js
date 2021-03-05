@@ -13,7 +13,6 @@ class MyClient extends AkairoClient {
             directory: './commands/',
             prefix: ['~', 'dummi '],
             defaultCooldown: 1000,
-            ratelimit: 2,
             handleEdits: true,
             commandUtil: true,
             clientPermissions: 'EMBED_LINKS'
