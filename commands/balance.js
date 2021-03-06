@@ -11,7 +11,7 @@ class BalanceCommand extends Command {
         super('balance', {
             aliases: ['balance', 'bal', 'credits', 'cred'],
             category: 'economy',
-            description: 'Coins Balance',
+            description: 'View your or someone else\'s balance.',
             channel: ['guild'],
             args: [
                 {
@@ -52,19 +52,21 @@ class BalanceCommand extends Command {
         let work = data[member.id].work;
         let day = data[message.author.id].day;
         let bankLimit = userLevel * 10000 * day;
-// Send embed on use of command
+
         let BalEmbed = new Discord.MessageEmbed()
-        .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL({ dynamic: true }))
-        .addField('| Wallet', coinsBalance, true)
-        .addField('| Bank', bankBalance + "/" + bankLimit, true )
-        .setFooter(`Total amount: ${bankBalance + coinsBalance}`)
-        .setColor(0xaa00cc)
+            .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL({ dynamic: true }))
+            .addField('Wallet', "₪ " + coinsBalance)
+            .addField('Bank', "₪ " + bankBalance + "/" + bankLimit)
+            .setFooter(`Total amount: ₪ ${bankBalance + coinsBalance}`)
+            .setColor(0xaa00cc)
         
         try {
             message.util.send(BalEmbed)
         }
         catch {
-            message.util.send(`${member}, does not have any balance yet...`)
+            let embed = new Discord.MessageEmbed()
+                .setAuthor(`${member.username} does not have any coins yet!`, message.author.displayAvatarURL({ dynamic: true }))
+            message.util.send(embed)
         }
         fs.writeFile('data.json', JSON.stringify(data), (err) => {
             if(err) console.log(err)

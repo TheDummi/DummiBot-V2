@@ -16,7 +16,8 @@ class WorkCommand extends Command {
     }
 
     async exec(message) {
-
+        let embed = new Discord.MessageEmbed()
+            .setColor(0xaa00cc)
         if (!data[message.author.id]) {
             data[message.author.id] = {
                 work: 0,
@@ -34,7 +35,7 @@ class WorkCommand extends Command {
         let work = data[message.author.id].work * 1000
         let hour = data[message.author.id].day * 100
         if (data[message.author.id].work == 0) {
-            return await message.channel.send('You need to claim 1 daily before you can start working')
+            embed = embed.setAuthor(`${message.author.username}, you need to claim 1 daily before being able to work!`, message.author.displayAvatarURL({ dynamic: true }))
         }
         coins[message.author.id] = {
             coins: coins[message.author.id].coins + parseInt(work + hour),
@@ -44,7 +45,6 @@ class WorkCommand extends Command {
             work: data[message.author.id].work,
             day: data[message.author.id].day + 1
         }
-        await message.util.send(`Your ${data[message.author.id].work} days of work has been rewarded in ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ${hour}`)
         if (!xp[message.author.id]) {
             xp[message.author.id] = {
                 xp: 0,
@@ -73,6 +73,8 @@ class WorkCommand extends Command {
         fs.writeFile('data.json', JSON.stringify(data), (err) => {
             if (err) console.log(err)
         })
+        embed = embed.setAuthor(`${message.author.username}, your ${data[message.author.id].work} days of work has been rewarded in ₪ ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ₪ ${hour}`, message.author.displayAvatarURL({ dynamic: true }))
+        return await message.channel.send(embed)
     }
 }
 

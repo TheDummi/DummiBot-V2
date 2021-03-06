@@ -1,11 +1,7 @@
-const {
-	Command
-} = require('discord-akairo')
+const { Command } = require('discord-akairo')
 const Discord = require('discord.js')
-const {
-	haste
-} = require("../funcs.js")
-const {inspect} = require("util")
+const { haste } = require("../funcs.js")
+const { inspect } = require("util")
 
 const clean = (text) => {
 	if (typeof text === 'string') return text.replace(/`/g, '`' + String.fromCharCode(8203)).replace(/@/g, '@' + String.fromCharCode(8203));
@@ -65,7 +61,8 @@ class EvalCommand extends Command {
 				channel = message.channel;
 			if (code.replace(/ /g, '').includes('9+10' || '10+9')) {
 				output = 21;
-			} else {
+			} 
+			else {
 				output = eval(code);
 				output = await output;
 			}
@@ -74,30 +71,16 @@ class EvalCommand extends Command {
 			output = clean(output);
 			embed
 				.setTitle('✅ Evaled code successfully')
-				.addField(
-					'📥 Input',
-					code.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(code)) : '```js\n' + code + '```'
-				)
-				.addField(
-					'📤 Output',
-					output.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(output)) : '```js\n' + output + '```'
-				)
+				.addField('📥 Input', code.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(code)) : '```js\n' + code + '```')
+				.addField('📤 Output', output.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(output)) : '```js\n' + output + '```')
 				.setColor('#66FF00')
 				.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();
 		} catch (e) {
 			embed
 				.setTitle('❌ Code was not able to be evaled')
-				.addField(
-					'📥 Input',
-					code.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(code)) : '```js\n' + code + '```'
-				)
-				.addField(
-					'📤 Output',
-					e.length > 1012
-						? 'Too large to display. Hastebin: ' + (await haste(e))
-						: '```js\n' + e + '```Full stack: ' + (await haste(e.stack))
-				)
+				.addField('📥 Input', code.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(code)) : '```js\n' + code + '```')
+				.addField('📤 Output', e.length > 1012 ? 'Too large to display. Hastebin: ' + (await haste(e)) : '```js\n' + e + '```Full stack: ' + (await haste(e.stack)))
 				.setColor('#FF0000')
 				.setFooter(message.author.username, message.author.displayAvatarURL({ dynamic: true }))
 				.setTimestamp();

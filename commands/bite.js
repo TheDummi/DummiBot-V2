@@ -70,7 +70,7 @@ class BiteCommand extends Command {
 // In all other cases
     } else {
 		const MentionEmbed = new Discord.MessageEmbed()
-			.setDescription(`${user.username} bit ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
+			.setAuthor(`${user.username} bit ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
 			.setImage(randomImage())
 			.setColor(randColor())
 		await message.util.send(MentionEmbed)

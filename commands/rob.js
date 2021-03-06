@@ -10,7 +10,7 @@ class RobCommand extends Command {
             category: 'economy',
             ratelimit: 3,
             cooldown: 300000,
-            description: 'Steal Dummicoins from someone.',
+            description: 'Steal coins from someone.',
             ownerOnly: false,
 			channel: 'guild',
             args: [
@@ -27,8 +27,8 @@ class RobCommand extends Command {
     }
 
     async exec(message, args) {
-
-// Defined amounts
+        let embed = new Discord.MessageEmbed()
+            .setColor(0xaa00cc)
         let member = args.user;
         if (!xp[message.author.id]) {
             xp[message.author.id] = {
@@ -46,33 +46,26 @@ class RobCommand extends Command {
 
         const random = Math.floor(Math.random() * argsCoins);
         const failure = [
-            'You got caught sneaking!',
-            'You were found!',
-            `You almost ran of with ${random}, but you got caught!`,
-            'You were so close!',
-            'If you\'re going to steal something, at least be quiet about it...'
+            'you got caught sneaking!',
+            'you were found!',
+            `you almost ran of with ₪ ${random}, but you got caught!`,
+            'you were so close!',
+            'if you\'re going to steal something, at least be quiet about it...'
         ];
         const failures = () => failure[Math.floor(Math.random() * failure.length)];
         const successRate = Math.floor(Math.random() * Math.floor(2));
 
-// If mentioned user is a bot, return a message, telling the message author, bots can't be stolen from
         if(member.bot == true) {
-            let BotEmbed = new Discord.MessageEmbed()
-            .setTitle('You cannot steal from bots')
-            .setColor(0xaa00cc)
-            return await message.channel.send(BotEmbed)
+            embed = embed.setAuthor(`${message.author.username}, you can't steal from bots!`, message.author.displayAvatarURL({ dynamic: true }))
         }
 
-// If the mentioned user does not have any coins, set amount, and send a message to current channel
         if(!coins[member.id]) {
             coins[member.id] = {
                 coins: 0,
                 bank: 0,
             }
-        return await message.util.send(`${member} does not have any dummicoins!`)
+            embed = embed.setAuthor(`${message.author.username}, ${member.username} doesn't have any coins!`, message.author.displayAvatarURL({ dynamic: true }))
         }
-        
-// If successRate is 0 you steal a certain amount
         if (successRate === 0) {
             coins[message.author.id] = {
                 coins: userCoins + parseInt(random),
@@ -83,24 +76,16 @@ class RobCommand extends Command {
                 coins: argsCoins - parseInt(random),
                 bank: argsBank
             }
-            let WinEmbed = new Discord.MessageEmbed()
-                .setColor(0xaa00cc)
-                .setAuthor(`You stole ${random} dummicoins from ${args.user.username}`, message.author.displayAvatarURL())
-            await message.util.send(WinEmbed)
+            embed = embed.setAuthor(`${message.author.username}, you stole ₪ ${random} from ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
         }
-
-// In all other cases, you lose
         else {
-            return await message.util.send(failures())
+            embed = embed.setAuthor(`${message.author.username}, ${failures()}`, message.author.displayAvatarURL({ dynamic: true }))
         }
-
-// Write changes to ../currency.json
-        
         let userXp = xp[message.author.id].xp;
         let userLevel = xp[message.author.id].level;
         let userRespect = xp[message.author.id].respect;
         let userLevelRespect = xp[message.author.id].respectLevel;
-        let xpAdd = Math.floor(Math.random() * 15) + 5;
+        let xpAdd = Math.floor(Math.random() * 15) + 15;
         userRespect = userRespect - xpAdd;
         xp[message.author.id] = {
             xp: userXp,
@@ -115,6 +100,7 @@ class RobCommand extends Command {
         fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
             if(err) console.log(err)
         })
+        return await message.util.send(embed)
     }
 };
 

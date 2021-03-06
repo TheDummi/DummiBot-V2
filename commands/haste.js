@@ -32,13 +32,19 @@ class HasteCommand extends Command {
 			console.log(e)
 			return await message.reply("Not a valid file path")
 		}
-		try {
-			const {body} = await got.post('https://hastebin.com/documents', {
+		const {body} = await got.post('https://hst.sh/documents', {
 				body: b
 			});
-			message.util.send(`https://hastebin.com/${JSON.parse(body).key}.js`);
-		} catch (error) {
-			message.util.send(error.response.body);
+			if (b.length > 2048) {
+				message.util.send(`https://hst.sh/${JSON.parse(body).key}.js`);
+			}
+			else {
+			let embed = new Discord.MessageEmbed()
+				.setTitle(`${args.message}`)
+				.setDescription('```js\n' + b + '```')
+				.setColor(0xaa00Cc)
+				.setURL(`https://hst.sh/${JSON.parse(body).key}.js`)
+			message.util.send(embed)
 		}
 	}
 }

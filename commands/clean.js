@@ -25,9 +25,9 @@ class CleanCommand extends Command {
 
 	async exec(message, args) {
 		let embed1 = new Discord.MessageEmbed()
-			.setTitle('There is a maximum of 50 messages.')
+			.setTitle('There is a maximum of 100 messages.')
 			.setColor(0xaa00cc)
-		if (Number(args.message) >= 50) return message.reply(embed1)
+		if (Number(args.message) > 100) return message.reply(embed1)
 		.then(message => {
 			setTimeout(function() {
 				message.delete(embed1)
@@ -43,7 +43,7 @@ class CleanCommand extends Command {
 			}, 5000);
 		})
 		try {
-			await message.channel.bulkDelete(Number(args.message) + 1)
+			await message.channel.bulkDelete(Number(args.message))
 				let embed3 = new Discord.MessageEmbed()
 					.setTitle(`${args.message} messages deleted`)
 					.setColor(0xaa00cc)
@@ -55,20 +55,25 @@ class CleanCommand extends Command {
 				})
 			let channel = channels[message.guild.id].moderation;
 			channel = this.client.channels.cache.get(channel);
+			if (channel == undefined) return;
+			else {
 			let logEmbed = new Discord.MessageEmbed()
 			.setTitle('Moderation command used!')
 			.addField(`Name`, message.author, true)
 			.addField(`Command`, "clean", true)
+			.addField(`Channel`, `<#${message.channel.id}>`, true)
 			.addField(`Command specifics`, `Cleaned ${args.message} messages in ${message.channel}.`)
 			.setTimestamp()
 			.setColor(0xaa00cc)
 			channel.send(logEmbed)
+			}
 		}
-		catch {
+		catch(e) {
+			console.log(e)
 			let embed4 = new Discord.MessageEmbed()
 				.setTitle('Error deleting, please make sure the messages are less than two weeks old.')
 				.setColor(0xaa00cc)
-			return message.reply(embed4)	
+			return message.reply(embed4)
 			.then(message => {
 				setTimeout(function() {
 					message.delete(embed4)

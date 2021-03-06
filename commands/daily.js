@@ -11,7 +11,7 @@ class DailyCommand extends Command {
         super('daily', {
             aliases: ['daily', 'd'],
             category: 'economy',
-            description: 'Claim a reward everyday!',
+            description: 'Daily coins reward.',
             channel: 'guild',
             cooldown: 86400000,
         })
@@ -56,7 +56,7 @@ class DailyCommand extends Command {
                     bank: userBank
                 }
                 let embed = new Discord.MessageEmbed()
-                    .setAuthor(`${message.author.username} you claimed a daily of ${daily}, you now have ${coin} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+                    .setAuthor(`${message.author.username} you claimed a daily of ₪ ${daily}, you now have ₪ ${coin} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
                     .setColor(0xaa00cc)
                 await message.util.send(embed)
                 let userXp = xp[message.author.id].xp;

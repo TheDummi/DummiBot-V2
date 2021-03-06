@@ -12,7 +12,12 @@ class ErrorCommand extends Command {
     }
 
     async exec(message) {
-        message.channel.a.send('hi')
+        try {
+        error
+        }
+        catch (e) {
+            message.util.send(`\`\`\`${e}\`\`\``).then(m => setTimeout(function() {m.delete()}, 5000))
+        }
     }
 };
 
