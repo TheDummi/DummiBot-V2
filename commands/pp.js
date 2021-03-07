@@ -24,17 +24,21 @@ class PPCommand extends Command {
             category: 'fun',
             description: 'I won\'t explain this.',
             ownerOnly: false,
-            channel: ['guild', 'dm']
+            channel: ['guild', 'dm'],
+            args: [
+                {
+                    id: 'member',
+                    type: 'member'
+                }
+            ]
         })
     }
 
-	async exec(message) {
-        let member;
-        if (message.mentions.users.array()[0]) member = await message.guild.members.fetch(message.mentions.users.array()[0].id);
-        else member = message.member;
+	async exec(message, args) {
+        let member = args.member || message.author
         const bigpp = () => pp[Math.floor(Math.random() * pp.length)];
         let embed = new Discord.MessageEmbed()
-        .setDescription(`<@${member.id}>'s pp\n\n` + bigpp())
+        .setDescription(`${member}'s pp\n\n` + bigpp())
         .setColor(0xaa00cc)
         message.util.send(embed)
     }

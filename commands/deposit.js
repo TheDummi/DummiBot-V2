@@ -20,7 +20,7 @@ class DepositCommand extends Command {
                     prompt: {
                         start: 'How much would you like to deposit?'
                     }
-                },
+                }
             ]
         })
     }

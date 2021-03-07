@@ -16,7 +16,7 @@ class WithdrawCommand extends Command {
                     type: 'number',
                     match: 'rest',
                     prompt: {
-                        start: 'How much would you like to sell?'
+                        start: 'How much would you like to deposit?'
                     }
                 },
             ]

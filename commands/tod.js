@@ -235,8 +235,8 @@ const truths = () => truth[Math.floor(Math.random() *  truth.length)];
 const dares = () => dare[Math.floor(Math.random() *  dare.length)];
 class ToDCommand extends Command {
     constructor() {
-        super('truth/dare', {
-            aliases: ['truth', 'dare', 'tod'],
+        super('truth or dare', {
+            aliases: ['truth or dare', 'truth', 'dare', 'tod'],
             category: 'fun',
             description: 'Truth or dare. (tod for random)',
             channel: ['guild', 'dm'],

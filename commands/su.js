@@ -7,21 +7,37 @@ class SuCommand extends Command {
 			category: 'bot maker',
 			description: 'Runs command as someone else, must use user id',
 			ownerOnly: true,
-			channel: 'guild'
+			channel: 'guild',
+			args: [
+				{
+					id: 'id',
+					type: 'id',
+					prompt: {
+						start: 'Who would you like to be?'
+					}
+				},
+				{
+					id: 'command',
+					type: 'string',
+					match: 'rest',
+					prompt: {
+						start: 'What command would you like to run?'
+					}
+				}
+			]
 		})
 	}
 
 	async exec(message, args) {
 		let m = message
-		let member = message.guild.members.cache.get(args[0]) || null
+		let member = args.id || null
 		let command;
 		try {
-			command = require(`./${args[1]}.js`)
+			command = require(`./${args.command}.js`)
 		}
 		catch {
 			return message.reply(`Invalid command`)
 		}
-		if (member === null) return message.reply(`User ${args[0]} is either invalid, or not in this server.`)
 		m.author =  member.user
 		m.member = member
 		command.execute(m, args.splice(0, 2))

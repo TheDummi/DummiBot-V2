@@ -51,6 +51,9 @@ class BalanceCommand extends Command {
         let userLevel = xp[member.id].level;
         let work = data[member.id].work;
         let day = data[member.id].day;
+        if (day == 0) {
+            day = 1
+        }
         let bankLimit = userLevel * 10000 * day;
 
         let BalEmbed = new Discord.MessageEmbed()
