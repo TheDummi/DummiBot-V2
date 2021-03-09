@@ -16,12 +16,26 @@ class PatCommand extends Command {
             category: 'actions',
             description: 'Pat someone',
             ownerOnly: false,
-            channel: ['guild']
+            channel: ['guild'],
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					prompt: {
+						start: 'Who would you like to pat?',
+						retry: 'Invalid user, Who would you like to pat?',
+						limit: 3,
+						ended: 'Too many retries.',
+						cancel: 'Cancelled the command',
+						timeout: 'Out of time.'
+					}
+				}
+			]
         })
     }
 
         async exec(message, args) {
-            args[0] = message.mentions.users.first()
+            let member = args.member;
             let SelfEmbed = new Discord.MessageEmbed()
                 .setTitle('You can\'t pat yourself...')
                 .setColor(0xaa00cc);
@@ -33,11 +47,11 @@ class PatCommand extends Command {
                 .setColor(0xaa00cc);
             const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
             let embed = new Discord.MessageEmbed()
-                .setDescription(`**<@${message.author.id}> Pats ${args[0]}!!**`)
+                .setDescription(`**<@${message.author.id}> Pats ${member}!!**`)
                 .setImage(randomImage)
                 .setColor(randColor());
         // If you mention no one.
-            if (args[0] === undefined) {
+            if (member === undefined) {
                 return message.util.send(NoneEmbed)
             .then(message => {
                 setTimeout(function() {
@@ -46,7 +60,7 @@ class PatCommand extends Command {
             })
         }
         // If you mention yourself.
-            if (args[0].id === message.author.id) {
+            if (member.id === message.author.id) {
                 return message.util.send(SelfEmbed)
             .then(message => {
             setTimeout(function() {
@@ -55,7 +69,7 @@ class PatCommand extends Command {
                 })
             }
         // If you mention the bot.
-            if (args[0].id === message.client.user.id) {
+            if (member.id === message.client.user.id) {
                 return message.util.send(BotEmbed)
             .then(message => {
             setTimeout(function() {

@@ -11,7 +11,7 @@ class MyClient extends AkairoClient {
         });
         this.commandHandler = new CommandHandler(this, {
             directory: './commands/',
-            prefix: ['~', 'dummi '],
+            prefix: ['~', 'dummi ',],
             defaultCooldown: 1000,
             handleEdits: true,
             commandUtil: true,

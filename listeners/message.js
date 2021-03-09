@@ -22,10 +22,13 @@ class MessageListener extends Listener {
     if (message.author.bot) return;
 
 // Random reactions
-    /* if (getReactions(message) === true && Math.random() < 0.05){ 
-        number = 5;
+    if (!data[message.guild.id])
+        data[message.guild.id] ={
+            reactions: false
+        }
+    if (data[message.guild.id].reactions == true && Math.random() < 0.05) {
         message.react(message.guild.emojis.cache.get(message.guild.emojis.cache.randomKey()));
-    }*/
+    }
 
 // Suggestion channels
 // DummiBot-suggestions 

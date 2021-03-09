@@ -81,7 +81,7 @@ class ReadyListener extends Listener {
 // Online message
         let users = () => this.client.users.cache.size
         let guilds = () => this.client.guilds.cache.size
-        const uptime = () => getUptime(this.client).uptime;
+        const uptime = () => getUptime(this.client).noSecUptime;
         this.client.users.cache.get('482513687417061376').send('I\'m online')
         .then( () => {
             setInterval(function() {

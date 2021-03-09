@@ -19,12 +19,26 @@ class KillCommand extends Command {
 			category: 'actions',
 			description: 'Kill someone.',
 			ownerOnly: false,
-			channel: ['guild']
+			channel: ['guild'],
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					prompt: {
+						start: 'Who would you like to kill?',
+						retry: 'Invalid user, Who would you like to kill?',
+						limit: 3,
+						ended: 'Too many retries.',
+						cancel: 'Cancelled the command',
+						timeout: 'Out of time.'
+					}
+				}
+			]
 		})
 	}
 
 	async exec(message, args) {
-		args[0] = message.mentions.users.first();
+		let member = args.member;
 		let SelfEmbed = new Discord.MessageEmbed()
 		.setTitle('I\'m not here to support suicide, just putting that out there.')
 		.setColor(0xaa00cc)
@@ -36,16 +50,16 @@ class KillCommand extends Command {
 		.setColor(0xaa00cc)
 		const randomShooting = randomShot[Math.floor(Math.random() * randomShot.length)];
 		let ShotEmbed = new Discord.MessageEmbed()
-		.setDescription(`**<@${message.author.id}> shot ${args[0]}!!**`)
+		.setDescription(`**<@${message.author.id}> shot ${member}!!**`)
 		.setImage(randomShooting)
 		.setColor(randColor())
 		const randomKilling = randomKill[Math.floor(Math.random() * randomKill.length)];
 		let KillEmbed = new Discord.MessageEmbed()
-		.setDescription(`**<@${message.author.id}> Killed ${args[0]}!!**`)
+		.setDescription(`**<@${message.author.id}> Killed ${member}!!**`)
 		.setImage(randomKilling)
 		.setColor(randColor())
 // If you mention no one.
-	if (args[0] === undefined) {
+	if (member === undefined) {
 		return message.util.send(NoneEmbed)
 		.then(message => {
 			setTimeout(function() {
@@ -54,7 +68,7 @@ class KillCommand extends Command {
 		})
 	}
 // If you mention yourself.
-	if (args[0].id === message.author.id) {
+	if (member.id === message.author.id) {
 			return message.util.send(SelfEmbed)
 		.then(message => {
 			setTimeout(function() {
@@ -63,7 +77,7 @@ class KillCommand extends Command {
 		})
 	}
 // If you mention the bot.
-	if (args[0].id === message.client.user.id) {
+	if (member.id === message.client.user.id) {
 			return message.util.send(BotEmbed)
 		.then(message => {
 			setTimeout(function() {
@@ -71,8 +85,6 @@ class KillCommand extends Command {
 			}, 5000);
 		})
 	}
-
-	if (message.util.parsed.alias === 'kill') {
 		
 		if (!xp[message.author.id]) {
 			xp[message.author.id] = {
@@ -101,36 +113,6 @@ class KillCommand extends Command {
 		})
 		return message.util.send(KillEmbed)
 	}
-	if (message.util.parsed.alias === 'shoot') {
-		
-		if (!xp[message.author.id]) {
-			xp[message.author.id] = {
-				xp: 0,
-				level: 1,
-				respect: 0,
-				respectLevel: 1,
-				prestige: 0,
-			};
-		}
-		let userXp = xp[message.author.id].xp;
-		let userLevel = xp[message.author.id].level;
-		let userRespect = xp[message.author.id].respect;
-		let userLevelRespect = xp[message.author.id].respectLevel;
-		let xpAdd = Math.floor(Math.random() * 5) + 5;
-		userRespect = userRespect - xpAdd;
-		xp[message.author.id] = {
-			xp: userXp,
-			level: userLevel,
-			respect: userRespect,
-			respectLevel: userLevelRespect,
-			prestige: 0,
-		}
-		fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
-			if (err) console.log(err)
-		})
-		return message.util.send(ShootEmbed)
-	}
-}
 };
 
 module.exports = KillCommand;

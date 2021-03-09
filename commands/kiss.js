@@ -39,12 +39,26 @@ class KissCommand extends Command {
 			category: 'actions',
 			description: 'Kiss someone',
 			ownerOnly: false,
-			channel: ['guild', 'dm']
+			channel: ['guild', 'dm'],
+			args: [
+				{
+					id: 'member',
+					type: 'member',
+					prompt: {
+						start: 'Who would you like to kiss?',
+						retry: 'Invalid user, Who would you like to kiss?',
+						limit: 3,
+						ended: 'Too many retries.',
+						cancel: 'Cancelled the command',
+						timeout: 'Out of time.'
+					}
+				}
+			]
 		})
 	}
 
 async exec(message, args) {
-	args[0] = message.mentions.users.first()
+	let member = args.member
 	let SelfEmbed = new Discord.MessageEmbed()
 		.setTitle('Its physically impossible to kiss yourself, at least somewhere in the face then...')
 		.setColor(0xaa00cc);
@@ -56,11 +70,11 @@ async exec(message, args) {
 		.setColor(0xaa00cc);
 	const randomImage = randomImages[Math.floor(Math.random() * randomImages.length)];
 	let embed = new Discord.MessageEmbed()
-		.setDescription(`**<@${message.author.id}> kisses ${args[0]}...**`)
+		.setDescription(`**<@${message.author.id}> kisses ${member}...**`)
 		.setImage(randomImage)
 		.setColor(randColor());
 // If you mention no one.
-	if (args[0] === undefined) {
+	if (member === undefined) {
 			return message.util.send(NoneEmbed)
 		.then(message => {
 			setTimeout(function() {
@@ -69,7 +83,7 @@ async exec(message, args) {
 		})
 	}
 // If you mention yourself.
-	if (args[0].id === message.author.id) {
+	if (member.id === message.author.id) {
 			return message.util.send(SelfEmbed)
 		.then(message => {
 			setTimeout(function() {
@@ -78,7 +92,7 @@ async exec(message, args) {
 		})
 	}
 // If you mention the bot.
-	if (args[0].id === message.client.user.id) {
+	if (member.id === message.client.user.id) {
 			return message.util.send(BotEmbed)
 		.then(message => {
 			setTimeout(function() {
