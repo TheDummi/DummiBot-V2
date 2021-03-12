@@ -39,3 +39,5 @@ class MyClient extends AkairoClient {
 const client = new MyClient();
 const token = fs.readFileSync("token.txt").toString()
 client.login(token);
+
+// javascript is dumb you should use discord.py
