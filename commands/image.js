@@ -29,6 +29,7 @@ class ImageCommand extends Command {
     async exec(message, args) {
         const random = Math.floor(Math.random() * Math.floor(50)) + 1
         const image = args.message;
+        message.util.send(`Started looking for: \`${image}\` as an image.`)
         const results = await google.scrape(image, 50);
         try {
             if (random == 0) {

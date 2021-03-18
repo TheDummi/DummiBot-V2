@@ -1,9 +1,10 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs');
-const data = require('../data.json');
-const coins = require('../currency.json');
-const xp = require('../xp.json')
+const data = require('../data/userData.json');
+const coins = require('../data/currency.json');
+const xp = require('../data/xpData.json');
+const respect = require('../data/respectData.json');
 
 class WorkCommand extends Command {
     constructor() {
@@ -47,30 +48,22 @@ class WorkCommand extends Command {
         }
         if (!xp[message.author.id]) {
             xp[message.author.id] = {
-                xp: 0,
-                level: 1,
                 respect: 0,
                 respectLevel: 1,
-                prestige: 0,
             };
         }
-        let userXp = xp[message.author.id].xp;
-        let userLevel = xp[message.author.id].level;
         let userRespect = xp[message.author.id].respect;
         let userLevelRespect = xp[message.author.id].respectLevel;
         let xpAdd = Math.floor(Math.random() * 15) + 5;
         userRespect = userRespect + xpAdd;
         xp[message.author.id] = {
-            xp: userXp,
-            level: userLevel,
             respect: userRespect,
             respectLevel: userLevelRespect,
-            prestige: 0,
         }
-        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+        fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
             if (err) console.log(err)
         })
-        fs.writeFile('data.json', JSON.stringify(data), (err) => {
+        fs.writeFile('data/userData.json', JSON.stringify(data), (err) => {
             if (err) console.log(err)
         })
         embed = embed.setAuthor(`${message.author.username}, your ${data[message.author.id].work} days of work has been rewarded in ₪ ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ₪ ${hour}`, message.author.displayAvatarURL({ dynamic: true }))

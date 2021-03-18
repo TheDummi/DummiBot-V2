@@ -1,6 +1,6 @@
 const fs = require("fs");
 const got = require("got");
-const data = require('./data.json');
+const data = require('./data/userData.json');
 const Discord = require('discord.js')
 
 const hasteURLs = [

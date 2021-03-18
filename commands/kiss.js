@@ -31,7 +31,7 @@ const randomImages = [
 const { Command } = require('discord-akairo')
 const Discord = require("discord.js")
 const fs = require('fs');
-const xp = require('../xp.json')
+const xp = require('../data/respectData.json')
 class KissCommand extends Command {
 	constructor() {
 		super('kiss', {
@@ -112,20 +112,15 @@ async exec(message, args) {
 				prestige: 0,
 			};
 		}
-		let userXp = xp[message.author.id].xp;
-		let userLevel = xp[message.author.id].level;
 		let userRespect = xp[message.author.id].respect;
 		let userLevelRespect = xp[message.author.id].respectLevel;
 		let xpAdd = Math.floor(Math.random() * 15) + 5;
 		userRespect = userRespect + xpAdd;
 		xp[message.author.id] = {
-			xp: userXp,
-			level: userLevel,
 			respect: userRespect,
 			respectLevel: userLevelRespect,
-			prestige: 0,
 		}
-		fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+		fs.writeFile('data/respectData.json', JSON.stringify(xp), (err) => {
 			if (err) console.log(err)
 		})
 		}

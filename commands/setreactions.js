@@ -1,7 +1,7 @@
 const fs = require("fs");
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
-const data = require('../data.json');
+const data = require('../data/serverData.json');
 
 class ReactionsCommand extends Command {
     constructor() {
@@ -41,7 +41,7 @@ class ReactionsCommand extends Command {
             }
             embed = embed.setDescription(`Random reactions disabled.`)
         }
-        fs.writeFile('data.json', JSON.stringify(data), (err) => {
+        fs.writeFile('data/serverData.json', JSON.stringify(data), (err) => {
             if (err) console.log(err);
         })
         return await message.channel.send(embed)

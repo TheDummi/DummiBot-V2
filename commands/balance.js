@@ -1,11 +1,10 @@
 const fs = require('fs')
 const Discord = require('discord.js')
 const { Command } = require('discord-akairo')
-const currency = require('../currency.json')
-const xp = require('../xp.json')
-const data = require('../data.json');
-const { GuildMemberManager } = require('discord.js')
-const { GuildMember } = require('discord.js')
+const currency = require('../data/currency.json')
+const xp = require('../data/xpData.json')
+const respect = require('../data/respectData.json')
+const userData = require('../data/userData.json');
 class BalanceCommand extends Command {
     constructor() {
         super('balance', {
@@ -26,17 +25,10 @@ class BalanceCommand extends Command {
 
 // Define member as first mentioned member or message author, define gold, and balance for member
         let member = args.user || message.author;
-        if (!data[member.id]) {
-            data[member.id] = {
+        if (!userData[member.id]) {
+            userData[member.id] = {
                 work: 0,
                 day: 0
-            }
-        }
-// If the member doesn't have any dummicoins, set defaults
-        if (!currency[message.author.id]){
-            currency[message.author.id] = {
-                coins: 0,
-                bank: 0
             }
         }
         if (!currency[member.id]){
@@ -46,20 +38,35 @@ class BalanceCommand extends Command {
             }
         }
         
+        if (!xp[member.id]) {
+            xp[member.id] = {
+                xp: 0,
+                level: 1
+            }
+        }
+
+        if (!respect[member.id]) {
+            respect[member.id] = {
+                respect: 0,
+                respectLevel: 1
+            }
+        }
+
         let coinsBalance = currency[member.id].coins;
         let bankBalance = currency[member.id].bank;
         let userLevel = xp[member.id].level;
-        let work = data[member.id].work;
-        let day = data[member.id].day;
+        let work = userData[member.id].work;
+        let day = userData[member.id].day;
         if (day == 0) {
             day = 1
         }
         let bankLimit = userLevel * 10000 * day;
+        let percent = Math.round(bankBalance/bankLimit * 1000) / 10 + "%"
 
         let BalEmbed = new Discord.MessageEmbed()
             .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL({ dynamic: true }))
             .addField('Wallet', "₪ " + coinsBalance)
-            .addField('Bank', "₪ " + bankBalance + "/" + bankLimit)
+            .addField('Bank', "₪ " + bankBalance + "/" + bankLimit + ` \`${percent}\``)
             .setFooter(`Total amount: ₪ ${bankBalance + coinsBalance}`)
             .setColor(0xaa00cc)
         
@@ -71,10 +78,10 @@ class BalanceCommand extends Command {
                 .setAuthor(`${member.username} does not have any coins yet!`, message.author.displayAvatarURL({ dynamic: true }))
             message.util.send(embed)
         }
-        fs.writeFile('data.json', JSON.stringify(data), (err) => {
+        fs.writeFile('data/userData.json', JSON.stringify(userData), (err) => {
             if(err) console.log(err)
         });
-        fs.writeFile('currency.json', JSON.stringify(currency), (err) => {
+        fs.writeFile('data/currency.json', JSON.stringify(currency), (err) => {
             if(err) console.log(err)
         });
     }

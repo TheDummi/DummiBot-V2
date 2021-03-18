@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
-const coins = require('../currency.json');
-const level = require('../xp.json')
+const coins = require('../data/currency.json');
+const level = require('../data/respectData.json')
 const fs = require('fs');
 
 class WeeklyCommand extends Command {
@@ -25,11 +25,8 @@ class WeeklyCommand extends Command {
         
         if (!level[message.author.id]) {
             level[message.author.id] = {
-                xp: xp[message.author.id].xp,
+                xp: 0,
                 level: 1,
-                respect: 0,
-                respectLevel: 0,
-                prestige: 0
             }
         }
             let UserLevel = level[message.author.id].level;
@@ -42,13 +39,13 @@ class WeeklyCommand extends Command {
                 coins: userCoins + parseInt(Weekly),
                 bank: userBank
             }
-        fs.writeFile("currency.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("data/currency.json", JSON.stringify(coins), (err) => {
             if(err) console.log(err)
         });
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
             .setAuthor(`${message.author.username} you claimed a weekly of ₪ ${Weekly}, you now have ₪ ${coin} in your wallet`)
-        return await message.util.send()
+        return await message.util.send(embed)
     }
 };
 

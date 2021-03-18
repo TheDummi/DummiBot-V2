@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs')
-let coins = require('../currency.json')
+let coins = require('../data/currency.json')
 class WithdrawCommand extends Command {
     constructor() {
         super('withdraw', {
@@ -47,7 +47,7 @@ class WithdrawCommand extends Command {
             }
             embed = embed.setAuthor(`${message.author.username}, you withdrawn ₪ ${args.message} from your bank! You now have ₪ ${coins[message.author.id].coins} in your wallet!`, message.author.displayAvatarURL({ dynamic: true }))
         }
-        fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
+        fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             if(err) console.log(err)
         });
         return await message.util.send(embed)

@@ -18,7 +18,7 @@ const randomImage = () => randomImages[Math.floor(Math.random() * randomImages.l
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const fs = require('fs');
-const xp = require('../xp.json')
+const xp = require('../data/xpData.json')
 
 class BiteCommand extends Command {
     constructor() {
@@ -96,7 +96,7 @@ class BiteCommand extends Command {
             respectLevel: userLevelRespect,
             prestige: 0,
         }
-        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+        fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
             if (err) console.log(err)
         })
 		}

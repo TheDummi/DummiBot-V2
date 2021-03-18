@@ -11,7 +11,7 @@ const randomImages = [
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 const fs = require('fs');
-const xp = require('../xp.json')
+const respect = require('../data/respectData.json')
 class HugCommand extends Command {
     constructor() {
         super('hug', {
@@ -45,37 +45,31 @@ async exec(message, args) {
         .setColor(randColor());
     if (args.user.id === this.client.user.id) {
         return message.util.send(BotEmbed)
-    } else if (args.user.id === message.author.id) {
+    } 
+    else if (args.user.id === message.author.id) {
         return message.util.send(SelfEmbed)
-    }    else {
-    await message.util.send(embed);
-    if (!xp[message.author.id]) {
-        xp[message.author.id] = {
-            xp: 0,
-            level: 1,
-            respect: 0,
-            respectLevel: 1,
-            prestige: 0,
-        };
     }
-    let userXp = xp[message.author.id].xp;
-    let userLevel = xp[message.author.id].level;
-    let userRespect = xp[message.author.id].respect;
-    let userLevelRespect = xp[message.author.id].respectLevel;
-    let xpAdd = Math.floor(Math.random() * 15) + 5;
-    userRespect = userRespect + xpAdd;
-    xp[message.author.id] = {
-        xp: userXp,
-        level: userLevel,
-        respect: userRespect,
-        respectLevel: userLevelRespect,
-        prestige: 0,
+    else {
+        await message.util.send(embed);
+        if (!respect[message.author.id]) {
+            respect[message.author.id] = {
+                respect: 0,
+                respectLevel: 1,
+            };
+        }
+        let userRespect = respect[message.author.id].respect;
+        let userLevelRespect = respect[message.author.id].respectLevel;
+        let respectAdd = Math.floor(Math.random() * 15) + 5;
+        userRespect = userRespect + respectAdd;
+        respect[message.author.id] = {
+            respect: userRespect,
+            respectLevel: userLevelRespect,
+        }
+        fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
+            if (err) console.log(err)
+        })
+        }
     }
-    fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
-        if (err) console.log(err)
-    })
-    }
-}
 };
 
 module.exports = HugCommand;

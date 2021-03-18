@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const channels = require('../serverData.json');
+const channels = require('../data/channelData.json');
 class CleanCommand extends Command {
 	constructor() {
 		super('clean', {

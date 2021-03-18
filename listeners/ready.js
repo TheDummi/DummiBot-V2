@@ -82,13 +82,20 @@ class ReadyListener extends Listener {
         let users = () => this.client.users.cache.size
         let guilds = () => this.client.guilds.cache.size
         const uptime = () => getUptime(this.client).noSecUptime;
-        this.client.users.cache.get('482513687417061376').send('I\'m online')
+        let i = 1;
+        let me = this.client.users.cache.get('482513687417061376')
+        me.send(`I'm online`)
         .then( () => {
             setInterval(function() {
-                this.client.commandHandler.reloadAll()
-                this.client.listenerHandler.reloadAll()
-                this.client.inhibitorHandler.reloadAll()
-                this.client.users.cache.get('482513687417061376').send('I reloaded')
+                try {
+                client.commandHandler.reloadAll()
+                client.listenerHandler.reloadAll()
+                client.inhibitorHandler.reloadAll()
+                me.send(`I reloaded ${i++}`)
+                }
+                catch(err) {
+                    me.send(`Couldn't reload because of ${err}`)
+                }
             }, 86400000)
         })
         let embed1 = new Discord.MessageEmbed()
@@ -105,7 +112,6 @@ class ReadyListener extends Listener {
         let m = await channel.send(DummiBotJSOnlineRole, embed1).catch(e => console.log(e));
         setInterval(async function () {
         
-// Update online message
         let embed1 = new Discord.MessageEmbed()
             .setTitle('Online update')
             .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif')
@@ -114,11 +120,12 @@ class ReadyListener extends Listener {
             .addField('| Date I restarted', DateMoment(), true)
             .addField('| Time I restarted', TimeMoment(), true)
             .addField('| Uptime', uptime())
-            .addField('| Last message Update', (new Date().toTimeString()))
             .setFooter('| If this message does not update every minute it means I\'m either having an outage, or I\'m offline.')
             .setColor(0xaa00cc)
+            .setTimestamp()
         await m.edit(embed1);
         }, 60000);
     }
 };
+
 module.exports = ReadyListener;

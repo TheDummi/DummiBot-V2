@@ -10,8 +10,8 @@ class SuCommand extends Command {
 			channel: 'guild',
 			args: [
 				{
-					id: 'id',
-					type: 'id',
+					id: 'user',
+					type: 'user',
 					prompt: {
 						start: 'Who would you like to be?'
 					}
@@ -30,7 +30,7 @@ class SuCommand extends Command {
 
 	async exec(message, args) {
 		let m = message
-		let member = args.id || null
+		let member = args.user || null
 		let command;
 		try {
 			command = require(`./${args.command}.js`)

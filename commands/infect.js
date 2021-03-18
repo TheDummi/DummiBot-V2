@@ -6,7 +6,7 @@ const boolean = [
     "Failed"
 ]
 const fs = require('fs')
-const xp = require('../xp.json')
+const xp = require('../data/respectData.json')
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
 class InfectCommand extends Command {
@@ -75,7 +75,7 @@ class InfectCommand extends Command {
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed7 = new Discord.MessageEmbed()
-            .setDescription(`\`██████░░░░░░░░░░░░░░\`\n\nUsername: ${member.user.username}`)
+            .setDescription(`\`██████░░░░░░░░░░░░░░\`\n\nUsername: ${member.username}`)
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed8 = new Discord.MessageEmbed()
@@ -91,7 +91,7 @@ class InfectCommand extends Command {
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed11 = new Discord.MessageEmbed()
-            .setDescription(`\`██████████░░░░░░░░░░\`\n\nTag: ${member.user.tag}`)
+            .setDescription(`\`██████████░░░░░░░░░░\`\n\nTag: ${member.tag}`)
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed12 = new Discord.MessageEmbed()
@@ -99,8 +99,8 @@ class InfectCommand extends Command {
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed13 = new Discord.MessageEmbed()
-            .setDescription(`\`████████████░░░░░░░░\`\n\nAvatar ID: ${member.user.avatar}`)
-            .setImage(member.user.displayAvatarURL({ size: 4096, dynamic: true}))
+            .setDescription(`\`████████████░░░░░░░░\`\n\nAvatar ID: ${member.avatar}`)
+            .setImage(member.displayAvatarURL({ size: 4096, dynamic: true}))
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed14 = new Discord.MessageEmbed()
@@ -108,7 +108,7 @@ class InfectCommand extends Command {
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed15 = new Discord.MessageEmbed()
-            .setDescription(`\`██████████████░░░░░░\`\n\nAccount created at: ${member.user.createdAt}`)
+            .setDescription(`\`██████████████░░░░░░\`\n\nAccount created at: ${member.createdAt}`)
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed16 = new Discord.MessageEmbed()
@@ -116,7 +116,7 @@ class InfectCommand extends Command {
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed17 = new Discord.MessageEmbed()
-            .setDescription(`\`████████████████░░░░\`\n\nTime stamp: ${member.user.createdTimestamp}`)
+            .setDescription(`\`████████████████░░░░\`\n\nTime stamp: ${member.createdTimestamp}`)
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
         let embed18 = new Discord.MessageEmbed()
@@ -137,8 +137,8 @@ class InfectCommand extends Command {
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
             const Boolean = () => boolean[Math.floor(Math.random() * boolean.length)]
         let ResultEmbed = new Discord.MessageEmbed() 
-            .setDescription(`Infection information:\n\nAccount: ${member}\nID: \`${member.id}\`\nUsername: \`${member.user.username}\`\nNickname: \`${member.nickname || "No nickname"}\`\nTag: \`${member.user.tag}\`\nAvatar ID: \`${member.user.avatar}\`\nAccount created at: \`${member.user.createdAt}\`\nTime stamp: \`${member.user.createdTimestamp}\`\nGuild: \`${message.guild.name}\`\nChannel: \`${message.channel.name}\`\n\n**Infection ${Boolean()}**`)
-            .setImage(member.user.displayAvatarURL({ size: 4096, dynamic: true}))
+            .setDescription(`Infection information:\n\nAccount: ${member}\nID: \`${member.id}\`\nUsername: \`${member.username}\`\nNickname: \`${member.nickname || "No nickname"}\`\nTag: \`${member.tag}\`\nAvatar ID: \`${member.avatar}\`\nAccount created at: \`${member.createdAt}\`\nTime stamp: \`${member.createdTimestamp}\`\nGuild: \`${message.guild.name}\`\nChannel: \`${message.channel.name}\`\n\n**Infection ${Boolean()}**`)
+            .setImage(member.displayAvatarURL({ size: 4096, dynamic: true}))
             .setColor(0xaa00cc)
             .addField('Ping', `\`\`\`glsl\n${timeDiff()}ms\`\`\``, true)
             await m.edit(embed1)
@@ -186,11 +186,8 @@ class InfectCommand extends Command {
             await m.edit(ResultEmbed)
             if (!xp[message.author.id]) {
                 xp[message.author.id] = {
-                    xp: 0,
-                    level: 1,
                     respect: 0,
                     respectLevel: 1,
-                    prestige: 0,
                 };
             }
             let userXp = xp[message.author.id].xp;
@@ -200,15 +197,12 @@ class InfectCommand extends Command {
             let xpAdd = Math.floor(Math.random() * 5) + 5;
             userRespect = userRespect - xpAdd;
             xp[message.author.id] = {
-                xp: userXp,
-                level: userLevel,
                 respect: userRespect,
                 respectLevel: userLevelRespect,
-                prestige: 0,
             }
-            fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+            fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
                 if (err) console.log(err)
-            })
+            });
     }
 };
 

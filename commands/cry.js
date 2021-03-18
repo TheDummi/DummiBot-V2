@@ -36,7 +36,7 @@ async exec(message, args) {
 	// If there is no mentioned user
 		if (member == undefined) {
 			let noEmbed = new Discord.MessageEmbed()
-				.setAuthor(`${user.username} `, 'cries...', message.user.displayAvatarURL({ dynamic: true }))
+				.setAuthor(`${user.username} cries...`, user.displayAvatarURL({ dynamic: true }))
 				.setImage(randomImage())
 				.setColor(randColor())
 			return await message.util.send(noEmbed);

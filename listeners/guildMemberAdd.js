@@ -1,7 +1,7 @@
 const { Listener } = require('discord-akairo');
 const Discord = require('discord.js');
 const randColor =  require('../funcs.js');
-const channels = require('../serverData.json');
+const channels = require('../data/channelData.json');
 const moment = require('moment');
 class GuildMemberAddListener extends Listener {
     constructor() {

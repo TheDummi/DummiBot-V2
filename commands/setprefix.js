@@ -1,7 +1,7 @@
 const Discord = require("discord.js")
 const { Command } = require('discord-akairo');
 const fs = require("fs");
-const data = require('../data.json');
+const data = require('../data/serverData.json');
 
 class SetPrefixCommand extends Command {
     constructor() {
@@ -37,17 +37,17 @@ class SetPrefixCommand extends Command {
 			data[message.guild.id] = {
 				prefix: args.prefix
 			}
-			fs.writeFileSync("data.json", JSON.stringify(data))
+			fs.writeFileSync("data/serverData.json", JSON.stringify(data))
 			let embed = new Discord.MessageEmbed()
 			.setDescription(`**Changed the prefix for this server to \`${args.prefix}\`**`)
 			.setColor(0xaa00cc)
 			await message.reply(embed)
 		}
 		else {
-			let data = fs.readFileSync("data.json")
+			let data = fs.readFileSync("data/serverData.json")
 			let json = JSON.parse(data)
 			delete json.prefixes[message.guild.id]
-			fs.writeFileSync("data.json", JSON.stringify(json))
+			fs.writeFileSync("data/serverData.json", JSON.stringify(json))
 			let embed1 = new Discord.MessageEmbed()
 			.setDescription(`**Changed the prefix for this server to the default! (\`~\`)**`)
 			.setColor(0xaa00cc)

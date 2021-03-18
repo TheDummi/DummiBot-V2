@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const coins = require('../currency.json');
+const coins = require('../data/currency.json');
 const fs = require('fs');
 
 class FlipCoinCommand extends Command {
@@ -74,7 +74,7 @@ class FlipCoinCommand extends Command {
                 }
             }
         }
-		fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
+		fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             if (err) console.log(err)
         })
 	}

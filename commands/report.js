@@ -1,6 +1,6 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord.js');
-const reportChannel = require('../serverData.json');
+const reportChannel = require('../data/channelData.json');
 let purple = 0xaa00cc;
 
 class ReportCommand extends Command {

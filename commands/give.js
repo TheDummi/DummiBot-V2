@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs')
-let coins = require('../currency.json')
-const xp = require('../xp.json')
+let coins = require('../data/currency.json')
+const xp = require('../data/xpData.json')
 class GiveCommand extends Command {
     constructor() {
         super('give', {
@@ -67,13 +67,13 @@ class GiveCommand extends Command {
             coins: memberCoins + parseInt(args.message),
             bank: coins[member.id].bank
         }
-            fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
+            fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
                 if(err) console.log(err)
-            })
+            });
         embed = embed.setAuthor(`${message.author.username}, you given ₪ ${args.message} to ${member.username}`, member.displayAvatarURL({ dynamic: true }))
         }
         return await message.util.send(embed)
     }
-}
+};
 
 module.exports = GiveCommand;

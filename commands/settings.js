@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require("discord.js");
-const data = require('../data.json');
-const serverData = require('../serverData.json');
+const data = require('../data/userData.json');
+const serverData = require('../data/channelData.json');
 const { capitalize } = require('../funcs.js');
 
 class SettingsCommand extends Command {

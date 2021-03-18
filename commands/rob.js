@@ -1,8 +1,8 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
-const coins = require('../currency.json');
+const coins = require('../data/currency.json');
 const fs = require('fs');
-const xp = require('../xp.json')
+const xp = require('../data/respectData.json')
 class RobCommand extends Command {
     constructor() {
         super('rob', {
@@ -32,11 +32,8 @@ class RobCommand extends Command {
         let member = args.user;
         if (!xp[message.author.id]) {
             xp[message.author.id] = {
-                xp: 0,
-                level: 1,
                 respect: 0,
                 respectLevel: 1,
-                prestige: 0,
             };
         }
         let argsCoins = coins[member.id].coins;
@@ -81,23 +78,18 @@ class RobCommand extends Command {
         else {
             embed = embed.setAuthor(`${message.author.username}, ${failures()}`, message.author.displayAvatarURL({ dynamic: true }))
         }
-        let userXp = xp[message.author.id].xp;
-        let userLevel = xp[message.author.id].level;
         let userRespect = xp[message.author.id].respect;
         let userLevelRespect = xp[message.author.id].respectLevel;
         let xpAdd = Math.floor(Math.random() * 15) + 15;
         userRespect = userRespect - xpAdd;
         xp[message.author.id] = {
-            xp: userXp,
-            level: userLevel,
             respect: userRespect,
             respectLevel: userLevelRespect,
-            prestige: 0,
         }
-        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+        fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
             if (err) console.log(err)
         })
-        fs.writeFile('currency.json', JSON.stringify(coins), (err) => {
+        fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             if(err) console.log(err)
         })
         return await message.util.send(embed)

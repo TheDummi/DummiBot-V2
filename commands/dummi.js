@@ -62,7 +62,7 @@ const randomImages = [
 
 ]
 const fs = require('fs')
-const xp = require('../xp.json')
+const xp = require('../data/xpData.json')
 const randomFooters = [ 
     "Dummi was born on the 13th of may \n2005 and died on 19th of august 2019.",
     "Dummi loved water!",
@@ -117,7 +117,7 @@ class DummiCommand extends Command {
             respectLevel: userLevelRespect,
             prestige: 0,
         }
-        fs.writeFile('xp.json', JSON.stringify(xp), (err) => {
+        fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
             if (err) console.log(err)
         })
 	}

@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs');
-let settings = require('../developer.json')
+let settings = require('../data/settings.json')
 
 class SetCommand extends Command {
     constructor() {
@@ -54,7 +54,7 @@ class SetCommand extends Command {
             owner.send(`${message.author.username} set coins earn to ${args.number}`)
         }
 
-        fs.writeFile('developer.json', JSON.stringify(settings), (err) => {
+        fs.writeFile('data/settings.json', JSON.stringify(settings), (err) => {
             if (err) console.log(err)
         })
     }

@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
-const moderation = require('../serverData.json');
+const moderation = require('../data/channelData.json');
 
 class AddRoleCommand extends Command {
     constructor() {
@@ -102,8 +102,7 @@ class AddRoleCommand extends Command {
             channel = this.client.channels.cache.get(channel);
             await channel.send(reportEmbed);
         }
-        catch(e) {
-            console.log(e)
+        catch {
             message.channel.send('No moderation channel set-up, no logging of this command.')
             .then(message => {
                 setTimeout(function() {
