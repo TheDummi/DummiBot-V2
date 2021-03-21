@@ -24,20 +24,23 @@ class ReactionsCommand extends Command {
     async exec(message, args) {
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
-        if (!data[message.guild.id]) {
-            data[message.guild.id] = {
-                reactions: false
-            }
-        }
+            if (!data[message.guild.id]) {
+				data[message.guild.id] = {
+					reactions: false,
+					prefix: data[message.guild.id].prefix,
+				}
+			}
         if (args.choice == 'on') {
             data[message.guild.id] = {
-                reactions: true
+                reactions: true,
+				prefix: data[message.guild.id].prefix
             }
             embed = embed.setDescription(`Random reactions enabled.`)
         }
         if (args.choice == 'off') {
             data[message.guild.id] = {
-                reactions: false
+                reactions: false,
+				prefix: data[message.guild.id].prefix
             }
             embed = embed.setDescription(`Random reactions disabled.`)
         }

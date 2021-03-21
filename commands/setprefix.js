@@ -31,15 +31,17 @@ class SetPrefixCommand extends Command {
 		if (args.prefix) {
 			if (!data[message.guild.id]) {
 				data[message.guild.id] = {
-					prefix: '~',
+					reactions: data[message.guild.id].reactions,
+					prefix: null,
 				}
 			}
 			data[message.guild.id] = {
+				reactions: data[message.guild.id].reactions,
 				prefix: args.prefix
 			}
 			fs.writeFileSync("data/serverData.json", JSON.stringify(data))
 			let embed = new Discord.MessageEmbed()
-			.setDescription(`**Changed the prefix for this server to \`${args.prefix}\`**`)
+			.setDescription(`**Set the prefix for this server to \`${args.prefix}\`**`)
 			.setColor(0xaa00cc)
 			await message.reply(embed)
 		}

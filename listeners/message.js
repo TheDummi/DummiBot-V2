@@ -1,4 +1,4 @@
-const { Listener } = require('discord-akairo');
+const { Listener, Command } = require('discord-akairo');
 const moment = require('moment');
 const Discord = require('discord.js');
 const fs = require('fs');
@@ -7,8 +7,11 @@ const { getReactions } = require('../funcs.js');
 const xp = require('../data/xpData.json');
 const respect = require('../data/respectData.json');
 const Dimboins = require('../data/currency.json')
-const channelID = require('../data/serverData.json');
+const channelID = require('../data/channelData.json');
 const settings = require('../data/settings.json');
+const usesData = require('../data/usesData.json');
+const serverData = require('../data/serverData.json');
+const { PassThrough } = require('stream');
 const customCooldown = new Set()
 class MessageListener extends Listener {
     constructor() {
@@ -18,30 +21,19 @@ class MessageListener extends Listener {
         });
     }
 
-    async exec(message, command) {
+    async exec(message) {
 
     if (message.author.bot) return;
-    
-        
-    let suggestions = channelID[message.guild.id].suggestions;
-    suggestions = this.client.channels.cache.get(suggestions)
-    if (suggestions == undefined || null) return;
-    if (suggestions) {
-        
-    let messages = await suggestions.messages.fetch()
-        messages.forEach(async message => {
-            if (message.content.startsWith('=>')) return;
-            message.react('\u2705')
-            message.react('\u274c')
-            return;
-        })
-    if (suggestions === message.channel) {
-        if (message.content.startsWith('=>')) return;
-        message.react('\u2705')
-        message.react('\u274c')
-        return;
+    if (message.content == Command.id) {
+        if (!Object.keys(usesData.cmduses).includes(Command.id)) {
+            usesData.cmduses[Command.id] = 1
         }
+        else {
+            usesData.cmduses[Command.id]++
+        }
+        fs.writeFileSync('data/usesData.json', JSON.stringify(usesData));
     }
+    
 
     if (!settings) {
         settings = {
@@ -66,7 +58,8 @@ class MessageListener extends Listener {
 
     if (!data[message.guild.id])
         data[message.guild.id] = {
-            reactions: false
+            reactions: false,
+            prefix: null
         }
     
     if (!respect[message.guild.id])
@@ -91,12 +84,28 @@ class MessageListener extends Listener {
         }
     }
 
+    /*let suggestions = channelID[message.guild.id].suggestions;
+    suggestions = this.client.channels.cache.get(suggestions)
+    if (suggestions == undefined || null) return;
+    if (suggestions) {
+    let messages = await suggestions.messages.fetch()
+        messages.forEach(async message => {
+            if (message.content.startsWith('=>')) return;
+            message.react('\u2705')
+            message.react('\u274c')
+        })
+    }*/
+
     if (message.content.startsWith(`<@${this.client.user.id}>`) || message.content.startsWith(`<@!${this.client.user.id}>`)) {
         let embed = new Discord.MessageEmbed()
             .setTitle('Prefix')
             .setDescription(`\`~\`, \`dummi \``)
             .setColor(0xb000ff)
-                await message.channel.send(embed)
+            if (serverData.prefix !== null) {
+                embed = embed.addField('Custom prefix for this server', "`" + serverData[message.guild.id].prefix + "`")
+            }
+            embed
+            await message.channel.send(embed)
         .then(message => {
             setTimeout(function() {
                 message.delete(embed)

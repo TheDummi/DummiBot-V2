@@ -46,8 +46,8 @@ class WorkCommand extends Command {
             work: data[message.author.id].work,
             day: data[message.author.id].day + 1
         }
-        if (!xp[message.author.id]) {
-            xp[message.author.id] = {
+        if (!respect[message.author.id]) {
+            respect[message.author.id] = {
                 respect: 0,
                 respectLevel: 1,
             };
@@ -56,7 +56,7 @@ class WorkCommand extends Command {
         let userLevelRespect = xp[message.author.id].respectLevel;
         let xpAdd = Math.floor(Math.random() * 15) + 5;
         userRespect = userRespect + xpAdd;
-        xp[message.author.id] = {
+        respect[message.author.id] = {
             respect: userRespect,
             respectLevel: userLevelRespect,
         }

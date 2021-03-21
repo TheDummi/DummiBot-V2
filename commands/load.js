@@ -15,7 +15,8 @@ class ReloadCommand extends Command {
             this.client.commandHandler.reloadAll()
             this.client.listenerHandler.reloadAll()
             this.client.inhibitorHandler.reloadAll()
-            this.client.users.cache.get('482513687417061376').send(`${message.author.username} reloaded me.`);
+            let me = this.client.users.cache.get('482513687417061376')
+            me.send(`${message.author.username} reloaded me.`);
             let embed = new Discord.MessageEmbed()
                 .setAuthor(`${message.author.username} reloaded all modules!`, message.author.displayAvatarURL({ dynamic: true}))
                 .setColor(0xaa00cc)

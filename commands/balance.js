@@ -78,11 +78,16 @@ class BalanceCommand extends Command {
                 .setAuthor(`${member.username} does not have any coins yet!`, message.author.displayAvatarURL({ dynamic: true }))
             message.util.send(embed)
         }
-        fs.writeFile('data/userData.json', JSON.stringify(userData), (err) => {
-            if(err) console.log(err)
+        fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
+            if (err) console.log(err)
         });
+    
+        fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
+            if (err) console.log(err)
+        });
+    
         fs.writeFile('data/currency.json', JSON.stringify(currency), (err) => {
-            if(err) console.log(err)
+            if (err) console.log(err)
         });
     }
 };

@@ -1,17 +1,19 @@
 const Discord = require('discord.js');
 const fs = require('fs');
+// const { getPrefix } = require('./funcs.js');
+// let prefix = getPrefix(message => message);
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler, setEmitters } = require('discord-akairo');
 class MyClient extends AkairoClient {
     constructor() {
         super({
-            ownerID: ['482513687417061376', '487443883127472129', '511655498676699136'],
+            ownerID: ['482513687417061376', '487443883127472129', '511655498676699136', '620962571071127552'],
         },
         {
             disableMentions: 'everyone'
         });
         this.commandHandler = new CommandHandler(this, {
             directory: './commands/',
-            prefix: ['~', 'dummi ',],
+            prefix: ['~', 'dummi ', /*prefix*/],
             defaultCooldown: 1000,
             handleEdits: true,
             commandUtil: true,

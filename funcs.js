@@ -43,15 +43,15 @@ module.exports = {
         let noSecUptime = `${days} days, ${hours} hours and ${minutes} minutes`;
         return {uptime: uptime, noSecUptime: noSecUptime};
     },
-    getPrefix(message) {
+    /*getPrefix(message) {
         let p = "~"
-        var data = fs.readFileSync("data.json");
-        const json = JSON.parse(data); 
+        var data = fs.readFileSync("data/serverData.json");
+        const json = JSON.parse(data);
         if (json.prefixes[String(message.guild.id)]) {
             p = json.prefixes[String(message.guild.id)]
         }
         return p
-    },
+    },*/
     async haste(text) {
         for (const url of hasteURLs) {
             try {
