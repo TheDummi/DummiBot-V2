@@ -101,7 +101,7 @@ class MessageListener extends Listener {
             .setTitle('Prefix')
             .setDescription(`\`~\`, \`dummi \``)
             .setColor(0xb000ff)
-            if (serverData.prefix !== null) {
+            if (serverData[message.guild.id].prefix !== undefined || null) {
                 embed = embed.addField('Custom prefix for this server', "`" + serverData[message.guild.id].prefix + "`")
             }
             embed
