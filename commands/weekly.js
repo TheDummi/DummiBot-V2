@@ -1,7 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const coins = require('../data/currency.json');
-const level = require('../data/respectData.json')
+const level = require('../data/xpData.json')
 const fs = require('fs');
 
 class WeeklyCommand extends Command {
@@ -36,7 +36,7 @@ class WeeklyCommand extends Command {
             let Weekly = 10000 * UserLevel;
             let coin = userCoins + Weekly;
             coins[message.author.id] = {
-                coins: userCoins + parseInt(Weekly),
+                coins: coin,
                 bank: userBank
             }
         fs.writeFile("data/currency.json", JSON.stringify(coins), (err) => {

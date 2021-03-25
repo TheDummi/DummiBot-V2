@@ -10,8 +10,9 @@ const Dimboins = require('../data/currency.json')
 const channelID = require('../data/channelData.json');
 const settings = require('../data/settings.json');
 const usesData = require('../data/usesData.json');
+const storage = require('../data/storageData.json');
 const serverData = require('../data/serverData.json');
-const { PassThrough } = require('stream');
+const upgrade = require('../data/upgradeData.json');
 const customCooldown = new Set()
 class MessageListener extends Listener {
     constructor() {
@@ -33,7 +34,27 @@ class MessageListener extends Listener {
         }
         fs.writeFileSync('data/usesData.json', JSON.stringify(usesData));
     }
-    
+
+    if (!upgrade[message.author.id]) {
+        upgrade[message.author.id] = {
+            skillPoints: 1,
+            curHp: 100,
+            health: 100,
+            attack: 10,
+            storage: 0,
+            storageSpace: 400,
+            stealth: 1,
+            critical: 2,
+        }
+    }
+
+    if (!storage[message.author.id]) {
+        storage[message.author.id] = {
+            cheese: 0,
+            bandages: 0,
+            revives: 0
+        }
+    }
 
     if (!settings) {
         settings = {
@@ -114,12 +135,21 @@ class MessageListener extends Listener {
     }
 
 // Defined variables
-    let userCoins = Dimboins[message.author.id].coins;
-    let userBank = Dimboins[message.author.id].bank;
-    let userXp = xp[message.author.id].xp;
-    let userLevel = xp[message.author.id].level;
-    let userRespect = respect[message.author.id].respect;
-    let userLevelRespect = respect[message.author.id].respectLevel;
+    let user = message.author.id;
+    let userSkillPoints = upgrade[user].skillPoints;
+    let curHp = upgrade[user].curHp;
+    let userHealth = upgrade[user].health;
+    let userAttack = upgrade[user].attack;
+    let storageMin = upgrade[user].storage;
+    let userStorage = upgrade[user].storageSpace;
+    let userStealth = upgrade[user].stealth;
+    let userCritical = upgrade[user].critical;
+    let userCoins = Dimboins[user].coins;
+    let userBank = Dimboins[user].bank;
+    let userXp = xp[user].xp;
+    let userLevel = xp[user].level;
+    let userRespect = respect[user].respect;
+    let userLevelRespect = respect[user].respectLevel;
     let rank = [xp.level].sort().reverse().indexOf(userXp);
     let timestamp = Number(new Date());
     const TimeMoment = () => moment(timestamp).format("H:mm");
@@ -172,6 +202,8 @@ class MessageListener extends Listener {
     
     userLevel = userLevel + 1;
 
+    userSkillPoints = userSkillPoints + 1;
+
     let coinsLevelAdd = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * xp[message.author.id].level) * 1000;
     userCoins = coinsLevelAdd + userCoins;
 
@@ -218,7 +250,16 @@ class MessageListener extends Listener {
         xp: userXp,
         level: userLevel,
     }
-
+    upgrade[message.author.id] = {
+        skillPoints: userSkillPoints,
+        curHp: curHp,
+        health: userHealth,
+        attack: userAttack,
+        storage: storageMin,
+        storageSpace: userStorage,
+        stealth: userStealth,
+        critical: userCritical,
+    }
     fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
         if (err) console.log(err)
     });
@@ -228,6 +269,12 @@ class MessageListener extends Listener {
     });
 
     fs.writeFile('data/currency.json', JSON.stringify(Dimboins), (err) => {
+        if (err) console.log(err)
+    });
+    fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
+        if (err) console.log(err)
+    });
+    fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
         if (err) console.log(err)
     });
     }
