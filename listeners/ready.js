@@ -1,7 +1,8 @@
 const { Listener } = require('discord-akairo');
 const moment = require('moment');
 const Discord = require('discord.js');
-const { getUptime, randColor } = require('../funcs.js')
+const { getUptime, randColor } = require('../funcs.js');
+
 class ReadyListener extends Listener {
     constructor() {
         super('ready', {
@@ -11,6 +12,7 @@ class ReadyListener extends Listener {
     }
 
     async exec() {
+        
         let client = this.client
 // Rainbow role
         let roles = new Discord.Collection()

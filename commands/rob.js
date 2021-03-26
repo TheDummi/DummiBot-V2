@@ -2,7 +2,8 @@ const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const coins = require('../data/currency.json');
 const fs = require('fs');
-const xp = require('../data/respectData.json')
+const xp = require('../data/respectData.json');
+const ignored = new Set()
 class RobCommand extends Command {
     constructor() {
         super('rob', {
@@ -27,6 +28,7 @@ class RobCommand extends Command {
     }
 
     async exec(message, args) {
+        
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
         let member = args.user;
@@ -40,59 +42,66 @@ class RobCommand extends Command {
         let argsBank = coins[member.id].bank;
         let userCoins = coins[message.author.id].coins;
         let userBank = coins[message.author.id].bank;
+        
+        if (ignored.has(args.user.id)) return await message.util.send(`${args.user} is currently immune.`);
+    	else {
+            const random = Math.floor(Math.random() * argsCoins);
+            const failure = [
+                'you got caught sneaking!',
+                'you were found!',
+                `you almost ran of with ₪ ${random}, but you got caught!`,
+                'you were so close!',
+                'if you\'re going to steal something, at least be quiet about it...'
+            ];
+            const failures = () => failure[Math.floor(Math.random() * failure.length)];
+            const successRate = Math.floor(Math.random() * Math.floor(2));
 
-        const random = Math.floor(Math.random() * argsCoins);
-        const failure = [
-            'you got caught sneaking!',
-            'you were found!',
-            `you almost ran of with ₪ ${random}, but you got caught!`,
-            'you were so close!',
-            'if you\'re going to steal something, at least be quiet about it...'
-        ];
-        const failures = () => failure[Math.floor(Math.random() * failure.length)];
-        const successRate = Math.floor(Math.random() * Math.floor(2));
-
-        if(member.bot == true) {
-            embed = embed.setAuthor(`${message.author.username}, you can't steal from bots!`, message.author.displayAvatarURL({ dynamic: true }))
-        }
-
-        if(!coins[member.id]) {
-            coins[member.id] = {
-                coins: 0,
-                bank: 0,
-            }
-            embed = embed.setAuthor(`${message.author.username}, ${member.username} doesn't have any coins!`, message.author.displayAvatarURL({ dynamic: true }))
-        }
-        if (successRate === 0) {
-            coins[message.author.id] = {
-                coins: userCoins + parseInt(random),
-                bank: userBank
+            if(member.bot == true) {
+                embed = embed.setAuthor(`${message.author.username}, you can't steal from bots!`, message.author.displayAvatarURL({ dynamic: true }))
             }
 
-            coins[args.user.id] = {
-                coins: argsCoins - parseInt(random),
-                bank: argsBank
+            if(!coins[member.id]) {
+                coins[member.id] = {
+                    coins: 0,
+                    bank: 0,
+                }
+                embed = embed.setAuthor(`${message.author.username}, ${member.username} doesn't have any coins!`, message.author.displayAvatarURL({ dynamic: true }))
             }
-            embed = embed.setAuthor(`${message.author.username}, you stole ₪ ${random} from ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
+            if (successRate === 0) {
+                coins[message.author.id] = {
+                    coins: userCoins + parseInt(random),
+                    bank: userBank
+                }
+
+                coins[args.user.id] = {
+                    coins: argsCoins - parseInt(random),
+                    bank: argsBank
+                }
+                embed = embed.setAuthor(`${message.author.username}, you stole ₪ ${random} from ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
+            }
+            else {
+                embed = embed.setAuthor(`${message.author.username}, ${failures()}`, message.author.displayAvatarURL({ dynamic: true }))
+            }
+            let userRespect = xp[message.author.id].respect;
+            let userLevelRespect = xp[message.author.id].respectLevel;
+            let xpAdd = Math.floor(Math.random() * 15) + 15;
+            userRespect = userRespect - xpAdd;
+            xp[message.author.id] = {
+                respect: userRespect,
+                respectLevel: userLevelRespect,
+            }
+            fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
+                if (err) console.log(err)
+            })
+            fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
+                if(err) console.log(err)
+            })
+            ignored.add(args.user.id);
+            setTimeout(() => {
+                ignored.delete(args.user.id)
+            }, 3600000);
+            return await message.util.send(embed)
         }
-        else {
-            embed = embed.setAuthor(`${message.author.username}, ${failures()}`, message.author.displayAvatarURL({ dynamic: true }))
-        }
-        let userRespect = xp[message.author.id].respect;
-        let userLevelRespect = xp[message.author.id].respectLevel;
-        let xpAdd = Math.floor(Math.random() * 15) + 15;
-        userRespect = userRespect - xpAdd;
-        xp[message.author.id] = {
-            respect: userRespect,
-            respectLevel: userLevelRespect,
-        }
-        fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
-            if (err) console.log(err)
-        })
-        fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
-            if(err) console.log(err)
-        })
-        return await message.util.send(embed)
     }
 };
 

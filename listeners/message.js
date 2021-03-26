@@ -14,6 +14,7 @@ const storage = require('../data/storageData.json');
 const serverData = require('../data/serverData.json');
 const upgrade = require('../data/upgradeData.json');
 const customCooldown = new Set()
+const customChest = new Set()
 class MessageListener extends Listener {
     constructor() {
         super('message', {
@@ -52,7 +53,8 @@ class MessageListener extends Listener {
         storage[message.author.id] = {
             cheese: 0,
             bandages: 0,
-            revives: 0
+            revives: 0,
+            rifle: 0
         }
     }
 
@@ -138,6 +140,7 @@ class MessageListener extends Listener {
     let user = message.author.id;
     let userSkillPoints = upgrade[user].skillPoints;
     let curHp = upgrade[user].curHp;
+    let rifle = storage[user].rifle;
     let userHealth = upgrade[user].health;
     let userAttack = upgrade[user].attack;
     let storageMin = upgrade[user].storage;
@@ -209,7 +212,7 @@ class MessageListener extends Listener {
 
     let lvlUp = new Discord.MessageEmbed()
         .setTitle('Level up!🎉')
-        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins!`)
+        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And A skill point!`)
         .setColor(0xaa00cc)
         .setThumbnail(message.author.displayAvatarURL())
     try {
@@ -230,10 +233,9 @@ class MessageListener extends Listener {
         .setTitle('Level up!🎉')
         .setDescription(`<@${message.author.id}> leveled up!`)
         .addField(`Level`, userLevel, true)
-        .addField('XP', userXp, true)
+        .addField('Respect level', userLevelRespect, true)
         .addField('Server', message.guild.name, true)
-        .addField(`Coins`, userCoins)
-        .addField('Bank', userBank, true)
+        .addField(`Coins`, userCoins + userBank, true)
         .setColor(0xaa00cc)
         .setFooter(`${message.author.username}`, message.author.displayAvatarURL({ dynamic: true }))
         .setThumbnail(message.author.displayAvatarURL({ dynamic: true }))

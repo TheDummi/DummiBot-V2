@@ -5,7 +5,7 @@ const storage = require('../data/storageData.json');
 class BackpackCommand extends Command {
     constructor() {
         super('backpack', {
-            aliases: ['backpack'],
+            aliases: ['backpack', 'bp'],
             category: 'economy',
             description: 'View your backpack.',
             args: [
@@ -32,6 +32,7 @@ class BackpackCommand extends Command {
         let embed = new Discord.MessageEmbed()
             .setAuthor(`${member.username}'s backpack`, member.displayAvatarURL({ dynamic: true }))
             .addField('Items', `🧀 ${cheese}\n🩹 ${bandages}\n💉 ${revives}`)
+            .setFooter('~use [item] [amount]')
             .setColor(0xaa00cc)
         message.util.send(embed);
     }

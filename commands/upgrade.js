@@ -6,15 +6,15 @@ const xp = require('../data/xpData.json');
 class UpgradeCommand extends Command {
     constructor() {
         super('upgrade', {
-            aliases: ['upgrade',],
+            aliases: ['upgrade', 'up'],
             category: 'economy',
             description: 'Use your upgrade points to upgrade your stats',
             args: [
                 {
                     id: 'choice',
-                    type: ['health', 'storage', 'attack', 'pets', 'stealth', 'critical'],
+                    type: ['health', 'storage', 'attack', 'stealth', 'critical'],
                     prompt: {
-                        start: 'What would you like to upgrade?\n`health`\n`storage`\n`attack`\n`pets`\n`stealth`\n`critical`'
+                        start: 'What would you like to upgrade?\n`health`\n`storage`\n`attack`\n`stealth`\n`critical`'
                     }
                 },
                 {

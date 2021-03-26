@@ -17,10 +17,14 @@ class BuyCommand extends Command {
                         'cheese',
                         'skillpoints',
                         'bandages',
-                        'revive'
+                        'medkit',
+                        'revive',
+                        'rifle',
+                        'shield'
                     ],
                     prompt: {
-                        start: 'What would you like to buy?'
+                        start: 'What would you like to buy?',
+                        retry: 'Can\'t buy that. What would you like to buy?'
                     }
                 },
                 {
@@ -41,7 +45,9 @@ class BuyCommand extends Command {
             storage[message.author.id] = {
                 cheese: 0,
                 bandages: 0,
-                revives: 0
+                revives: 0,
+                medkit: 0,
+                rifle: 0,
             }
         }
 
@@ -50,11 +56,14 @@ class BuyCommand extends Command {
 
         let cheese = storage[message.author.id].cheese;
         let bandages = storage[message.author.id].bandages;
+        let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
+        let shield = storage[message.author.id].shield;
 
         let user = message.author.id;
         let skillPoints = upgrade[user].skillPoints;
         let curHp = upgrade[user].curHp;
+        let rifle = storage[user].rifle;
         let userHealth = upgrade[user].health;
         let userAttack = upgrade[user].attack;
         let userStorageMax = upgrade[user].storage;
@@ -89,10 +98,38 @@ class BuyCommand extends Command {
             });
             return message.util.send(`You bought ${string} skill points`)
         }
-        userStorageMax = userStorageMax + string;
+        if (choice == 'rifle') {
+            if (userCoins < 750000) {
+                return await message.util.send('You don\'t have enough coins!')
+            }
+            if (string > 1) return await message.util.send('You can only own 1 rifle.') 
+            if (rifle >= 1) return await message.util.send('You already have a hunting rifle.')
+            storage[message.author.id] = {
+                cheese: cheese,
+                bandages: bandages,
+                medkit: medkit,
+                revives: revives,
+                rifle: rifle + string,
+                shield: shield,
+            }
+            coins[message.author.id] = {
+                coins: userCoins - 750000,
+                bank: userBank
+            }
+            fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
+                if (err) console.log(err)
+            });
+            fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
+                if (err) console.log(err)
+            });
+            return await message.util.send('You bought a hunting rifle.');
+        }
+        
         if (string > (userStorage - userStorageMax)) {
             return await message.util.send('You do not have enough space!')
         }
+        userStorageMax = userStorageMax + string;
+
         if (choice == 'cheese') {
             if (userCoins < string * 100) {
                 return message.util.send('Not enough coins!')
@@ -100,6 +137,15 @@ class BuyCommand extends Command {
             userCoins = userCoins - (string * 100)
             cheese = cheese + string
         }
+
+        if (choice == 'medkit') {
+            if (userCoins < string * 5000) {
+                return message.util.send('Not enough coins!')
+            }
+            userCoins = userCoins - (string * 5000)
+            medkit = medkit + string
+        }
+
         if (choice == 'bandages') {
             if (userCoins < string * 1000) {
                 return message.util.send('Not enough coins!')
@@ -121,7 +167,9 @@ class BuyCommand extends Command {
         storage[message.author.id] = {
             cheese: cheese,
             bandages: bandages,
-            revives: revives
+            medkit: medkit,
+            revives: revives,
+            rifle: rifle,
         }
         upgrade[message.author.id] = {
             skillPoints: skillPoints,
