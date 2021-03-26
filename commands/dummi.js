@@ -118,7 +118,11 @@ class DummiCommand extends Command {
             prestige: 0,
         }
         fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         })
 	}
 };

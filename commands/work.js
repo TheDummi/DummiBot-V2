@@ -61,12 +61,26 @@ class WorkCommand extends Command {
             respectLevel: userLevelRespect,
         }
         fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         })
         fs.writeFile('data/userData.json', JSON.stringify(data), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         })
-        embed = embed.setAuthor(`${message.author.username}, your ${data[message.author.id].work} days of work has been rewarded in ₪ ${work}! You've worked a total of ${data[message.author.id].day}h, this gave you a bonus of ₪ ${hour}`, message.author.displayAvatarURL({ dynamic: true }))
+        let days = data[message.author.id].work;
+        let hours = data[message.author.id].day;
+        embed = embed
+            .setAuthor(`${message.author.username}, you worked for 1h!`, message.author.displayAvatarURL({ dynamic: true }))
+            .setDescription(`Day loan: ${work}\nHour loan: ${hour}\n----------------------\nTotal loan: ${work + hour}`)
+            .addField('Total days', days, true)
+            .addField('Total hours', hours, true)
         return await message.channel.send(embed)
     }
 }

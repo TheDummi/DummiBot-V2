@@ -433,8 +433,7 @@ class GifCommand extends Command {
                 await message.util.send(embed)
             }
         }
-        catch (e) {
-            console.log(e)
+        catch {
             message.util.send('No images found!')
         }
     }

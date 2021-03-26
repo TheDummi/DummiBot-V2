@@ -91,10 +91,18 @@ class BuyCommand extends Command {
                 bank: userBank
             }
             fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             return message.util.send(`You bought ${string} skill points`)
         }
@@ -117,10 +125,18 @@ class BuyCommand extends Command {
                 bank: userBank
             }
             fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             return await message.util.send('You bought a hunting rifle.');
         }
@@ -182,13 +198,25 @@ class BuyCommand extends Command {
             critical: userCritical,
         }
         fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         return await message.util.send(`You bought ${string} ${choice}!`)
     }

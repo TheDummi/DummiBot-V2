@@ -263,21 +263,41 @@ class MessageListener extends Listener {
         critical: userCritical,
     }
     fs.writeFile('data/xpData.json', JSON.stringify(xp), (err) => {
-        if (err) console.log(err)
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
 
     fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
-        if (err) console.log(err)
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
 
     fs.writeFile('data/currency.json', JSON.stringify(Dimboins), (err) => {
-        if (err) console.log(err)
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
-        if (err) console.log(err)
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
-        if (err) console.log(err)
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     }
 };

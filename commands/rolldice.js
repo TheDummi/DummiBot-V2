@@ -37,13 +37,6 @@ class RollDiceCommand extends Command {
 		for (var i = 0; i < args.number; i++) {
 			str = str + (i+1) + ": " + rollDice() + "\n"
 		}
-		if (rollDice() === 1) rollDice().replace(1, "⚀");
-		if (rollDice() === 2) rollDice().replace(2, "⚁");
-		if (rollDice() === 3) rollDice().replace(3, "⚂");
-		if (rollDice() === 4) rollDice().replace(4, "⚃");
-		if (rollDice() === 5) rollDice().replace(5, "⚄");
-		if (rollDice() === 6) rollDice().replace(6, "⚅");
-        console.log("🚀 ~ file: rolldice.js ~ line 46 ~ RollDiceCommand ~ exec ~ rollDice()", rollDice())
 		m.edit(`${str}`);
     }
 };

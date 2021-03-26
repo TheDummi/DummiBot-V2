@@ -45,7 +45,11 @@ class ReactionsCommand extends Command {
             embed = embed.setDescription(`Random reactions disabled.`)
         }
         fs.writeFile('data/serverData.json', JSON.stringify(data), (err) => {
-            if (err) console.log(err);
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         })
         return await message.channel.send(embed)
     }

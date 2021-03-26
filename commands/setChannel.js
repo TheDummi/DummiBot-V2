@@ -138,7 +138,11 @@ class SetChannelCommand extends Command {
             }
         }
             fs.writeFile("data/channelData.json", JSON.stringify(channels), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             })
         channel = this.client.channels.cache.get(channel)
         return await message.util.send(`Set ${channel}, as ${option} channel!`);

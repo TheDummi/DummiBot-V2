@@ -99,8 +99,12 @@ class UpgradeCommand extends Command {
             critical: userCritical,
         }
 
-        fs.writeFile('data/upgrade.json', JSON.stringify(upgrade), (err) => {
-            if (err) console.log(err)
+        fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         return await message.util.send(`You upgraded ${choice} by ${number}!`)
     }

@@ -68,8 +68,7 @@ class CleanCommand extends Command {
 			channel.send(logEmbed)
 			}
 		}
-		catch(e) {
-			console.log(e)
+		catch {
 			let embed4 = new Discord.MessageEmbed()
 				.setTitle('Error deleting, please make sure the messages are less than two weeks old.')
 				.setColor(0xaa00cc)

@@ -66,7 +66,9 @@ class DailyCommand extends Command {
             bank: userBank
         }
 
-        embed = embed.setAuthor(`${message.author.username} you claimed a daily of ₪ ${daily}, you now have ₪ ${coin} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+        embed = embed
+        .setAuthor(`${message.author.username}, you claimed your daily!`, message.author.displayAvatarURL({ dynamic: true }))
+        .setDescription(`Daily: ${daily}\nWallet: ${userCoins}\n---------------------\nTotal: ${coin}`)
         await message.util.send(embed)
 
         userRespect = userRespect + xpAdd;
@@ -77,15 +79,27 @@ class DailyCommand extends Command {
         }
         
         fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
 
         fs.writeFile("data/currency.json", JSON.stringify(coins), (err) => {
-            if(err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
 
         fs.writeFile('data/userData.json', JSON.stringify(userData), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
     }
 };

@@ -65,7 +65,11 @@ class ProfileCommand extends Command {
             .setColor(0xaa00cc)
         await message.util.send(embed)
         fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
     }
 }

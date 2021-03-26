@@ -104,7 +104,11 @@ class SetRoleCommand extends Command {
             }
         }
             fs.writeFile("serverData.json", JSON.stringify(channels), (err) => {
-                if (err) console.log(err)
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             })
             channel = message.guild.roles.cache.get(channel)
             message.util.send(`Set ${channel}, as ${option} role!`)

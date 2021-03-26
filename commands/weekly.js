@@ -40,11 +40,16 @@ class WeeklyCommand extends Command {
                 bank: userBank
             }
         fs.writeFile("data/currency.json", JSON.stringify(coins), (err) => {
-            if(err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
-            .setAuthor(`${message.author.username} you claimed a weekly of ₪ ${Weekly}, you now have ₪ ${coin} in your wallet`)
+            .setAuthor(`${message.author.username}, you claimed your weekly!`, message.author.displayAvatarURL({ dynamic: true }))
+            .setDescription(`Weekly: ${Weekly}\nWallet: ${userCoins}\n---------------------\nTotal: ${coin}`)
         return await message.util.send(embed)
     }
 };

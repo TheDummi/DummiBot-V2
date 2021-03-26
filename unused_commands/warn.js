@@ -45,7 +45,11 @@ class WarnCommand extends Command {
         await message.util.send(`Warned <@${args.user.id}> for the ${warn++} time! With reason: ${reason}`)
         await message.args.user.send(`You got warned in ${message.guild.name} for ${reason} ${warn++}!`)
         fs.writeFile("warning.json", JSON.stringify(warns), (err) => {
-            if(err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         })
     }
 };

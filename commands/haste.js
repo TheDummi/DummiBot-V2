@@ -28,8 +28,7 @@ class HasteCommand extends Command {
 		try {
 			b = fs.readFileSync(args.message)
 		}
-		catch(e) {
-			console.log(e)
+		catch {
 			return await message.reply("Not a valid file path")
 		}
 		const {body} = await got.post('https://hst.sh/documents', {

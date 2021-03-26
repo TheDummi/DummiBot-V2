@@ -57,7 +57,6 @@ class MuteCommand extends Command {
 		if (argsMute.id == message.author.id) return message.util.send('You can\'t mute yourself');
 		try {
 			let muteRole = roles[message.guild.id].mute;
-            console.log("🚀 ~ file: mute.js ~ line 60 ~ MuteCommand ~ exec ~ muteRole", muteRole)
 			muteRole = message.guild.roles.cache.get(muteRole)
 			if (message.member.roles.cache.has(muteRole)) return message.reply('Has already been muted')
 			await message.member.roles.add(muteRole)
@@ -85,8 +84,7 @@ class MuteCommand extends Command {
 			await message.author.send(embed8);
 		}, argsTime);
 		} 
-		catch(e) {
-			console.log(e)
+		catch {
 			message.util.send('No mute role set up.')
 		}
 	}

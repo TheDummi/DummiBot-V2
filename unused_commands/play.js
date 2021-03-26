@@ -26,14 +26,13 @@ module.exports = {
             dispatcher = connection.play(ytdl(args[0], { filter: 'audioonly' }));
             message.delete()
         }
-        catch (e) {
+        catch {
             if (String(e) === "Error: Not a YouTube domain") {
                 dispatcher = connection.play(args[0]);
                 message.delete()
             }
             else {
                 await message.guild.me.voice.channel.leave()
-                console.log(e)
                 return await message.reply("Error playing url, is it a valid audio source?")
             }
         }

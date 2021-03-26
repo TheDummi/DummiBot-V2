@@ -54,7 +54,11 @@ class ContributorsCommand extends Command {
             contributor: member.user.username
         }
         fs.writeFileSync('contributors.json', JSON.stringify(contributors), (err) => {
-            if (err) console.log(err)
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         }
     }
