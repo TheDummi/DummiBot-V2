@@ -75,7 +75,7 @@ class RouletteCommand extends Command {
             coins: coin,
             bank: bank
         }
-        fs.writeFile('data/coins.json', JSON.stringify(coins), (err) => {
+        fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)

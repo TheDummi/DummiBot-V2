@@ -125,11 +125,6 @@ dist
 *.code-workspace
 
 # End of https://www.toptal.com/developers/gitignore/api/vscode,node
-
-xp.json
-currency.json
-data.json
-contributors.json
+data
+unused_commands
 token.txt
-developer.json
-serverData.json
