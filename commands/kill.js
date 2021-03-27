@@ -43,6 +43,9 @@ class KillCommand extends Command {
 				critical: 2,
 			}
 		}
+		if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
 		if (args.member.bot) {
 			return await message.util.send('You can\'t kill bots')
 		}

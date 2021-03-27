@@ -23,6 +23,12 @@ class ReviveCommand extends Command {
         })
     }
     async exec(message, args) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
+        if (args.user.id == message.author.id) {
+            return await message.util.send('In order to revive yourself, you have to `use` a revive.')
+        }
         if (!upgrade[args.user.id]) {
             upgrade[args.user.id] = {
                 skillPoints: 0,
@@ -60,6 +66,10 @@ class ReviveCommand extends Command {
         let userStorage = upgrade[args.user.id].storageSpace;
         let userStealth = upgrade[args.user.id].stealth;
         let userCritical = upgrade[args.user.id].critical;
+
+        if (curHp > 0) {
+            return await message.util.send('This user is not dead')
+        }
 
         if (!revives) {
             return await message.util.send('You don\'t have any revives!')

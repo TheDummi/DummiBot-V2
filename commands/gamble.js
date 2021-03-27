@@ -2,6 +2,7 @@ const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const fs = require('fs');
 const coins = require('../data/currency.json');
+const upgrade = require('../data/upgradeData.json');
 class GambleCommand extends Command {
     constructor() {
         super('gamble', {
@@ -25,7 +26,9 @@ class GambleCommand extends Command {
         })
     }
     async exec(message, args) {
-
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
         if(!coins[message.author.id]){

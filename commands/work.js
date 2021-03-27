@@ -5,6 +5,7 @@ const data = require('../data/userData.json');
 const coins = require('../data/currency.json');
 const xp = require('../data/xpData.json');
 const respect = require('../data/respectData.json');
+const upgrade = require('../data/upgradeData.json');
 
 class WorkCommand extends Command {
     constructor() {
@@ -17,6 +18,9 @@ class WorkCommand extends Command {
     }
 
     async exec(message) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
         if (!data[message.author.id]) {

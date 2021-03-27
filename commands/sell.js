@@ -49,6 +49,9 @@ class SellCommand extends Command {
         })
     }
     async exec(message, args) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let choice = args.choice;
         let string = args.string;
         if (!storage[message.author.id]) {

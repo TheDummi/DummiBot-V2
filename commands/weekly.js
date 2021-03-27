@@ -3,6 +3,7 @@ const { Command } = require('discord-akairo');
 const coins = require('../data/currency.json');
 const level = require('../data/xpData.json')
 const fs = require('fs');
+const upgrade = require('../data/upgradeData.json');
 
 class WeeklyCommand extends Command {
     constructor() {
@@ -15,7 +16,9 @@ class WeeklyCommand extends Command {
         })
     }
     async exec(message) {
-        
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         if (!coins[message.author.id]) {
             coins[message.author.id] = {
                 coins: 0,

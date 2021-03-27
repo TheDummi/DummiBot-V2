@@ -28,6 +28,9 @@ class HuntCommand extends Command {
     }
 
     async exec(message, args) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         if (upgrade[message.author.id].storage >= upgrade[message.author.id].storageSpace) {
             return await message.util.send('You have no storage space left.')
         }

@@ -1,6 +1,7 @@
 const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const coins = require('../data/currency.json');
+const upgrade = require('../data/upgradeData.json');
 const fs = require('fs');
 
 class RouletteCommand extends Command {
@@ -33,6 +34,9 @@ class RouletteCommand extends Command {
     }
 
     async exec(message, args) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         if (!coins[message.author.id]) {
             coins[message.author.id] = {
                 coins: 0,

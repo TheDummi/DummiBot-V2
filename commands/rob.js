@@ -3,6 +3,7 @@ const { Command } = require('discord-akairo');
 const coins = require('../data/currency.json');
 const fs = require('fs');
 const xp = require('../data/respectData.json');
+const upgrade = require('../data/upgradeData.json');
 const ignored = new Set()
 class RobCommand extends Command {
     constructor() {
@@ -28,7 +29,9 @@ class RobCommand extends Command {
     }
 
     async exec(message, args) {
-        
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)
         let member = args.user;

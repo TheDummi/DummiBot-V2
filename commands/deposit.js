@@ -4,6 +4,7 @@ const fs = require('fs');
 const coins = require('../data/currency.json');
 const xp = require('../data/xpData.json');
 const data = require('../data/userData.json');
+const upgrade = require('../data/upgradeData.json');
 class DepositCommand extends Command {
     constructor() {
         super('deposit', {
@@ -25,6 +26,9 @@ class DepositCommand extends Command {
         })
     }
     async exec(message, args) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let user = message.author.id
         let embed = new Discord.MessageEmbed()
             .setColor(0xaa00cc)

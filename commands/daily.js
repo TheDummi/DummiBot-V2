@@ -5,6 +5,7 @@ const xp = require('../data/xpData.json');
 const fs = require('fs');
 const userData = require('../data/userData.json');
 const respect = require('../data/respectData.json');
+const upgrade = require('../data/upgradeData.json');
 
 class DailyCommand extends Command {
     constructor() {
@@ -18,6 +19,9 @@ class DailyCommand extends Command {
     }
 
     async exec(message) {
+        if (upgrade[message.author.id].curHp <= 0) {
+            return await message.util.send('You are dead, use a revive to revive yourself!')
+        }
         let user = message.author.id;
         if (!userData[user]) {
             userData[user] = {
