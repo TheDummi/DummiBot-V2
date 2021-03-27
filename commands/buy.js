@@ -20,7 +20,6 @@ class BuyCommand extends Command {
                         'medkit',
                         'revive',
                         'rifle',
-                        'shield'
                     ],
                     prompt: {
                         start: 'What would you like to buy?',
@@ -58,7 +57,6 @@ class BuyCommand extends Command {
         let bandages = storage[message.author.id].bandages;
         let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
-        let shield = storage[message.author.id].shield;
 
         let user = message.author.id;
         let skillPoints = upgrade[user].skillPoints;
@@ -94,14 +92,14 @@ class BuyCommand extends Command {
                 let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
                 let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             return message.util.send(`You bought ${string} skill points`)
@@ -118,7 +116,6 @@ class BuyCommand extends Command {
                 medkit: medkit,
                 revives: revives,
                 rifle: rifle + string,
-                shield: shield,
             }
             coins[message.author.id] = {
                 coins: userCoins - 750000,
@@ -128,14 +125,14 @@ class BuyCommand extends Command {
                 let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
                 let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             return await message.util.send('You bought a hunting rifle.');
@@ -201,21 +198,21 @@ class BuyCommand extends Command {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         return await message.util.send(`You bought ${string} ${choice}!`)

@@ -1,6 +1,6 @@
 {
   "name": "dummibot",
-  "version": "2.1.3",
+  "version": "2.1.4",
   "description": "DummiBot",
   "main": "main.js",
   "dependencies": {

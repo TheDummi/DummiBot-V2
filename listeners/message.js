@@ -14,7 +14,6 @@ const storage = require('../data/storageData.json');
 const serverData = require('../data/serverData.json');
 const upgrade = require('../data/upgradeData.json');
 const customCooldown = new Set()
-const customChest = new Set()
 class MessageListener extends Listener {
     constructor() {
         super('message', {
@@ -266,7 +265,7 @@ class MessageListener extends Listener {
         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
 
@@ -274,7 +273,7 @@ class MessageListener extends Listener {
         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
 
@@ -282,21 +281,42 @@ class MessageListener extends Listener {
         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+    });
+    fs.writeFile('data/channelData.json', JSON.stringify(channelID), (err) => {
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+    });
+    fs.writeFile('data/serverData.json', JSON.stringify(serverData), (err) => {
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+    });
+    fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
+        let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
     });
     }

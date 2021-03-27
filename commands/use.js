@@ -92,14 +92,14 @@ class UseCommand extends Command {
                         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
                     });
                     fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
                         let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
                     });
                     return await message.util.send(`You ate ${string} cheese!`)
@@ -118,12 +118,12 @@ class UseCommand extends Command {
             if (curHp >= userHealth) {
                 return await message.util.send('You are full health!')
             }
-            if (curHp + string * 10 > userHealth) {
+            if (curHp + string * 50 > userHealth) {
                 return await message.util.send('You can\'t over heal!')
             }
             
             bandages = bandages - string
-            curHp = curHp + string * 10
+            curHp = curHp + string * 50
         }
         if (choice == 'medkit') {
             if (medkit < string) {
@@ -135,12 +135,12 @@ class UseCommand extends Command {
             if (curHp >= userHealth) {
                 return await message.util.send('You are full health!')
             }
-            if (curHp + string * 25 > userHealth) {
+            if (curHp + string * 200 > userHealth) {
                 return await message.util.send('You can\'t over heal!')
             }
             
             medkit = medkit - string
-            curHp = curHp + string * 25
+            curHp = curHp + string * 200
         }
         if (choice == 'revive') {
             if (revives < string) {
@@ -173,14 +173,14 @@ class UseCommand extends Command {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         return await message.util.send(`You used ${string} ${choice}!`)

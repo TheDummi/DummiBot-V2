@@ -51,7 +51,7 @@ class WithdrawCommand extends Command {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         return await message.util.send(embed)

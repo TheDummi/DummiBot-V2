@@ -60,14 +60,14 @@ class LevelCommand extends Command {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/respectData.json', JSON.stringify(respect), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
     }

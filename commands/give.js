@@ -71,7 +71,7 @@ class GiveCommand extends Command {
                 let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
         embed = embed.setAuthor(`${message.author.username}, you given ₪ ${args.message} to ${member.username}`, member.displayAvatarURL({ dynamic: true }))

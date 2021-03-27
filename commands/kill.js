@@ -46,6 +46,9 @@ class KillCommand extends Command {
 		if (args.member.bot) {
 			return await message.util.send('You can\'t kill bots')
 		}
+		if (upgrade[args.member.id].curHp <= 0) {
+			return await message.util.send('This user is already dead')
+		}
 		if (killed.has(args.member.id)) return await message.util.send(`${args.member} is currently immune.`);
     	else {
 
@@ -94,7 +97,7 @@ class KillCommand extends Command {
 				let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
-                .setDescription(`\`\`\`${err}\`\`\``)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
 			});
 			killed.add(args.member.id);
