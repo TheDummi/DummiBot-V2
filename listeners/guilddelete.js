@@ -12,9 +12,16 @@ class GuildDeleteListener extends Listener {
 async exec(guild) {
     const channel = this.client.channels.cache.get('787659277408927746')
     let embed = new Discord.MessageEmbed()
-	.setTitle(`${guild.name} either kicked me or deleted the server!`)
 	.setFooter(`I now am in ${this.client.guilds.cache.size} servers!`)
 	.setColor(0xaa00cc)
+    .setTimestamp()
+    let check = guild.deleted;
+    if (check == false) {
+        embed = embed.setDescription(`${guild.name} got deleted...`)
+    }
+    else {
+        embed = embed.setDescription(`${guild.name} kicked me...`)
+    }
 	await channel.send(embed)
     }
 }

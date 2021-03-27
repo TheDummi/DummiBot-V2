@@ -9,7 +9,7 @@ class CommandPermissionsListener extends Listener {
     }
 
     async exec(message, command, missing) {
-        if (!this.client.permissions) {
+        if (type == this.client) {
         let embed = new Discord.MessageEmbed()
             .setAuthor(`${message.author.username} I'm missing the following permissions: ${missing} to run ${command.id}`, message.author.displayAvatarURL( { dynamic: true } ))
             .setColor(0xaa00cc)
@@ -20,7 +20,7 @@ class CommandPermissionsListener extends Listener {
             }, 60000)
         })
         }
-        if (!message.author.permissions) {
+        if (type == message.author) {
         let embed = new Discord.MessageEmbed()
             .setAuthor(`${message.author.username} you don't have the following permissions: ${missing}, for ${command.id}`, message.author.displayAvatarURL( { dynamic: true } ))
             .setColor(0xaa00cc)

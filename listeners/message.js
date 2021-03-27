@@ -78,32 +78,35 @@ class MessageListener extends Listener {
         };
     }
 
-    if (!data[message.guild.id])
-        data[message.guild.id] = {
-            reactions: false,
-            prefix: null
-        }
-    
-    if (!respect[message.guild.id])
+    if (!respect[message.author.id])
         respect[message.author.id] = {
             respect: 0,
             respectLevel: 1
         }
-
-    if (data[message.guild.id].reactions == true && Math.random() < 0.05) {
-        message.react(message.guild.emojis.cache.get(message.guild.emojis.cache.randomKey()));
-    }
-
-    if (!channelID[message.guild.id]) {
-        channelID[message.guild.id] = {
-            level: null,
-            report: null,
-            warn: null,
-            moderation: null,
-            welcome: null,
-            leave: null,
-            suggestions: null,
+    try {
+        if (data[message.guild.id].reactions == true && Math.random() < 0.05) {
+            message.react(message.guild.emojis.cache.get(message.guild.emojis.cache.randomKey()));
         }
+    
+        if (!data[message.guild.id])
+                data[message.guild.id] = {
+                    reactions: false,
+                    prefix: null
+                }
+        if (!channelID[message.guild.id]) {
+            channelID[message.guild.id] = {
+                level: null,
+                report: null,
+                warn: null,
+                moderation: null,
+                welcome: null,
+                leave: null,
+                suggestions: null,
+            }
+        }
+    }
+    catch {
+        return;
     }
 
     /*let suggestions = channelID[message.guild.id].suggestions;

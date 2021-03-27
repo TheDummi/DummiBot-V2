@@ -13,8 +13,8 @@ class CommandBlockedListener extends Listener {
         
         let embed = new Discord.MessageEmbed()
         .setTitle('Command block traceback')
-        .setColor(0xAA00CC)
-        .addField('Author', message.author.username)
+        .setColor(0xaa00cc)
+        .addField('Author', message.author.tag)
         if (message.guild.name !== null) {
             embed = embed.addField('Server', message.guild.name)
         }
@@ -25,11 +25,19 @@ class CommandBlockedListener extends Listener {
         }
         embed
             .addField('Command', command.id)
-            .addField('Reason', 'not in/an ' + reason)
-        channel.send(embed)
-        if (reason == "owner") return message.channel.send(`<@${message.author.id}> you are not a developer. \`${command.id}\` is a developer command.`)
-        if (reason == "dm") return message.channel.send(`<@${message.author.id}> you can only use \`${command.id}\` in DMs.`)
-        if (reason == "guild") return message.channel.send(`<@${message.author.id}> you can only use \`${command.id}\` in guilds.`)
+        if (reason == "owner") {
+            embed = embed.addField('Reason', `Not an ${reason}`)
+            await message.channel.send(`<@${message.author.id}> you are not a developer. \`${command.id}\` is a developer command.`)
+        }
+        if (reason == "dm") {
+            embed = embed.addField('Reason', `Not in a DM`)
+            await message.channel.send(`<@${message.author.id}> you can only use \`${command.id}\` in DMs.`)
+        }
+        if (reason == "guild") {
+            embed = embed.addField('Reason', `Not in a guild`)
+            await message.channel.send(`<@${message.author.id}> you can only use \`${command.id}\` in guilds.`)
+        }
+        await channel.send(embed)
     }
 };
 module.exports = CommandBlockedListener;
