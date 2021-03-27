@@ -92,8 +92,8 @@ class HuntCommand extends Command {
                 pigeon = pigeon + random;
                 rabbit = rabbit + random;
                 embed = embed
-                    .addField('🐦', pigeon)
-                    .addField('🐇', rabbit)
+                    .addField('🐦', random)
+                    .addField('🐇', random)
                 }, a)
             }
             if (time == '2') {
@@ -105,8 +105,8 @@ class HuntCommand extends Command {
                 pig = pig + random;
                 goat = goat + random;
                 embed = embed
-                    .addField('🐖', pig)
-                    .addField('🐐', goat)
+                    .addField('🐖', random)
+                    .addField('🐐', random)
                 }, a)
             }
             if (time == '4') {
@@ -117,7 +117,7 @@ class HuntCommand extends Command {
                 setTimeout(() => {
                 fox = fox + random;
                 embed = embed
-                    .addField('🦊', fox)
+                    .addField('🦊', random)
                 }, a)
             }
             if (time == '8') {
@@ -128,7 +128,7 @@ class HuntCommand extends Command {
                 setTimeout(() => {
                 deer = deer + random;
                 embed = embed
-                    .addField('🦌', deer)
+                    .addField('🦌',random)
                 }, a)
             }
             if (time == '12') {
@@ -140,8 +140,8 @@ class HuntCommand extends Command {
                 tiger = tiger + random;
                 lion = lion + random;
                 embed = embed
-                    .addField('🐅', tiger)
-                    .addField('🦁', lion)
+                    .addField('🐅', random)
+                    .addField('🦁', random)
                 }, a)
             }
             if (time == '24') {
@@ -152,7 +152,7 @@ class HuntCommand extends Command {
                 setTimeout(() => {
                 buffalo = buffalo + random;
                 embed = embed
-                    .addField('🐃', buffalo)
+                    .addField('🐃', random)
                 }, a)
             }
             await message.util.send(`You went hunting for ${time}h`)

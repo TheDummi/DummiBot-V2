@@ -76,7 +76,7 @@ class ReviveCommand extends Command {
         }
         upgrade[args.user.id] = {
             skillPoints: skillPoints,
-            curHp: curHp + (userHealth/2),
+            curHp: curHp + Math.round(userHealth/2),
             health: userHealth,
             attack: userAttack,
             storage: userStorageMax,

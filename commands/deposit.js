@@ -16,8 +16,7 @@ class DepositCommand extends Command {
             args: [
                 {
                     id: 'message',
-                    type: 'number',
-                    match: 'rest',
+                    type: 'string',
                     prompt: {
                         start: 'How much would you like to deposit?'
                     }
@@ -54,21 +53,47 @@ class DepositCommand extends Command {
         let userLevel = xp[user].level;
         let work = data[user].work;
         let day = data[user].day;
-        let bankLimit = (userLevel * 10000 * day)
-        
-        if (userBank + args.message > bankLimit) {
-            embed = embed.setAuthor(`${message.author.username}, you can't store that much on your bank!`, message.author.displayAvatarURL({ dynamic: true}))
-            return await message.channel.send(embed)
+        if (day == 0) {
+            day = 1
         }
-        if (userCoins < args.message) {
-            embed = embed.setAuthor(`${message.author.username}, you don\'t have enough coins!`, message.author.displayAvatarURL({ dynamic: true}))
-            return await message.util.send(embed)
+        let bankLimit = (userLevel * 10000 * day)
+        let a;
+        if (args.message == 'all') {
+            if (userBank >= bankLimit) {
+                return await message.util.send('You already have a full bank!')
+            }
+            if (userCoins < bankLimit) {
+                a = userCoins
+            }
+            if (userBank <= 0) {
+                a = bankLimit
+                console.log(a)
+            }
+            else {
+                a = bankLimit - userBank
+                
+            }
+            
+        }
+        else {
+            if (isNaN(args.message)) {
+                return message.util.send('Not a valid amount.')
+            }
+            if (userBank + Number(args.message) > bankLimit) {
+                embed = embed.setAuthor(`${message.author.username}, you can't store that much on your bank!`, message.author.displayAvatarURL({ dynamic: true}))
+                return await message.channel.send(embed)
+            }
+            if (userCoins < Number(args.message)) {
+                embed = embed.setAuthor(`${message.author.username}, you don\'t have enough coins!`, message.author.displayAvatarURL({ dynamic: true}))
+                return await message.util.send(embed)
+            }
+            a = Number(args.message)
         }
         coins[user] = {
-            coins: userCoins - parseInt(args.message),
-            bank: userBank + parseInt(args.message),
+            coins: userCoins - parseInt(a),
+            bank: userBank + parseInt(a),
         }
-            embed = embed.setAuthor(`${message.author.username} you deposited ₪ ${args.message}, you now have ₪ ${userCoins - args.message} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
+            embed = embed.setAuthor(`${message.author.username} you deposited ₪ ${a}, you now have ₪ ${userCoins - a} in your wallet`, message.author.displayAvatarURL({ dynamic: true }))
             
         fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
             let errEmbed = new Discord.MessageEmbed()

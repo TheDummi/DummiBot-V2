@@ -52,6 +52,7 @@ class MessageListener extends Listener {
         storage[message.author.id] = {
             cheese: 0,
             bandages: 0,
+            medkit: 0,
             revives: 0,
             rifle: 0
         }
