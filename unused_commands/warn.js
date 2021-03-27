@@ -1,7 +1,7 @@
 const { Command } = require('discord-akairo');
 const Discord = require('discord-akairo');
 const fs = require('fs');
-const warns = require('../warning.json');
+const warns = require('../data/warningData.json');
 class WarnCommand extends Command {
     constructor() {
         super('warn', {
@@ -44,7 +44,7 @@ class WarnCommand extends Command {
         }
         await message.util.send(`Warned <@${args.user.id}> for the ${warn++} time! With reason: ${reason}`)
         await message.args.user.send(`You got warned in ${message.guild.name} for ${reason} ${warn++}!`)
-        fs.writeFile("warning.json", JSON.stringify(warns), (err) => {
+        fs.writeFile("data/warningData.json", JSON.stringify(warns), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)
