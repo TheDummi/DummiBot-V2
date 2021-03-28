@@ -57,11 +57,11 @@ class BalanceCommand extends Command {
         let userLevel = xp[member.id].level;
         let work = userData[member.id].work;
         let day = userData[member.id].day;
-        if (day == 0) {
-            day = 1
+        if (work == 0) {
+            work = 1
         }
-        let bankLimit = userLevel * 10000 * day;
-        let percent = Math.round(bankBalance/bankLimit * 1000) / 10 + "%"
+        let bankLimit = userLevel * 10000 * work;
+        let percent = Math.round(bankBalance/bankLimit * 10000) / 100 + "%"
 
         let BalEmbed = new Discord.MessageEmbed()
             .setAuthor(`${member.username}'s wallet`, member.displayAvatarURL({ dynamic: true }))

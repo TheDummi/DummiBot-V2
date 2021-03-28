@@ -53,10 +53,10 @@ class DepositCommand extends Command {
         let userLevel = xp[user].level;
         let work = data[user].work;
         let day = data[user].day;
-        if (day == 0) {
-            day = 1
+        if (work == 0) {
+            work = 1
         }
-        let bankLimit = (userLevel * 10000 * day)
+        let bankLimit = (userLevel * 10000 * work)
         let a;
         if (args.message == 'all') {
             if (userBank >= bankLimit) {
@@ -67,11 +67,9 @@ class DepositCommand extends Command {
             }
             if (userBank <= 0) {
                 a = bankLimit
-                console.log(a)
             }
-            else {
+            if (userCoins > bankLimit - userBank) {
                 a = bankLimit - userBank
-                
             }
             
         }

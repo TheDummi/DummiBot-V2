@@ -59,7 +59,7 @@ class ProfileCommand extends Command {
             .addField('Health', `❤️ ${curHp}/${userHealth}`)
             .addField('Attack', `⚔️ ${userAttack}`)
             .addField('Storage', `[📦 ${storage}/${userStorage}](https://www.youtube.com/watch?v=oHg5SJYRHA0&ab_channel=cotter548)`)
-            .addField('Stealth', `:ninja: ${userStealth}`)
+            .addField('Stealth', `:ninja: ${userStealth}/100`)
             .addField('Critical chance', `💥 ${userCritical}`)
             .addField('Hunting rifle', `🔫 ${rifle ? "Owned" : "Not owned"}`)
             .setColor(0xaa00cc)

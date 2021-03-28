@@ -46,8 +46,8 @@ class ReviveCommand extends Command {
             storage[message.author.id] = {
                 cheese: 0,
                 bandages: 0,
-                revives: 0,
                 medkit: 0,
+                revives: 0,
                 rifle: 0,
             }
             return message.util.send('You don\'t have any revives!')

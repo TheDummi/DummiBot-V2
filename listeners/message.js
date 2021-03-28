@@ -166,7 +166,7 @@ class MessageListener extends Listener {
     let coinsAdd = Math.floor(Math.random() * Math.random(coinsRate)) + 1;
     userCoins = userCoins + coinsAdd;
 // On message, level xp
-    let xpAdd = Math.floor(Math.random() * xpRate) + 15;
+    let xpAdd = Math.floor(Math.random() *15) +  xpRate;
     if (customCooldown.has(message.author.id)) return;
     else {
 
@@ -212,12 +212,25 @@ class MessageListener extends Listener {
 
     let coinsLevelAdd = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * xp[message.author.id].level) * 1000;
     userCoins = coinsLevelAdd + userCoins;
-
+    let point;
     let lvlUp = new Discord.MessageEmbed()
         .setTitle('Level up!🎉')
-        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And A skill point!`)
+        .setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And ${point} skill point!`)
         .setColor(0xaa00cc)
         .setThumbnail(message.author.displayAvatarURL())
+    if (userLevel <= 50) {
+        point = 1
+        lvlUp = lvlUp.setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And ${point} skill point!`)
+    }
+    if (userLevel >= 50) {
+        point = 2
+        lvlUp = lvlUp.setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And ${point} skill points!`)
+    }
+    if (userLevel >= 100) {
+        point = 2
+        lvlUp = lvlUp.setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And ${point} skill point!s`)
+    }
+        
     try {
         let channel = channelID[message.guild.id].level;
         channel = this.client.channels.cache.get(channel)

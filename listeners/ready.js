@@ -90,10 +90,9 @@ class ReadyListener extends Listener {
         .then( () => {
             setInterval(function() {
                 try {
-                client.commandHandler.reloadAll()
                 client.listenerHandler.reloadAll()
                 client.inhibitorHandler.reloadAll()
-                me.send(`I reloaded ${i++}`)
+                me.send(`I reloaded day ${i++}`)
                 }
                 catch(err) {
                     me.send(`Couldn't reload because of ${err}`)
@@ -101,7 +100,7 @@ class ReadyListener extends Listener {
             }, 86400000)
         })
         let embed1 = new Discord.MessageEmbed()
-            .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif')
+            .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif', {size: 4096})
             .setTitle('I\'m online!')
             .setDescription("I just restarted, I'll be there with you shortly.")
             .addField('| servers I\'m watching', guilds() + " servers", true)
@@ -116,7 +115,7 @@ class ReadyListener extends Listener {
         
         let embed1 = new Discord.MessageEmbed()
             .setTitle('Online update')
-            .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif')
+            .setImage('https://media.tenor.com/images/82f46c2b4d8b8d8945daa52b8508e38b/tenor.gif', {size: 4096})
             .addField('| servers I\'m watching', guilds() + " servers", true)
             .addField('| Users I\'m helping', users() + " users", true)
             .addField('| Date I restarted', DateMoment(), true)

@@ -41,6 +41,7 @@ class UseCommand extends Command {
             storage[message.author.id] = {
                 cheese: 0,
                 bandages: 0,
+                medkit: 0,
                 revives: 0,
                 rifle: 0
             }
@@ -51,7 +52,6 @@ class UseCommand extends Command {
         let bandages = storage[message.author.id].bandages;
         let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
-        let shield = storage[message.author.id].shield;
 
         let user = message.author.id;
         let skillPoints = upgrade[user].skillPoints;
@@ -75,6 +75,7 @@ class UseCommand extends Command {
                     storage[message.author.id] = {
                         cheese: cheese - string,
                         bandages: bandages,
+                        medkit: medkit,
                         revives: revives,
                         rifle: rifle
                     }

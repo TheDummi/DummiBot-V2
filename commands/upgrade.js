@@ -37,10 +37,10 @@ class UpgradeCommand extends Command {
 
         if (!upgrade[message.author.id]) {
             upgrade[message.author.id] = {
-                skillPoints: xp[message.author.id].level || 0,
+                skillPoints: xp[message.author.id].level || 1,
                 curHp: 100,
                 health: 100,
-                attack: 100,
+                attack: 10,
                 storage: 0,
                 storageSpace: 400,
                 stealth: 1,
@@ -83,6 +83,9 @@ class UpgradeCommand extends Command {
         }
 
         if (choice == 'stealth') {
+            if (userStealth >= 100) {
+                return message.util.send('Your stealth is already maxed out!')
+            }
             skillPoints = skillPoints - number
             userStealth = userStealth + number
         }

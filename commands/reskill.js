@@ -58,7 +58,7 @@ class ReskillCommand extends Command {
                             skillPoints: level,
                             curHp: 100,
                             health: 100,
-                            attack: 100,
+                            attack: 10,
                             storage: upgrade[message.author.id].storage,
                             storageSpace: 400,
                             stealth: 1,

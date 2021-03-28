@@ -53,6 +53,7 @@ class SetCommand extends Command {
             message.util.send(`Set coins earn to ${args.number}!`)
             owner.send(`${message.author.username} set coins earn to ${args.number}`)
         }
+        this.client.listenerHandler.reload('message')
 
         fs.writeFile('data/settings.json', JSON.stringify(settings), (err) => {
             let errEmbed = new Discord.MessageEmbed()
