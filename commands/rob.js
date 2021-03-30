@@ -84,6 +84,12 @@ class RobCommand extends Command {
                     bank: argsBank
                 }
                 embed = embed.setAuthor(`${message.author.username}, you stole ₪ ${random} from ${member.username}`, message.author.displayAvatarURL({ dynamic: true }))
+                try {
+                    member.send(`${message.author.username} stole ₪ ${random} from you in ${message.guild.name}.`)
+                }
+                catch {
+                    return;
+                }
             }
             else {
                 embed = embed.setAuthor(`${message.author.username}, ${failures()}`, message.author.displayAvatarURL({ dynamic: true }))

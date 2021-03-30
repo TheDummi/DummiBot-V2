@@ -21,7 +21,7 @@ class BallCommand extends Command {
         super('8ball', {
             aliases: ['8ball', '8b'],
             category: 'fun',
-            description: '8ball command',
+            description: 'Ask a question, get an answer.',
             channel: ['guild', 'dm'],
             args: [
                 {

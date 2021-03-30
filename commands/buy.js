@@ -20,6 +20,7 @@ class BuyCommand extends Command {
                         'medkit',
                         'revive',
                         'rifle',
+                        'rod'
                     ],
                     prompt: {
                         start: 'What would you like to buy?',
@@ -50,6 +51,7 @@ class BuyCommand extends Command {
                 revives: 0,
                 medkit: 0,
                 rifle: 0,
+                rod: 0
             }
         }
 
@@ -60,6 +62,7 @@ class BuyCommand extends Command {
         let bandages = storage[message.author.id].bandages;
         let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
+        let rod = storage[message.author.id].rod;
 
         let user = message.author.id;
         let skillPoints = upgrade[user].skillPoints;
@@ -119,6 +122,7 @@ class BuyCommand extends Command {
                 medkit: medkit,
                 revives: revives,
                 rifle: rifle + string,
+                rod: rod,
             }
             coins[message.author.id] = {
                 coins: userCoins - 750000,
@@ -139,6 +143,40 @@ class BuyCommand extends Command {
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
             });
             return await message.util.send('You bought a hunting rifle.');
+        }
+        if (choice == 'rod') {
+            if (userCoins < 10000) {
+                return await message.util.send('You don\'t have enough coins!')
+            }
+            if (string > 1) return await message.util.send('You can only own 1 fishing rod.') 
+            if (rod >= 1) return await message.util.send('You already have a fishing rod.')
+            storage[message.author.id] = {
+                cheese: cheese,
+                bandages: bandages,
+                medkit: medkit,
+                revives: revives,
+                rifle: rifle,
+                rod: rod + string,
+            }
+            coins[message.author.id] = {
+                coins: userCoins - 10000,
+                bank: userBank
+            }
+            fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+            });
+            fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
+                let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+            });
+            return await message.util.send('You bought a fishing rod.');
         }
         
         if (string > (userStorage - userStorageMax)) {
@@ -186,6 +224,7 @@ class BuyCommand extends Command {
             medkit: medkit,
             revives: revives,
             rifle: rifle,
+            rod: rod,
         }
         upgrade[message.author.id] = {
             skillPoints: skillPoints,

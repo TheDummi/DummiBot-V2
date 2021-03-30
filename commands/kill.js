@@ -72,6 +72,12 @@ class KillCommand extends Command {
 			if (rifle > 0) {
 				if (Math.random() < (argsUserStealth/100)) {
 					curHp = curHp - curHp;
+					try {
+						member.send(`You were killed by ${message.author.username} in ${message.guild.name}.`)
+					}
+					catch {
+						return;
+					}
 				}
 				else {
 					return await message.util.send('You were caught');
@@ -82,8 +88,13 @@ class KillCommand extends Command {
 					return await message.util.send(`You can't kill ${member}! You're too weak!`)
 				}
 				else {
-					let a = argsUserAttack - curHp;
-					curHp = a - a;
+					curHp = 0;
+					try {
+						member.send(`You were killed by ${message.author.username} in ${message.guild.name}.`)
+					}
+					catch {
+						return;
+					}
 				}
 			}
 			upgrade[member.id] = {

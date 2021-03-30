@@ -31,6 +31,7 @@ class SellCommand extends Command {
                         'tiger',
                         'lion',
                         'buffalo',
+                        'rod'
                     ],
                     prompt: {
                         start: 'What would you like to sell?',
@@ -61,6 +62,7 @@ class SellCommand extends Command {
                 medkit: 0,
                 revives: 0,
                 rifle: 0,
+                rod: 0,
             }
         }
         if (!hunting[message.author.id]) {
@@ -84,6 +86,7 @@ class SellCommand extends Command {
         let bandages = storage[user.id].bandages;
         let medkit = storage[user.id].medkit;
         let revives = storage[user.id].revives;
+        let rod = storage[user.id].rod;
 
         let pigeon = hunting[user.id].pigeon;
         let pig = hunting[user.id].pig;
@@ -113,6 +116,9 @@ class SellCommand extends Command {
         }
         if (choice == 'rifle') {
             return await message.util.send('You can\'t sell a hunting rifle.');
+        }
+        if (choice == 'rod') {
+            return await message.util.send("You can't sell a fishing rod.")
         }
         
         userStorageMax = userStorageMax - string;
@@ -245,6 +251,7 @@ class SellCommand extends Command {
             medkit: medkit,
             revives: revives,
             rifle: rifle,
+            rod: rod,
         }
         upgrade[message.author.id] = {
             skillPoints: skillPoints,

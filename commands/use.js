@@ -43,7 +43,8 @@ class UseCommand extends Command {
                 bandages: 0,
                 medkit: 0,
                 revives: 0,
-                rifle: 0
+                rifle: 0,
+                rod: 0,
             }
             return await message.util.send('You don\'t have anything in your backpack to use!')
         }
@@ -52,6 +53,7 @@ class UseCommand extends Command {
         let bandages = storage[message.author.id].bandages;
         let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
+        let rod = storage[message.author.id].rod;
 
         let user = message.author.id;
         let skillPoints = upgrade[user].skillPoints;
@@ -77,7 +79,8 @@ class UseCommand extends Command {
                         bandages: bandages,
                         medkit: medkit,
                         revives: revives,
-                        rifle: rifle
+                        rifle: rifle,
+                        rod: rod,
                     }
                     upgrade[message.author.id] = {
                         skillPoints: skillPoints,
@@ -159,6 +162,7 @@ class UseCommand extends Command {
             medkit: medkit,
             revives: revives,
             rifle: rifle,
+            rod: rod,
         }
         upgrade[message.author.id] = {
             skillPoints: skillPoints,

@@ -39,7 +39,8 @@ class ProfileCommand extends Command {
                 cheese: 0,
                 bandages: 0,
                 revives: 0,
-                rifle: 0
+                rifle: 0,
+                rod: 0,
             }
         }
         
@@ -51,7 +52,8 @@ class ProfileCommand extends Command {
         let userStorage = upgrade[user.id].storageSpace;
         let userStealth = upgrade[user.id].stealth;
         let userCritical = upgrade[user.id].critical;
-        let rifle = space[user.id].rifle
+        let rifle = space[user.id].rifle;
+        let rod = space[user.id].rod;
 
         let embed = new Discord.MessageEmbed()
             .setAuthor(`${user.username}'s profile`, user.displayAvatarURL({ dynamic: true }))
@@ -62,9 +64,17 @@ class ProfileCommand extends Command {
             .addField('Stealth', `:ninja: ${userStealth}/100`)
             .addField('Critical chance', `💥 ${userCritical}`)
             .addField('Hunting rifle', `🔫 ${rifle ? "Owned" : "Not owned"}`)
+            .addField('fishing rod', `🎣 ${rod ? "Owned" : "Not owned"}`)
             .setColor(0xaa00cc)
         await message.util.send(embed)
         fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+        });
+        fs.writeFile('data/storageData.json', JSON.stringify(space), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)

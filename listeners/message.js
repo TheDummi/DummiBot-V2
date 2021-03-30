@@ -54,7 +54,8 @@ class MessageListener extends Listener {
             bandages: 0,
             medkit: 0,
             revives: 0,
-            rifle: 0
+            rifle: 0,
+            rod: 0
         }
     }
 

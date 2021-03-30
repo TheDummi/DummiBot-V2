@@ -1,7 +1,5 @@
 const Discord = require('discord.js');
 const fs = require('fs');
-// const { getPrefix } = require('./funcs.js');
-// let prefix = getPrefix(message => message);
 const { AkairoClient, CommandHandler, InhibitorHandler, ListenerHandler, setEmitters } = require('discord-akairo');
 class MyClient extends AkairoClient {
     constructor() {

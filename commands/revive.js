@@ -49,6 +49,7 @@ class ReviveCommand extends Command {
                 medkit: 0,
                 revives: 0,
                 rifle: 0,
+                rod: 0
             }
             return message.util.send('You don\'t have any revives!')
         }
@@ -57,6 +58,7 @@ class ReviveCommand extends Command {
         let medkit = storage[message.author.id].medkit;
         let revives = storage[message.author.id].revives;
         let rifle = storage[message.author.id].rifle;
+        let rod = storage[message.author.id].rod;
 
         let skillPoints = upgrade[args.user.id].skillPoints;
         let curHp = upgrade[args.user.id].curHp;
@@ -90,6 +92,7 @@ class ReviveCommand extends Command {
             medkit: medkit,
             revives: revives - 1,
             rifle: rifle,
+            rod: rod
         }
         await message.util.send(`You revived ${args.user}`)
         fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
