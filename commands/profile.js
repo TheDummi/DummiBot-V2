@@ -8,7 +8,7 @@ class ProfileCommand extends Command {
     constructor() {
         super('profile', {
             aliases: ['profile','p'],
-            category: 'economy',
+            category: 'stats',
             description: 'Review your stats',
             args: [
                 {

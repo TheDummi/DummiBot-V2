@@ -20,13 +20,18 @@ class ErrorListener extends Listener {
         .setTitle('Command error traceback')
         .setColor(0xAA00CC)
         .addField('Author', message.author.username)
-        if (message.guild.name !== null) {
+        if (message.guild !== null) {
             embed = embed.addField('Server', message.guild.name)
+        } 
+        try {
+            if (message.channel.id !== undefined) {
+                let invite = message.channel.createInvite()
+		        let invited = await invite
+                embed = embed.addField('Server link', `[${message.guild.name}](${invited})`)
+            }
         }
-        if (message.channel.id !== undefined) {
-            let invite = message.channel.createInvite()
-		    let invited = await invite
-            embed = embed.addField('Server link', `[${message.guild.name}](${invited})`)
+        catch {
+            embed = embed.addField('Server link','No server invite permission or in DM.')
         }
         embed
             .addField('Error log', `[${command.id}](${m.url})`)

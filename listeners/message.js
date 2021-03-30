@@ -209,7 +209,7 @@ class MessageListener extends Listener {
     
     userLevel = userLevel + 1;
 
-    userSkillPoints = userSkillPoints + 1;
+    
 
     let coinsLevelAdd = Math.floor(Math.random() * 1000) + Math.floor(Math.random() * xp[message.author.id].level) * 1000;
     userCoins = coinsLevelAdd + userCoins;
@@ -231,7 +231,7 @@ class MessageListener extends Listener {
         point = 2
         lvlUp = lvlUp.setDescription(`<@${message.author.id}>, you're now level ${xp[message.author.id].level}\nYou earned ${coinsLevelAdd} coins! And ${point} skill point!s`)
     }
-        
+        userSkillPoints = userSkillPoints + point;
     try {
         let channel = channelID[message.guild.id].level;
         channel = this.client.channels.cache.get(channel)

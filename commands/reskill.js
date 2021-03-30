@@ -8,8 +8,9 @@ class ReskillCommand extends Command {
     constructor() {
         super('reskill', {
             aliases: ['reskill'],
-            category: 'economy',
+            category: 'stats',
             description: 'Reset all of your skills. Earn your skill points back at the cost of losing your bought skill points.',
+            channel: 'guild',
             args: [
                 {
                     id: 'choice',

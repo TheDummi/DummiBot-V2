@@ -13,20 +13,26 @@ class ServerInfoCommand extends Command {
 			category: 'info',
 			description: 'Get general info of this server',
 			ownerOnly: false,
-			channel: 'guild'
+			channel: 'guild',
+			args: [
+				{
+					id: 'guild',
+					type: 'guild'
+				}
+			]
 		})
 	}
 
-	async exec(message) {
+	async exec(message, args) {
 let bots = 0;
 for (var i = 0; i < message.guild.members.cache.array().length; i++) {
     if (message.guild.members.cache.array()[i].user.bot) bots++
 }
-let Guild = message.guild
+let Guild = args.guild || message.guild
 let embed = new Discord.MessageEmbed()
 	.setColor(0xaa00cc)    
 	.setTitle('Server info:')
-	.setThumbnail(message.guild.iconURL( { dynamic: true }))
+	.setThumbnail(Guild.iconURL( { dynamic: true }))
 	.addField('| Server owner', Guild.owner, true)
 	.addField('| Server name', Guild.name, true)
 	.addField('| Guild ID', Guild.id, true)

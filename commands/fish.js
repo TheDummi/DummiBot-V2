@@ -3,14 +3,15 @@ const { Command } = require('discord-akairo');
 const fishing = require('../data/fishingData.json');
 const storage = require('../data/storageData.json');
 const upgrade = require('../data/upgradeData.json');
-const huntTime = new Set()
+const fishTime = new Set()
 const fs = require('fs');
 class FishCommand extends Command {
     constructor() {
         super('fish', {
             aliases: ['fish'],
-            category: 'economy',
+            category: 'stats',
             description: 'Go fish for fish, sell these goods to earn money',
+            channel: 'guild',
             args: [
                 {
                     id: 'time',
@@ -31,10 +32,10 @@ class FishCommand extends Command {
         if (upgrade[message.author.id].storage >= upgrade[message.author.id].storageSpace) {
             return await message.util.send('You have no storage space left.')
         }
-        if (storage[message.author.id].fish <= 0) {
+        if (storage[message.author.id].rod <= 0) {
             return await message.util.send('You can\'t hunt without a fishing rod!')
         }
-        if (huntTime.has(message.author.id)) {
+        if (fishTime.has(message.author.id)) {
             return await message.util.send('You\'re already fishing!')
         }
         else {
@@ -44,6 +45,7 @@ class FishCommand extends Command {
                 }
             }
             let a;
+            let random;
             let i;
             let user = message.author;
             let time = args.time;
@@ -67,7 +69,7 @@ class FishCommand extends Command {
             if (time == '1') {
                 a = 3600000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(11));
+                    random = Math.floor(Math.random() * Math.floor(11));
                     i = random;
                 }, a)
             }
@@ -77,7 +79,7 @@ class FishCommand extends Command {
                 }
                 a = 7200000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(31));
+                    random = Math.floor(Math.random() * Math.floor(31));
                     i = random;
                 }, a)
             }
@@ -87,7 +89,7 @@ class FishCommand extends Command {
                 }
                 a = 14400000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(51))
+                    random = Math.floor(Math.random() * Math.floor(51))
                     i = random
                 }, a)
             }
@@ -97,7 +99,7 @@ class FishCommand extends Command {
                 }
                 a = 28800000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(91))
+                    random = Math.floor(Math.random() * Math.floor(91))
                     i = random
                 }, a)
             }
@@ -107,7 +109,7 @@ class FishCommand extends Command {
                 }
                 a = 43200000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(131))
+                    random = Math.floor(Math.random() * Math.floor(131))
                     i = random
                 }, a)
             }
@@ -117,14 +119,16 @@ class FishCommand extends Command {
                 }
                 a = 86400000;
                 setTimeout(() => {
-                    let random = Math.floor(Math.random() * Math.floor(251))
+                    random = Math.floor(Math.random() * Math.floor(251))
                     i = random
                 }, a)
             }
             await message.util.send(`You went fishing for ${time}h`)
-            huntTime.add(message.author.id)
+            fishTime.add(message.author.id)
                 setTimeout(async () => {
-                        embed = embed.setDescription(`You caught:`)
+                        embed = embed
+                            .setDescription(`You caught:`)
+                            .addField('🐟', random)
                         fish = fish + i
                         try {
                             await message.author.send(embed)
@@ -143,18 +147,10 @@ class FishCommand extends Command {
                             stealth: stealth,
                             critical: critical,
                         }
-                        hunting[message.author.id] = {
-                            pigeon: pigeon,
-                            pig: pig,
-                            goat: goat,
-                            fox: fox, 
-                            rabbit: rabbit,
-                            deer: deer,
-                            tiger: tiger,
-                            lion: lion,
-                            buffalo: buffalo,
+                    fishing[message.author.id] = {
+                            fish: fish
                         }
-                    fs.writeFile('data/huntingData.json', JSON.stringify(hunting), (err) => {
+                    fs.writeFile('data/fishingData.json', JSON.stringify(fishing), (err) => {
                         let errEmbed = new Discord.MessageEmbed()
                         .setTitle('JSON OVERLOAD')
                         .setColor(0xaa00cc)
@@ -168,7 +164,7 @@ class FishCommand extends Command {
                         .setDescription(`\`\`\`json\n${err}\`\`\``)
                     if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
                     });
-                huntTime.delete(message.author.id)
+                fishTime.delete(message.author.id)
             }, a)
         }
     }

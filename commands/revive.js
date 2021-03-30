@@ -8,12 +8,14 @@ class ReviveCommand extends Command {
     constructor() {
         super('revive', {
             aliases: ['revive'],
-            category: 'economy',
+            category: 'stats',
             description: 'Revive others with your revives',
+            channel: 'guild',
             args: [
                 {
                     id: 'user',
                     type: 'user',
+                    
                     prompt: {
                         start: 'Who would you like to revive?',
                         retry: 'Couldn\'t find that user, Who?'

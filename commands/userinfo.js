@@ -60,7 +60,13 @@ class UserInfoCommand extends Command {
 			category: 'info',
 			description: 'Get info about your discord account. \nUse ~userinfo [user mention] to see mentioned users info.',
 			ownerOnly: false,
-			channel: 'guild'
+			channel: 'guild',
+			args: [
+				{
+					id: 'user',
+					type: 'user'
+				}
+			]
 		})
 	}
 

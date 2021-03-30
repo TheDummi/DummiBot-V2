@@ -11,6 +11,7 @@ class RouletteCommand extends Command {
             category: 'economy',
             description: 'Bet on a color to win double your money',
             cooldown: 60000,
+            channel: 'guild',
             ratelimit: 2,
             args: [
                 {

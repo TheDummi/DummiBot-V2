@@ -11,7 +11,7 @@ class BalanceCommand extends Command {
             aliases: ['balance', 'bal', 'credits', 'cred'],
             category: 'economy',
             description: 'View your or someone else\'s balance.',
-            channel: ['guild'],
+            channel: 'guild',
             args: [
                 {
                     id: 'user',

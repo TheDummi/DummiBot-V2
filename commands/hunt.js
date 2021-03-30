@@ -9,8 +9,9 @@ class HuntCommand extends Command {
     constructor() {
         super('hunt', {
             aliases: ['hunt'],
-            category: 'economy',
+            category: 'stats',
             description: 'Go hunt for animals, sell these goods to earn money',
+            channel: 'guild',
             args: [
                 {
                     id: 'time',

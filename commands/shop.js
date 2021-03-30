@@ -14,6 +14,7 @@ class ShopCommand extends Command {
         super('shop', {
             aliases: ['shop', 's'],
             category: 'economy',
+            channel: 'guild',
             description: 'All buyable things',
         })
     }

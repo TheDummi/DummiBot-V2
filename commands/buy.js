@@ -10,6 +10,7 @@ class BuyCommand extends Command {
             aliases: ['buy'],
             category: 'economy',
             description: 'Buy stuff with coins',
+            channel: 'guild',
             args: [
                 {
                     id: 'choice',

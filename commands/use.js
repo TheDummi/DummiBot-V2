@@ -7,7 +7,8 @@ class UseCommand extends Command {
     constructor() {
         super('use', {
             aliases: ['use'],
-            category: 'economy',
+            category: 'stats',
+            channel: 'guild',
             description: 'use stuff with coins',
             args: [
                 {

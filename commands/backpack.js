@@ -2,6 +2,8 @@ const Discord = require('discord.js');
 const { Command } = require('discord-akairo');
 const storage = require('../data/storageData.json');
 const hunting = require('../data/huntingData.json');
+const fishing = require('../data/fishingData.json');
+const fs = require('fs');
 
 const items = [
     'cheese',
@@ -13,9 +15,10 @@ const items = [
 class BackpackCommand extends Command {
     constructor() {
         super('backpack', {
-            aliases: ['backpack', 'bp'],
-            category: 'economy',
+            aliases: ['backpack', 'bp', 'inv', 'inventory'],
+            category: 'stats',
             description: 'View your backpack.',
+            channel: 'guild',
             args: [
                 {
                     id: 'user',
@@ -49,6 +52,11 @@ class BackpackCommand extends Command {
                 rifle: 0,
             }
         }
+        if (!fishing[member.id]) {
+            fishing[member.id] = {
+                fish: 0,
+            }
+        }
         
         // animals
         let pigeon = hunting[member.id].pigeon;
@@ -60,6 +68,7 @@ class BackpackCommand extends Command {
         let tiger = hunting[member.id].tiger;
         let lion = hunting[member.id].lion;
         let buffalo = hunting[member.id].buffalo;
+        let fish = fishing[member.id].fish;
         
         // storage
         let cheese = storage[member.id].cheese;
@@ -110,6 +119,9 @@ class BackpackCommand extends Command {
             if (buffalo !== 0) {
                 embed = embed.addField('🐃', buffalo, true)
             }
+            if (fish !== 0) {
+                embed = embed.addField('🐟', fish, true)
+            }
             if (embed.fields.length <= 0) {
                 embed = embed.setDescription(str)
             }
@@ -117,6 +129,27 @@ class BackpackCommand extends Command {
             .setFooter(`~use [${randomItems}] [${Math.floor(Math.random() * Math.floor(500))}]`)
             .setColor(0xaa00cc)
         message.util.send(embed);
+        fs.writeFile('data/storageData.json', JSON.stringify(storage), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+        });
+        fs.writeFile('data/huntingData.json', JSON.stringify(hunting), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+        });
+        fs.writeFile('data/fishingData.json', JSON.stringify(fishing), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+        });
     }
 }
 

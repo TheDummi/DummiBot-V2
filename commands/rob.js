@@ -10,11 +10,11 @@ class RobCommand extends Command {
         super('rob', {
             aliases: ['rob', 'steal'],
             category: 'economy',
+            channel: 'guild',
             ratelimit: 3,
             cooldown: 300000,
             description: 'Steal coins from someone.',
             ownerOnly: false,
-			channel: 'guild',
             args: [
                 {
                     id: 'user',

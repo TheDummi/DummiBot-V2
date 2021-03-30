@@ -7,7 +7,8 @@ class UpgradeCommand extends Command {
     constructor() {
         super('upgrade', {
             aliases: ['upgrade', 'up'],
-            category: 'economy',
+            category: 'stats',
+            channel: 'guild',
             description: 'Use your upgrade points to upgrade your stats',
             args: [
                 {

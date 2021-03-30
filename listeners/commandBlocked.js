@@ -15,13 +15,18 @@ class CommandBlockedListener extends Listener {
         .setTitle('Command block traceback')
         .setColor(0xaa00cc)
         .addField('Author', message.author.tag)
-        if (message.guild.name !== null) {
+        if (message.guild !== null) {
             embed = embed.addField('Server', message.guild.name)
         }
-        if (message.channel.id !== undefined) {
-            let invite = message.channel.createInvite()
-		    let invited = await invite
-            embed = embed.addField('Direct link', `[click me](${invited})`)
+        try {
+            if (message.channel.id !== undefined) {
+                let invite = message.channel.createInvite()
+                let invited = await invite
+                embed = embed.addField('Direct link', `[click me](${invited})`)
+            }
+        }
+        catch {
+            embed = embed.addField('Server link', 'No server link permission or in a DM')
         }
         embed
             .addField('Command', command.id)

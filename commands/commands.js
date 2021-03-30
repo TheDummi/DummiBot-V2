@@ -14,21 +14,23 @@ const names = {
 	'moderation': 'Moderation commands',
 	'admin': "Admin commands",
 	'wom': "Wolves of Mars only commands",
-	'economy' : 'Economy commands'
+	'economy' : 'Economy commands',
+	'stats' : 'Stats commands'
 }
 const nameWeight = {
-	'fun': 2,
-	'emotion': 3,
-	'actions': 4,
-	'info': 6,
-	'music': 5,
-	'utility': 7,
-	'moderation': 8,
-	'admin': 11,
-	'help': 9,
-	'support': 10,
-	'bot maker': 12,
-	'economy' : 1
+	'fun': 3,
+	'emotion': 4,
+	'actions': 5,
+	'info': 7,
+	'music': 6,
+	'utility': 8,
+	'moderation': 9,
+	'admin': 12,
+	'help': 10,
+	'support': 11,
+	'bot maker': 13,
+	'economy' : 1,
+	'stats': 2,
 }
 class CommandsCommand extends Command {
 	constructor() {
@@ -67,8 +69,13 @@ class CommandsCommand extends Command {
 		for (let i = 0; i < categories.length; i++) {
 			embeds[i] = new Discord.MessageEmbed()
 			.setTitle(names[categories[i]] || categories[i])
-			.setThumbnail(message.guild.iconURL({ dynamic: true }))
 			.setColor(color)
+			try {
+				embeds[i] = embeds[i].setThumbnail(message.guild.iconURL({ dynamic: true }))
+			}
+			catch {
+				embeds[i] = embeds[i].setThumbnail(message.author.displayAvatarURL({ dynamic: true }))
+			}
 			for (const item of this.handler.modules.filter(e => e.category.id === categories[i]).sort().array()) {
 				if (!runnableCommands.includes(item)) continue;
 				try {

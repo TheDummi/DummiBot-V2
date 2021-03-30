@@ -4,6 +4,7 @@ const coins = require('../data/currency.json');
 const upgrade = require('../data/upgradeData.json');
 const storage = require('../data/storageData.json');
 const hunting = require('../data/huntingData.json');
+const fishing = require('../data/fishingData.json');
 const fs = require('fs');
 
 class SellCommand extends Command {
@@ -12,6 +13,7 @@ class SellCommand extends Command {
             aliases: ['sell'],
             category: 'economy',
             description: 'Sell stuff for coins',
+            channel: 'guild',
             args: [
                 {
                     id: 'choice',
@@ -31,7 +33,8 @@ class SellCommand extends Command {
                         'tiger',
                         'lion',
                         'buffalo',
-                        'rod'
+                        'rod',
+                        'fish'
                     ],
                     prompt: {
                         start: 'What would you like to sell?',
@@ -78,6 +81,12 @@ class SellCommand extends Command {
                 buffalo: 0,
             }
         }
+        if (!fishing[message.author.id]) {
+            fishing[message.author.id] = {
+                fish: 0
+            }
+        }
+
         let user = message.author;
         let userCoins = coins[user.id].coins;
         let userBank = coins[user.id].bank;
@@ -87,6 +96,8 @@ class SellCommand extends Command {
         let medkit = storage[user.id].medkit;
         let revives = storage[user.id].revives;
         let rod = storage[user.id].rod;
+
+        let fish = fishing[user.id].fish;
 
         let pigeon = hunting[user.id].pigeon;
         let pig = hunting[user.id].pig;
@@ -229,6 +240,14 @@ class SellCommand extends Command {
             userCoins = userCoins + a
             buffalo = buffalo - string
         }
+        if (choice == 'fish') {
+            if (string > buffalo) {
+                return await message.util.send(`You don't have enough ${choice}!`)
+            }
+            a = string * 1000
+            userCoins = userCoins + a
+            fish = fish - string
+        }
 
         coins[message.author.id] = {
             coins: userCoins,
@@ -263,6 +282,9 @@ class SellCommand extends Command {
             stealth: userStealth,
             critical: userCritical,
         }
+        fishing[message.author.id] = {
+            fish: fish
+        }
         fs.writeFile('data/huntingData.json', JSON.stringify(hunting), (err) => {
             let errEmbed = new Discord.MessageEmbed()
             .setTitle('JSON OVERLOAD')
@@ -285,6 +307,13 @@ class SellCommand extends Command {
             if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
         });
         fs.writeFile('data/currency.json', JSON.stringify(coins), (err) => {
+            let errEmbed = new Discord.MessageEmbed()
+                .setTitle('JSON OVERLOAD')
+                .setColor(0xaa00cc)
+                .setDescription(`\`\`\`json\n${err}\`\`\``)
+            if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+        });
+        fs.writeFile('data/fishingData.json', JSON.stringify(fishing), (err) => {
             let errEmbed = new Discord.MessageEmbed()
                 .setTitle('JSON OVERLOAD')
                 .setColor(0xaa00cc)

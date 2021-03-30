@@ -6,7 +6,7 @@ const xp = require('../data/respectData.json')
 class InviteCommand extends Command {
 	constructor() {
 		super('invite', {
-			aliases: ['invite', 'inv'],
+			aliases: ['invite'],
 			category: 'support',
 			description: 'Get invite links to invite the bot.',
 			ownerOnly: false,

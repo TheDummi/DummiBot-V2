@@ -12,7 +12,8 @@ class UpgradesCommand extends Command {
     constructor() {
         super('upgrades', {
             aliases: ['upgrades'],
-            category: 'economy',
+            category: 'stats',
+            channel: 'guild',
             description: 'All buyable things',
         })
     }

@@ -10,6 +10,7 @@ class BegCommand extends Command {
             category: 'economy',
             description: 'Beg for money',
             cooldown: 43200000,
+            channel: 'guild',
         })
     }
 

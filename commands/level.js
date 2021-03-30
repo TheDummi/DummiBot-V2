@@ -7,7 +7,7 @@ class LevelCommand extends Command {
     constructor() {
         super('level', {
             aliases: ['level', 'rank'],
-            category: 'economy',
+            category: 'stats',
             description: 'Get your level xp',
             channel: 'guild',
             args: [

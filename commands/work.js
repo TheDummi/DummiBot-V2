@@ -13,6 +13,7 @@ class WorkCommand extends Command {
             aliases: ['work'],
             category: 'economy',
             description: 'Work for coins',
+            channel: 'guild',
             cooldown: 3600000,
         })
     }

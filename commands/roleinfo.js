@@ -11,23 +11,22 @@ class RoleInfoCommand extends Command {
 			category: 'info',
 			description: 'Get general info about mentioned role.',
 			ownerOnly: false,
-			channel: 'guild'
+			channel: 'guild',
+			args: [
+				{
+					id: 'role',
+					type: 'role',
+					prompt: {
+						start: 'What role would you like to know more about?',
+						retry: "Couldn't find that role, What role?"
+					}
+				}
+			]
 		})
 	}
 
-async exec(message) {
-const role = message.mentions.roles.first();
-	if (!role) {
-		let embed0 = new Discord.MessageEmbed()
-			.setTitle('please enter a valid role.')
-			.setColor(0xaa00cc)
-			return message.util.reply(embed0)
-			.then(message => {
-				setTimeout(function() {
-					message.delete(embed0)
-				}, 5000);
-			})
-		}
+async exec(message, args) {
+let role = args.role
 		var permissions = [];
 		for (var i = 0; i < role.permissions.toArray().length; i++) {
 			permissions.push(capitalize("`" + role.permissions.toArray()[i].replace(/_/g, " ") + "`"));
