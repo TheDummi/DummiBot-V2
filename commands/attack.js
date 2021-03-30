@@ -8,7 +8,7 @@ class AttackCommand extends Command {
     constructor() {
         super('attack', {
             aliases: ['attack'],
-            category: 'action',
+            category: 'actions',
             description: 'Attack someone to damage them, kill them to finish it off.',
             args: [
                 {

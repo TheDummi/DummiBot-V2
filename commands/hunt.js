@@ -4,9 +4,7 @@ const hunting = require('../data/huntingData.json');
 const storage = require('../data/storageData.json');
 const upgrade = require('../data/upgradeData.json');
 const huntTime = new Set()
-const restTime = new Set()
 const fs = require('fs');
-
 class HuntCommand extends Command {
     constructor() {
         super('hunt', {
@@ -22,7 +20,6 @@ class HuntCommand extends Command {
                         retry: 'How long? `1`, `2`, `4`, `8`, `12` or `24` h?'
                     }
                 },
-
             ]
         })
     }
@@ -40,9 +37,6 @@ class HuntCommand extends Command {
         if (huntTime.has(message.author.id)) {
             return await message.util.send('You\'re already on a hunt!')
         }
-        else if (restTime.has(message.author.id)) {
-            return await message.util.send('You\'re tired. Rest and go hunt later.')
-        }
         else {
             if (!hunting[message.author.id]) {
                 hunting[message.author.id] = {
@@ -58,13 +52,14 @@ class HuntCommand extends Command {
                 }
             }
             let a;
+            let i;
             let user = message.author;
             let time = args.time;
 
             // skills
             let skillPoints = upgrade[user.id].skillPoints;
             let health = upgrade[user.id].health;
-            let curHp = upgrade[user.id].curHp
+            let curHp = upgrade[user.id].curHp;
             let attack = upgrade[user.id].attack;
             let storageMin = upgrade[user.id].storage;
             let storageMax = upgrade[user.id].storageSpace;
@@ -83,6 +78,7 @@ class HuntCommand extends Command {
             let buffalo = hunting[user.id].buffalo;
 
             let random = Math.floor(Math.random() * Math.floor(5)) + 1
+            let random2 = Math.floor(Math.random() * Math.floor(5)) + 1
             let embed = new Discord.MessageEmbed()
                 .setColor(0xaa00cc)
                 .setAuthor(`${user.username}, you are back from hunting!`)
@@ -90,129 +86,138 @@ class HuntCommand extends Command {
                 a = 3600000;
                 setTimeout(() => {
                 pigeon = pigeon + random;
-                rabbit = rabbit + random;
+                rabbit = rabbit + random2;
                 embed = embed
                     .addField('🐦', random)
-                    .addField('🐇', random)
-                    random = random * 2
+                    .addField('🐇', random2)
+                    i = random + random2
+
                 }, a)
             }
             if (time == '2') {
                 if (stealth < 10) {
-                    return message.util.send('You\'re not stealthy enough to hunt ')
+                    return message.util.send('You\'re not stealthy enough to hunt this long')
                 }
                 a = 7200000;
                 setTimeout(() => {
                 pig = pig + random;
-                goat = goat + random;
+                goat = goat + random2;
                 embed = embed
                     .addField('🐖', random)
-                    .addField('🐐', random)
-                    random = random * 2
+                    .addField('🐐', random2)
+                    i = random + random2
                 }, a)
             }
             if (time == '4') {
                 if (stealth < 20) {
-                    return message.util.send('You\'re not stealthy enough to hunt ')
+                    return message.util.send('You\'re not stealthy enough to hunt this long')
                 }
                 a = 14400000;
                 setTimeout(() => {
                 fox = fox + random;
                 embed = embed
                     .addField('🦊', random)
+                    i = random
                 }, a)
             }
             if (time == '8') {
                 if (stealth < 30) {
-                    return message.util.send('You\'re not stealthy enough to hunt ')
+                    return message.util.send('You\'re not stealthy enough to hunt this long')
                 }
                 a = 28800000;
                 setTimeout(() => {
                 deer = deer + random;
                 embed = embed
                     .addField('🦌',random)
+                    i = random
                 }, a)
             }
             if (time == '12') {
                 if (stealth < 40) {
-                    return message.util.send('You\'re not stealthy enough to hunt ')
+                    return message.util.send('You\'re not stealthy enough to hunt this long')
                 }
                 a = 43200000;
                 setTimeout(() => {
-                tiger = tiger + random;
-                lion = lion + random;
-                embed = embed
-                    .addField('🐅', random)
-                    .addField('🦁', random)
-                random = random * 2
+                    tiger = tiger + random;
+                    lion = lion + random2;
+                    embed = embed
+                        .addField('🐅', random)
+                        .addField('🦁', random2)
+                    i = random + random2
                 }, a)
             }
             if (time == '24') {
                 if (stealth < 50) {
-                    return message.util.send('You\'re not stealthy enough to hunt ')
+                    return message.util.send('You\'re not stealthy enough to hunt this long')
                 }
                 a = 86400000;
                 setTimeout(() => {
-                buffalo = buffalo + random;
-                embed = embed
-                    .addField('🐃', random)
+                    buffalo = buffalo + random;
+                    embed = embed
+                        .addField('🐃', random)
+                    i = random
                 }, a)
             }
             await message.util.send(`You went hunting for ${time}h`)
             huntTime.add(message.author.id)
                 setTimeout(async () => {
                     let e = Math.floor(Math.random() * Math.floor(curHp/2));
-                    embed = embed.setDescription(`Whilst hunting you got hurt, you lost ${e}❤️\n\nYou caught:`)
-                    try {
-                        await message.author.send(embed)
+                    if (curHp - e <= 0) {
+                        curHp = 0
+                        random = 0
+                        embed = embed.setDescription('You died while hunting!')
                     }
-                    catch {
-                        await message.util.send(user, embed)
-                    }
-                    
-                    upgrade[user.id] = {
-                        skillPoints: skillPoints,
-                        curHp: curHp - e,
-                        health: health,
-                        attack: attack,
-                        storage: storageMin + random,
-                        storageSpace: storageMax,
-                        stealth: stealth,
-                        critical: critical,
-                    }
-                    hunting[message.author.id] = {
-                        pigeon: pigeon,
-                        pig: pig,
-                        goat: goat,
-                        fox: fox, 
-                        rabbit: rabbit,
-                        deer: deer,
-                        tiger: tiger,
-                        lion: lion,
-                        buffalo: buffalo,
-                    }
-                fs.writeFile('data/huntingData.json', JSON.stringify(hunting), (err) => {
-                    let errEmbed = new Discord.MessageEmbed()
-                    .setTitle('JSON OVERLOAD')
-                    .setColor(0xaa00cc)
-                    .setDescription(`\`\`\`json\n${err}\`\`\``)
-                if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
-                });
-                fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
-                    let errEmbed = new Discord.MessageEmbed()
-                    .setTitle('JSON OVERLOAD')
-                    .setColor(0xaa00cc)
-                    .setDescription(`\`\`\`json\n${err}\`\`\``)
-                if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
-                });
-                    huntTime.delete(message.author.id)
-                }, a)
-                restTime.add(message.author.id)
-                setTimeout(() => {
-                    restTime.delete(message.Author.id)
-                }, a + (a/2))
+                    else {
+                        embed = embed.setDescription(`Whilst hunting you got hurt, you lost ${e}❤️\n\nYou caught:`)
+                        try {
+                            curHP - e;
+                            await message.author.send(embed)
+                        }
+                        catch {
+                            curHp - e;
+                            await message.util.send(user, embed)
+                        }
+                        
+                        upgrade[user.id] = {
+                            skillPoints: skillPoints,
+                            curHp: curHp,
+                            health: health,
+                            attack: attack,
+                            storage: storageMin + i,
+                            storageSpace: storageMax,
+                            stealth: stealth,
+                            critical: critical,
+                        }
+                        hunting[message.author.id] = {
+                            pigeon: pigeon,
+                            pig: pig,
+                            goat: goat,
+                            fox: fox, 
+                            rabbit: rabbit,
+                            deer: deer,
+                            tiger: tiger,
+                            lion: lion,
+                            buffalo: buffalo,
+                        }
+                    fs.writeFile('data/huntingData.json', JSON.stringify(hunting), (err) => {
+                        let errEmbed = new Discord.MessageEmbed()
+                        .setTitle('JSON OVERLOAD')
+                        .setColor(0xaa00cc)
+                        .setDescription(`\`\`\`json\n${err}\`\`\``)
+                    if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+                    });
+                    fs.writeFile('data/upgradeData.json', JSON.stringify(upgrade), (err) => {
+                        let errEmbed = new Discord.MessageEmbed()
+                        .setTitle('JSON OVERLOAD')
+                        .setColor(0xaa00cc)
+                        .setDescription(`\`\`\`json\n${err}\`\`\``)
+                    if (err) this.client.channels.cache.get('825128362291757146').send(errEmbed)
+                    });
+                }
+                huntTime.delete(message.author.id)
+            }, a)
         }
     }
-}
+};
 
 module.exports = HuntCommand;
