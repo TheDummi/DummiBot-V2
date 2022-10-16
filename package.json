@@ -7,7 +7,7 @@
     "discord-akairo": "^8.1.0",
     "discord.js": "^12.5.1",
     "git": "^0.1.5",
-    "got": "^11.8.1",
+    "got": "^11.8.5",
     "images-scraper": "^6.0.1",
     "pm2": "^5.2.0",
     "yt-search": "^2.7.3",
